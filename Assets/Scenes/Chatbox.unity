@@ -367,12 +367,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 616973813}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6132662485cba9e498a067d18ddb84d4, type: 3}
+  m_Script: {fileID: 11500000, guid: acd93c1c69f95204095afbc8a00eab76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   messageList: []
   chatPanel: {fileID: 1435956353}
-  textObject: {fileID: 1054542170165785950, guid: a8bf5e574386b7f4d90e899303c9c10b, type: 3}
+  textObject: {fileID: 1054542170165785950, guid: 4447cf8b36409fb4cb36cda56cdbed79, type: 3}
 --- !u!4 &616973815
 Transform:
   m_ObjectHideFlags: 0
