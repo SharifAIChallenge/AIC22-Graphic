@@ -16,6 +16,12 @@ public class Node : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log("hi");
+        EventManager.SelectNode(this);
+        this.GetComponent<SpriteRenderer>().color = Color.cyan;
+    }
+
+    public void Unselect()
+    {
+        this.GetComponent<SpriteRenderer>().color = new Color(1.0f,0.3915f,0.3915f);
     }
 }
