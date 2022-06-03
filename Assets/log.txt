@@ -1,8 +1,3 @@
-"Detected grpc-netty-shaded: Creating ShadedNettyGrpcServerFactory"
-"Registered gRPC service: ir.sharif.aic.hideandseek.api.grpc.GameHandler, bean: gameHandlerApiV1, class: ir.sharif.aic.hideandseek.api.GameHandlerApiV1"
-"Registered gRPC service: grpc.health.v1.Health, bean: grpcHealthService, class: io.grpc.protobuf.services.HealthServiceImpl"
-"Registered gRPC service: grpc.reflection.v1alpha.ServerReflection, bean: protoReflectionService, class: io.grpc.protobuf.services.ProtoReflectionService"
-"gRPC Server started, listening on address: *, port: 7000"
 "{"id":"962ecd58-3cf7-42ed-8d9f-3144b72e6938","timeStamp":1653982532455,"type":"READINESS_DECLARATION","message":"agent with id:1 has declared its readiness","context":{"agentId":"1","balance":"2.0","team":"FIRST","type":"THIEF","nodeId":"2","token":"token_1"}}"
 "{"id":"2e81ba01-8cd1-4f79-bb32-b6585176a88b","timeStamp":1653982533428,"type":"READINESS_DECLARATION","message":"agent with id:2 has declared its readiness","context":{"agentId":"2","balance":"1000.0","team":"FIRST","type":"POLICE","nodeId":"1","token":"token_2"}}"
 "{"id":"d3c54eec-3e20-4232-977f-72d83496874e","timeStamp":1653982534238,"type":"READINESS_DECLARATION","message":"agent with id:3 has declared its readiness","context":{"agentId":"3","balance":"1000.0","team":"SECOND","type":"THIEF","nodeId":"2","token":"token_3"}}"
