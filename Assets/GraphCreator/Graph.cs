@@ -109,5 +109,10 @@ namespace GraphCreator
             
             return waypoints.ToArray();
         }
+        
+        public int GetPoliceStation(Team team)
+        {
+            return team == Team.FIRST ? 0 : 8;
+        }
     }
 }

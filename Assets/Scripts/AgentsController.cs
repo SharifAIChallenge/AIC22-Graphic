@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using GraphCreator;
 using UnityEngine;
 
 public class AgentsController : MonoBehaviour
@@ -9,7 +10,8 @@ public class AgentsController : MonoBehaviour
 
     [SerializeField] private Transform agentsParent;
     
-    
+    [SerializeField] private Graph map;
+
     /*private List<Agent> _team1_Cop = new();
     private List<Agent> _team1_Thief = new();
     private List<Agent> _team2_Cop = new();
@@ -22,13 +24,13 @@ public class AgentsController : MonoBehaviour
         if (agentType == AgentType.POLICE)
         {
             var c = Instantiate(policePrefab, agentsParent);
-            c.Setup(id, team, balanceValue);
+            c.Setup(map, id, team, balanceValue);
             _agents.Add(c);
         }
         else
         {
             var c = Instantiate(thiefPrefab, agentsParent);
-            c.Setup(id, team, balanceValue, startNode);
+            c.Setup(map, id, team, balanceValue, startNode);
             _agents.Add(c);
         }
     }
