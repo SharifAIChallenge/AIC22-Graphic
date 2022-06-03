@@ -25,7 +25,8 @@ public class Node : MonoBehaviour
 
     public void Unselect()
     {
-        this.GetComponent<SpriteRenderer>().color = new Color(1.0f,0.3915f,0.3915f);
+        //this.GetComponent<SpriteRenderer>().color = new Color(1.0f,0.3915f,0.3915f);
+        this.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     public Node SetGraph(Graph graph)

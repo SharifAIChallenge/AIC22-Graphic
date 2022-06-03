@@ -1333,7 +1333,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodePrefab: {fileID: 2375205182632942344, guid: 41e1c0ddfbb28cccdbe62fbe5f885641, type: 3}
+  edgeMode: 0
   mainCamera: {fileID: 1331478350}
+  _nodes:
+    m_keys: 
+    m_values: []
 --- !u!4 &1833925016
 Transform:
   m_ObjectHideFlags: 0

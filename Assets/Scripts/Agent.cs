@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using GraphCreator;
 using UnityEngine;
 
@@ -32,7 +33,7 @@ public abstract class Agent : MonoBehaviour
     
     public void Move(int from, int to)
     {
-        
+        transform.DOPath(_map.GetPathPoint(from, to), 1);
     }
 }
 

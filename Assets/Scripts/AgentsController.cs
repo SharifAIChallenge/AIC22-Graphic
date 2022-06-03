@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using GraphCreator;
@@ -10,7 +11,10 @@ public class AgentsController : MonoBehaviour
 
     [SerializeField] private Transform agentsParent;
     
-    [SerializeField] private Graph map;
+    [SerializeField] private Graph mapPrefab;
+    [SerializeField] private Transform mapParent;
+    
+    private Graph map;
 
     /*private List<Agent> _team1_Cop = new();
     private List<Agent> _team1_Thief = new();
@@ -18,6 +22,11 @@ public class AgentsController : MonoBehaviour
     private List<Agent> _team2_Thief = new();*/
 
     private List<Agent> _agents = new();
+
+    private void Awake()
+    {
+        map = Instantiate(mapPrefab, mapParent);
+    }
 
     public void CreateAgent(int id, int startNode, AgentType agentType, Team team, double balanceValue)
     {

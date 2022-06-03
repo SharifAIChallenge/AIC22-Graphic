@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace GraphCreator
 {
@@ -11,10 +9,12 @@ namespace GraphCreator
         public GameObject nodePrefab;
         public bool edgeMode = false;
         public Camera mainCamera;
-        private readonly Dictionary<int, GameObject> _nodes = new Dictionary<int, GameObject>();
-        private int _nextNodeIndex = 1;
+        //private Dictionary<int, GameObject> _nodes = new();
+        [SerializeField] private NodeDictionary _nodes = new();
+        private int _nextNodeIndex = 0;
         private Node _selectedNode;
-        private readonly Dictionary<int, List<int>> _edges = new Dictionary<int, List<int>>();
+        //private Dictionary<int, List<int>> _edges = new();
+        [SerializeField] private EdgeDictionary _edges = new();
 
         public void AddNode()
         {
@@ -104,15 +104,27 @@ namespace GraphCreator
 
             List<Vector3> waypoints = new List<Vector3>();
             waypoints.Add(secondNodePosition);
-            waypoints.Add((firstNodePosition+secondNodePosition)/2);
-            waypoints.Add((firstNodePosition+secondNodePosition)/2);
+            // waypoints.Add((firstNodePosition+secondNodePosition)/2);
+            // waypoints.Add((firstNodePosition+secondNodePosition)/2);
             
             return waypoints.ToArray();
         }
         
         public int GetPoliceStation(Team team)
         {
-            return team == Team.FIRST ? 0 : 8;
+            return team == Team.FIRST ? 0 : 7;
         }
+    }
+
+    [Serializable]
+    public class NodeDictionary : SerializableDictionary<int, GameObject>
+    {
+        
+    }
+    
+    [Serializable]
+    public class EdgeDictionary : SerializableDictionary<int, List<int>>
+    {
+        
     }
 }
