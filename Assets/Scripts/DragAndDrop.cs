@@ -8,7 +8,6 @@ public class DragAndDrop : MonoBehaviour
     private Vector3 _dragOffset;
     private void OnMouseDrag()
     {
-
         transform.position = GetMousePosition() + _dragOffset;
     }
     private void OnMouseDown()

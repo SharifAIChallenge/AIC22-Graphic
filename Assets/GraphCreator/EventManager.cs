@@ -7,7 +7,6 @@ using UnityEngine.Serialization;
 public class EventManager : MonoBehaviour
 {
     public Graph theGraph;
-    private static Node _selectedNode;
     public Camera mainCamera;
     void Update()
     {
@@ -17,13 +16,8 @@ public class EventManager : MonoBehaviour
             ZoomOut();
         else if (Input.GetKeyDown(KeyCode.I))
             ZoomIn();
-    }
-
-    public static void SelectNode(Node node)
-    {
-        if (_selectedNode is not null)
-            _selectedNode.Unselect();
-        _selectedNode = node;
+        else if (Input.GetKeyDown(KeyCode.E))
+            theGraph.ToggleEdgeMode();
     }
 
     public void ZoomOut()
