@@ -70,7 +70,7 @@ namespace GraphCreator
                 throw new Exception($"NO NODE WITH ID {id} EXISTS!");
         }
 
-        public Vector2 GetPathPoint(int firstNodeId, int secondNodeId, float t)
+        /*public Vector2 GetPathPoint(int firstNodeId, int secondNodeId, float t)
         {
             Vector2 firstNodePosition;
             Vector2 secondNodePosition;
@@ -87,6 +87,27 @@ namespace GraphCreator
             else if (t < 0)
                 t = 0;
             return Vector2.Lerp(firstNodePosition, secondNodePosition, t);
+        }*/
+
+        public Vector3[] GetPathPoint(int firstNodeId, int secondNodeId)
+        {
+            Vector2 firstNodePosition;
+            Vector2 secondNodePosition;
+            if (_nodes.ContainsKey(firstNodeId))
+                firstNodePosition = _nodes[firstNodeId].transform.position;
+            else
+                throw new Exception($"NO NODE WITH ID {firstNodeId} EXISTS!");
+            if (_nodes.ContainsKey(secondNodeId))
+                secondNodePosition = _nodes[secondNodeId].transform.position;
+            else
+                throw new Exception($"NO NODE WITH ID {secondNodeId} EXISTS!");
+
+            List<Vector3> waypoints = new List<Vector3>();
+            waypoints.Add(secondNodePosition);
+            waypoints.Add((firstNodePosition+secondNodePosition)/2);
+            waypoints.Add((firstNodePosition+secondNodePosition)/2);
+            
+            return waypoints.ToArray();
         }
     }
 }
