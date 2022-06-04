@@ -422,7 +422,7 @@ MonoBehaviour:
   policePrefab: {fileID: 8538545206451265414, guid: 36326fa393de6624a9808fbee6381b29, type: 3}
   thiefPrefab: {fileID: 1352740128290327372, guid: ace308db31e7f4c49a4b8d3e76b49eb2, type: 3}
   agentsParent: {fileID: 399362296}
-  mapPrefab: {fileID: 6658792774377816949, guid: 12785c139bca26245b5d1c0f6eb9a427, type: 3}
+  mapPrefab: {fileID: 2073342667864220964, guid: b704a970be219184c85f2cee8335c523, type: 3}
   mapParent: {fileID: 2018029816}
 --- !u!1 &1076770199
 GameObject:

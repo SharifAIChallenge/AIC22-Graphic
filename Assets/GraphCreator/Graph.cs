@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using BezierSolution;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations;
 
 namespace GraphCreator
 {
@@ -16,6 +19,8 @@ namespace GraphCreator
         //private Dictionary<int, List<int>> _edges = new();
         [SerializeField] private EdgeDictionary _edges = new();
 
+        [SerializeField] private Edge edgePrefab;
+        
         public void AddNode()
         {
             Vector3 worldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -55,6 +60,9 @@ namespace GraphCreator
             _edges[nodeID].Add(selectedNodeID);
             _edges[selectedNodeID].Add(nodeID);
             Debug.Log($"Node Added Between {selectedNodeID} AND {nodeID}");
+
+            Edge e = Instantiate(edgePrefab, transform);
+            e.Setup(_nodes[selectedNodeID].transform.position, _nodes[nodeID].transform.position);
         }
 
 

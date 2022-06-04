@@ -297,8 +297,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1758551425}
   m_HandleRect: {fileID: 1758551424}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -367,12 +367,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 616973813}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acd93c1c69f95204095afbc8a00eab76, type: 3}
+  m_Script: {fileID: 11500000, guid: b0a37cf77484f0a4899fd1b00f79e1ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   messageList: []
   chatPanel: {fileID: 1435956353}
-  textObject: {fileID: 1054542170165785950, guid: 4447cf8b36409fb4cb36cda56cdbed79, type: 3}
+  textObject: {fileID: 1054542170165785950, guid: e69787a0c7832f74495c9da6285c0842, type: 3}
 --- !u!4 &616973815
 Transform:
   m_ObjectHideFlags: 0
@@ -705,7 +705,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.89500004, y: 0}
-  m_AnchoredPosition: {x: 12.000003, y: 183}
+  m_AnchoredPosition: {x: 12.000003, y: 185.75995}
   m_SizeDelta: {x: -12.000006, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1435956355
@@ -875,9 +875,9 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -943,7 +943,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1874723664
 RectTransform:
   m_ObjectHideFlags: 0
@@ -984,7 +984,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 47e4e8a66a0b58a4399d0f6ef76c9c6e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d53be4b208e98644080294b5b57a4459, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1041,7 +1041,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -2, y: -10}
-  m_SizeDelta: {x: 200, y: 200}
+  m_SizeDelta: {x: 200, y: 202.76}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1933079790
 MonoBehaviour:
@@ -1093,8 +1093,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 47e4e8a66a0b58a4399d0f6ef76c9c6e, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
