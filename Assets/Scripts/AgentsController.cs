@@ -60,4 +60,9 @@ public class AgentsController : MonoBehaviour
     {
         _agents[agentId - 1].IncreaseBalance(wage);
     }
+
+    public void DecreaseBalance(int agentId, double balance, double amount)
+    {
+        _agents[agentId - 1].DecreaseBalance(amount);
+    }
 }

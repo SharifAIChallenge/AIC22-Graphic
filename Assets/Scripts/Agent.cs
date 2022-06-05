@@ -40,6 +40,11 @@ public abstract class Agent : MonoBehaviour
     {
         money += amount;
     }
+
+    public void DecreaseBalance(double amount)
+    {
+        money -= amount;
+    }
 }
 
 public enum AgentType

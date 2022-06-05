@@ -84,15 +84,15 @@ public class PlaybackManager : MonoBehaviour
         }
         else if (line.Contains("\"type\":\"AGENT_SEND_MESSAGE\""))
         {
-            var agentIdValue = GetValue(agentId, line);
-            var balanceValue = GetValue(balance, line);
-            var priceValue = GetValue(price, line);
+            var agentIdValue = int.Parse(GetValue(agentId, line));
+            var balanceValue = double.Parse(GetValue(balance, line), CultureInfo.InvariantCulture);;
+            var priceValue = double.Parse(GetValue(price, line), CultureInfo.InvariantCulture);;
             var teamValue = GetValue(team, line);
             var textValue = GetValue(text, line);
             var typeValue = GetValue(type, line);
             
-            chatManager.UpdateChat(teamValue, typeValue, agentIdValue, textValue);
-            //TODO: balance
+            chatManager.UpdateChat(teamValue, typeValue, agentIdValue.ToString(), textValue);
+            agentsController.DecreaseBalance(agentIdValue, balanceValue, priceValue);
         }
         else if (line.Contains("\"type\":\"POLICES_CAUGHT_THIEVES\""))
         {
