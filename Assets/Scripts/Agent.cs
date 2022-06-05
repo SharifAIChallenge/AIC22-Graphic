@@ -35,6 +35,11 @@ public abstract class Agent : MonoBehaviour
     {
         transform.DOPath(_map.GetPathPoint(from, to), 1);
     }
+
+    public void IncreaseBalance(double amount)
+    {
+        money += amount;
+    }
 }
 
 public enum AgentType

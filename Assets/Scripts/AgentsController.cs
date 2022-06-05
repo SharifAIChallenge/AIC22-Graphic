@@ -44,8 +44,20 @@ public class AgentsController : MonoBehaviour
         }
     }
 
+    
+    
+    public void SortAgents()
+    {
+        _agents.Sort((a, b) => a.id - b.id);
+    }
+
     public void MoveAgent(int id, int from, int to)
     {
-        _agents.FirstOrDefault(c => c.id == id)?.Move(from, to);
+        _agents[id - 1].Move(from, to);
+    }
+
+    public void BalanceCharge(int agentId, double balance, double wage)
+    {
+        _agents[agentId - 1].IncreaseBalance(wage);
     }
 }

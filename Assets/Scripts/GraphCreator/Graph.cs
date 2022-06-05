@@ -120,7 +120,7 @@ namespace GraphCreator
         
         public int GetPoliceStation(Team team)
         {
-            return team == Team.FIRST ? 0 : 7;
+            return team == Team.FIRST ? 0 : 4;
         }
     }
 

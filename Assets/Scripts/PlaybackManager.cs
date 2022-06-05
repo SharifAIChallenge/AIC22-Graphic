@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using UnityEngine;
 using System.Text.RegularExpressions;
 
@@ -8,12 +9,16 @@ using Newtonsoft.Json.Converters;
 public class PlaybackManager : MonoBehaviour
 {
     [SerializeField] private AgentsController agentsController;
+    [SerializeField] private ChatManager chatManager;
     [SerializeField] private LogHandler logHandler;
+
+    private GameStatus _gameStatus;
+    public Action<GameStatus> onGameStatusChange = delegate{};
 
     Regex agentId = new Regex("\"agentId\":\"([^\"]+)\"");
     Regex balance = new Regex("\"balance\":\"([^\"]+)\"");
     Regex team = new Regex("\"team\":\"([^\"]+)\"");
-    Regex type = new Regex("\"type\":\"([^\"]+)\"");
+    Regex type = new Regex("\"type\":\"((?:POLICE)|(?:THIEF))\"");
     Regex nodeId = new Regex("\"nodeId\":\"([^\"]+)\"");
     Regex token = new Regex("\"token\":\"([^\"]+)\"");
     Regex toStatus = new Regex("\"toStatus\":\"([^\"]+)\"");
@@ -35,29 +40,22 @@ public class PlaybackManager : MonoBehaviour
 
     private void RunLine(string line)
     {
+        var log = line.Substring(1, line.Length - 2);
+
         if (line.Contains("\"type\":\"READINESS_DECLARATION\""))
         {
-            var log = line.Substring(1, line.Length - 2);
             var parsed = JsonConvert.DeserializeObject<GameLog<ReadinessLog>>(log, new StringEnumConverter());
             if (parsed is null) return;
             
             var context = parsed.context;
             agentsController.CreateAgent(context.agentId, context.nodeId, context.type, context.team, context.balance);
-
-            /*var agentIdValue = int.Parse(GetValue(agentId, line));
-            var balanceValue = double.Parse(GetValue(balance, line), CultureInfo.InvariantCulture);
-            var teamValue = GetValue(team, line) == "FIRST" ? Team.FIRST : Team.SECOND;
-            var typeValue = GetValue(type, line) == "POLICE" ? AgentType.POLICE : AgentType.THIEF;
-            var nodeIdValue = int.Parse(GetValue(nodeId, line));
-            var tokenValue = GetValue(token, line);
-
-            agentsController.CreateAgent(agentIdValue, nodeIdValue, typeValue, teamValue, balanceValue);*/
         }
         else if (line.Contains("\"type\":\"STATUS_CHANGE\""))
         {
-            var toStatusValue = GetValue(toStatus, line);
-            var fromStatusValue = GetValue(fromStatus, line);
-            //call function
+            var parsed = JsonConvert.DeserializeObject<GameLog<StatusChangeLog>>(log, new StringEnumConverter());
+            if (parsed is null) return;
+            
+            ChangeGameStatus(parsed.context.toStatus);
         }
         else if (line.Contains("\"type\":\"AGENT_MOVEMENT\""))
         {
@@ -73,14 +71,16 @@ public class PlaybackManager : MonoBehaviour
         {
             var toTurnNumberValue = GetValue(toTurnNumber, line);
             var toTurnValue = GetValue(toTurn, line);
+            
             //call function
         }
         else if (line.Contains("\"type\":\"AGENT_BALANCE_CHARGED\""))
         {
-            var agentIdValue = GetValue(agentId, line);
-            var balanceValue = GetValue(balance, line);
-            var wageValue = GetValue(wage, line);
-            //call function
+            var agentIdValue = int.Parse(GetValue(agentId, line));
+            var balanceValue = double.Parse(GetValue(balance, line), CultureInfo.InvariantCulture);
+            var wageValue = double.Parse(GetValue(wage, line), CultureInfo.InvariantCulture);
+            
+            agentsController.BalanceCharge(agentIdValue, balanceValue, wageValue);
         }
         else if (line.Contains("\"type\":\"AGENT_SEND_MESSAGE\""))
         {
@@ -90,7 +90,9 @@ public class PlaybackManager : MonoBehaviour
             var teamValue = GetValue(team, line);
             var textValue = GetValue(text, line);
             var typeValue = GetValue(type, line);
-            //call function
+            
+            chatManager.UpdateChat(teamValue, typeValue, agentIdValue, textValue);
+            //TODO: balance
         }
         else if (line.Contains("\"type\":\"POLICES_CAUGHT_THIEVES\""))
         {
@@ -109,6 +111,26 @@ public class PlaybackManager : MonoBehaviour
     {
         Match match = regex.Match(str);
         return match.Groups[1].Value;
+    }
+
+    private void ChangeGameStatus(GameStatus toStatus)
+    {
+        _gameStatus = toStatus;
+
+        switch (toStatus)
+        {
+            case GameStatus.PENDING:
+                break;
+            case GameStatus.ONGOING:
+                agentsController.SortAgents();
+                break;
+            case GameStatus.FINISHED:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(toStatus), toStatus, null);
+        }
+        
+        onGameStatusChange.Invoke(toStatus);
     }
 
     [Serializable]
@@ -130,5 +152,18 @@ public class PlaybackManager : MonoBehaviour
         public int nodeId;
         public string token;
     }
+    [Serializable]
+    private class StatusChangeLog
+    {
+        public GameStatus fromStatus;
+        public GameStatus toStatus;
+    }
+}
+
+public enum GameStatus
+{
+    PENDING,
+    ONGOING,
+    FINISHED
 }
 
