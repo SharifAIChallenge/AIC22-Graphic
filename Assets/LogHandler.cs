@@ -14,7 +14,7 @@ public class LogHandler : MonoBehaviour
             Regex agentId = new Regex("\"agentId\":\"([^\"]+)\"");
             Regex balance = new Regex("\"balance\":\"([^\"]+)\"");
             Regex team = new Regex("\"team\":\"([^\"]+)\"");
-            Regex type = new Regex("\"type\":\"([^\"]+)\"");
+            Regex type = new Regex("\"type\":\"((?:POLICE)|(?:THIEF))\"");
             Regex nodeId = new Regex("\"nodeId\":\"([^\"]+)\"");
             Regex token = new Regex("\"token\":\"([^\"]+)\"");
             Regex toStatus = new Regex("\"toStatus\":\"([^\"]+)\"");
