@@ -7,26 +7,35 @@ using UnityEngine.UI;
 public class ChatManager : MonoBehaviour
 {
     string[] lines;
-    public List<Message> messageList = new List<Message>();
-    public GameObject chatPanel, textObject;
+    public List<Message>[] messageList = {new List<Message>(), new List<Message>(), new List<Message>(), new List<Message>()};
+    public GameObject textObject;
+    public GameObject[] chatPanels = new GameObject[4];
     
-    void Update()
-    {
-    if (new FileInfo( "texts.txt" ).Length != 0)
-    {
-        lines = System.IO.File.ReadAllLines(@"texts.txt");
-        foreach (string line in lines)
-        {
+    //0: FIRST team, THIEF
+    //1: FIRST team, POLICE
+    //2: SECOND team, THIEF
+    //3: SECOND team, POLICE
+   
+    public void UpdateChat(string team, string type, string agentId, string text) {
+            string line = agentId + ": " + text;
             Message newMessage = new Message();
             newMessage.text = line;
-            GameObject newText = Instantiate(textObject, chatPanel.transform);
+            GameObject newText;
+            if (team.Equals("FIRST"))
+                if (type.Equals("THIEF")) newText = Instantiate(textObject, (chatPanels[0]).transform); 
+                else newText = Instantiate(textObject, (chatPanels[1]).transform); 
+            else
+                if (type.Equals("THIEF")) newText = Instantiate(textObject, (chatPanels[2]).transform);
+                else newText = Instantiate(textObject, (chatPanels[3]).transform); 
+              
             newMessage.textObject = newText.GetComponent<Text>();
-            newMessage.textObject.text = newMessage.text;
-            messageList.Add(newMessage);
-        }
-        
-        System.IO.File.WriteAllText(@"texts.txt", string.Empty);
-    }
+            newMessage.textObject.text = newMessage.text; 
+            if (type.Equals("FIRST"))
+                if (type.Equals("THIEF")) (messageList[0]).Add(newMessage);
+                else (messageList[1]).Add(newMessage);
+            else
+                if (type.Equals("THIEF")) (messageList[2]).Add(newMessage);
+                else (messageList[3]).Add(newMessage);
     }
 
     [System.Serializable]
