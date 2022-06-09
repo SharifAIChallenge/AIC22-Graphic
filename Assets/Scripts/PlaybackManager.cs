@@ -2,7 +2,6 @@ using System;
 using System.Globalization;
 using UnityEngine;
 using System.Text.RegularExpressions;
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -11,9 +10,14 @@ public class PlaybackManager : MonoBehaviour
     [SerializeField] private AgentsController agentsController;
     [SerializeField] private ChatManager chatManager;
     [SerializeField] private LogHandler logHandler;
+    [SerializeField] private HUDManager hudManager;
 
     private GameStatus _gameStatus;
-    public Action<GameStatus> onGameStatusChange = delegate{};
+    public Action<GameStatus> onGameStatusChange = delegate { };
+
+    private int _turnNumber;
+    private AgentType _turnAgentType;
+    public Action<int, AgentType> onTurnChange = delegate { };
 
     Regex agentId = new Regex("\"agentId\":\"([^\"]+)\"");
     Regex balance = new Regex("\"balance\":\"([^\"]+)\"");
@@ -33,6 +37,12 @@ public class PlaybackManager : MonoBehaviour
     Regex thiefId = new Regex("\"thiefId\":\"([^\"]+)\"");
     Regex gameResult = new Regex("\"game result\":\"([^\"]+)\"");
 
+    private void Start()
+    {
+        hudManager.Setup(this);
+        ChangeTurn(1, AgentType.THIEF);
+    }
+
     public void NextMove()
     {
         RunLine(logHandler.GetNextLine());
@@ -46,7 +56,7 @@ public class PlaybackManager : MonoBehaviour
         {
             var parsed = JsonConvert.DeserializeObject<GameLog<ReadinessLog>>(log, new StringEnumConverter());
             if (parsed is null) return;
-            
+
             var context = parsed.context;
             agentsController.CreateAgent(context.agentId, context.nodeId, context.type, context.team, context.balance);
         }
@@ -54,45 +64,45 @@ public class PlaybackManager : MonoBehaviour
         {
             var parsed = JsonConvert.DeserializeObject<GameLog<StatusChangeLog>>(log, new StringEnumConverter());
             if (parsed is null) return;
-            
+
             ChangeGameStatus(parsed.context.toStatus);
         }
         else if (line.Contains("\"type\":\"AGENT_MOVEMENT\""))
         {
             var agentIdValue = int.Parse(GetValue(agentId, line));
             var balanceValue = GetValue(balance, line);
-            var priceValue = GetValue(price, line);
+            var priceValue = double.Parse(GetValue(price, line), CultureInfo.InvariantCulture);
             var toNodeIdValue = int.Parse(GetValue(toNodeId, line));
             var fromNodeIdValue = int.Parse(GetValue(fromNodeId, line));
-            
+
             agentsController.MoveAgent(agentIdValue, fromNodeIdValue, toNodeIdValue);
+            agentsController.DecreaseBalance(agentIdValue, priceValue);
         }
         else if (line.Contains("\"type\":\"TURN_CHANGE\""))
         {
-            var toTurnNumberValue = GetValue(toTurnNumber, line);
-            var toTurnValue = GetValue(toTurn, line);
-            
-            //call function
+            var toTurnNumberValue = int.Parse(GetValue(toTurnNumber, line));
+            var toTurnValue = GetValue(toTurn, line) == "THIEF" ? AgentType.THIEF : AgentType.POLICE;
+
+            ChangeTurn(toTurnNumberValue, toTurnValue);
         }
         else if (line.Contains("\"type\":\"AGENT_BALANCE_CHARGED\""))
         {
             var agentIdValue = int.Parse(GetValue(agentId, line));
             var balanceValue = double.Parse(GetValue(balance, line), CultureInfo.InvariantCulture);
             var wageValue = double.Parse(GetValue(wage, line), CultureInfo.InvariantCulture);
-            
+
             agentsController.BalanceCharge(agentIdValue, balanceValue, wageValue);
         }
         else if (line.Contains("\"type\":\"AGENT_SEND_MESSAGE\""))
         {
             var agentIdValue = int.Parse(GetValue(agentId, line));
-            var balanceValue = double.Parse(GetValue(balance, line), CultureInfo.InvariantCulture);;
-            var priceValue = double.Parse(GetValue(price, line), CultureInfo.InvariantCulture);;
+            var priceValue = double.Parse(GetValue(price, line), CultureInfo.InvariantCulture);
             var teamValue = GetValue(team, line);
             var textValue = GetValue(text, line);
             var typeValue = GetValue(type, line);
-            
+
             chatManager.UpdateChat(teamValue, typeValue, agentIdValue.ToString(), textValue);
-            agentsController.DecreaseBalance(agentIdValue, balanceValue, priceValue);
+            agentsController.DecreaseBalance(agentIdValue, priceValue);
         }
         else if (line.Contains("\"type\":\"POLICES_CAUGHT_THIEVES\""))
         {
@@ -129,8 +139,15 @@ public class PlaybackManager : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException(nameof(toStatus), toStatus, null);
         }
-        
+
         onGameStatusChange.Invoke(toStatus);
+    }
+
+    private void ChangeTurn(int turnNumber, AgentType turnType)
+    {
+        _turnNumber = turnNumber;
+        _turnAgentType = turnType;
+        onTurnChange?.Invoke(turnNumber, turnType);
     }
 
     [Serializable]
@@ -142,6 +159,7 @@ public class PlaybackManager : MonoBehaviour
         public string message;
         public T context;
     }
+
     [Serializable]
     private class ReadinessLog
     {
@@ -152,6 +170,7 @@ public class PlaybackManager : MonoBehaviour
         public int nodeId;
         public string token;
     }
+
     [Serializable]
     private class StatusChangeLog
     {
@@ -166,4 +185,3 @@ public enum GameStatus
     ONGOING,
     FINISHED
 }
-
