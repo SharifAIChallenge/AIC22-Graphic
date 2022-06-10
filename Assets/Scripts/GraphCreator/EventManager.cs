@@ -12,15 +12,11 @@ public class EventManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.N))
             theGraph.AddNode();
-        else if (Input.GetKeyDown(KeyCode.O))
-            ZoomOut();
-        else if (Input.GetKeyDown(KeyCode.I))
-            ZoomIn();
         else if (Input.GetKeyDown(KeyCode.E))
             theGraph.ToggleEdgeMode();
     }
 
-    public void ZoomOut()
+    /*public void ZoomOut()
     {
         mainCamera.orthographicSize += 0.1f;
         Vector3 newPos = mainCamera.transform.position  -(mainCamera.transform.position - mainCamera.ScreenToWorldPoint(Input.mousePosition)) / 10;
@@ -36,6 +32,5 @@ public class EventManager : MonoBehaviour
         Vector3 newPos = mainCamera.transform.position  -(mainCamera.transform.position - mainCamera.ScreenToWorldPoint(Input.mousePosition)) / 10;
         newPos.z = -10;
         mainCamera.transform.position = newPos;
-    }
-    
+    }*/
 }

@@ -9,18 +9,18 @@ namespace GraphCreator
 {
     public class Graph : MonoBehaviour
     {
+        [SerializeField] public bool editMode;
+        
         public GameObject nodePrefab;
         public bool edgeMode = false;
         public Camera mainCamera;
-        //private Dictionary<int, GameObject> _nodes = new();
         [SerializeField] private NodeDictionary _nodes = new();
         private int _nextNodeIndex = 0;
         private Node _selectedNode;
-        //private Dictionary<int, List<int>> _edges = new();
         [SerializeField] private EdgeDictionary _edges = new();
 
         [SerializeField] private Edge edgePrefab;
-        
+
         public void AddNode()
         {
             Vector3 worldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -51,8 +51,6 @@ namespace GraphCreator
             {
                 _selectedNode = node;
             }
-
-            
         }
 
         private void AddEdge(int selectedNodeID, int nodeID)
