@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using GraphCreator;
+using TMPro;
 using UnityEngine;
 
 public abstract class Agent : MonoBehaviour
@@ -11,6 +12,8 @@ public abstract class Agent : MonoBehaviour
     protected int _currentNode;
 
     [SerializeField] private SpriteRenderer hat;
+    [SerializeField] private GameObject agentDataPanel;
+    [SerializeField] private TMP_Text moneyText;
     
     protected Graph _map;
 
@@ -44,6 +47,17 @@ public abstract class Agent : MonoBehaviour
     public void DecreaseBalance(double amount)
     {
         money -= amount;
+    }
+
+    private void OnMouseEnter()
+    {
+        moneyText.text = "Money: " + money;
+        agentDataPanel.SetActive(true);
+    }
+
+    private void OnMouseExit()
+    {
+        agentDataPanel.SetActive(false);
     }
 }
 
