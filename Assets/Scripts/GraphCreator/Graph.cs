@@ -55,12 +55,17 @@ namespace GraphCreator
 
         private void AddEdge(int selectedNodeID, int nodeID)
         {
+            if (_edges[nodeID].Contains(selectedNodeID))
+            {
+                return;
+            }
+            
             _edges[nodeID].Add(selectedNodeID);
             _edges[selectedNodeID].Add(nodeID);
             Debug.Log($"Node Added Between {selectedNodeID} AND {nodeID}");
 
             Edge e = Instantiate(edgePrefab, transform);
-            e.Setup(_nodes[selectedNodeID].transform.position, _nodes[nodeID].transform.position);
+            e.Setup(_nodes[selectedNodeID].transform, _nodes[nodeID].transform);
         }
 
 

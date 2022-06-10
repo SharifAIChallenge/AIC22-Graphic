@@ -1075,7 +1075,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   dragEnabled: 1
-  mouseButton: 0
+  mouseButton: 2
   dragSpeed: -0.06
   ztTarget: {fileID: 0}
   DCTranslate: 0
@@ -1099,7 +1099,7 @@ MonoBehaviour:
   followTarget: {fileID: 0}
   lerpSpeed: 0.5
   offset: {x: 0, y: 0, z: -10}
-  clampCamera: 1
+  clampCamera: 0
   bounds: {fileID: 0}
   dollyRail: {fileID: 0}
   snapTarget: {fileID: 0}
@@ -1375,8 +1375,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0444a44c95730ed7b86e85a529e5325b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  editMode: 1
   nodePrefab: {fileID: 2375205182632942344, guid: 41e1c0ddfbb28cccdbe62fbe5f885641, type: 3}
-  edgeMode: 0
+  edgeMode: 1
   mainCamera: {fileID: 1331478350}
   _nodes:
     m_keys: 
