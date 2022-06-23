@@ -28,6 +28,7 @@ public class DragCamera2DInspector : Editor {
         dc2d.dragEnabled = EditorGUILayout.Toggle(new GUIContent("Drag Enabled", "Enable/Disable camera movement"), dc2d.dragEnabled);
         dc2d.mouseButton = (DragCamera2D.MouseButton)EditorGUILayout.EnumPopup(new GUIContent("Mouse Button", "Mouse button responsible for drag."), dc2d.mouseButton);
         dc2d.dragSpeed = EditorGUILayout.Slider(new GUIContent("Drag Speed", "Speed the camera moves when dragged."), dc2d.dragSpeed, -5f, 5f);
+        dc2d.isPerspective = EditorGUILayout.Toggle(new GUIContent("Is Perspective", ""), dc2d.isPerspective);
 
         GUILayout.Space(20f);
 

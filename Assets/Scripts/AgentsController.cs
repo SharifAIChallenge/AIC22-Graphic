@@ -23,9 +23,12 @@ public class AgentsController : MonoBehaviour
 
     private List<Agent> _agents = new();
 
+    [SerializeField] private CityRandomGenerate cityGenerator;
+    
     private void Awake()
     {
         map = Instantiate(mapPrefab, mapParent);
+        cityGenerator.Generate();
     }
 
     public void CreateAgent(int id, int startNode, AgentType agentType, Team team, double balanceValue)
