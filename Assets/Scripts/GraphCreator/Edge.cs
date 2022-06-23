@@ -30,6 +30,7 @@ public class Edge : MonoBehaviour
                 break;
         }
     }
+
     public void Setup(Transform from, Transform to, EdgeType type)
     {
         SetTransportationMethod(type);
@@ -49,6 +50,43 @@ public class Edge : MonoBehaviour
 
         spline.autoConstructMode = SplineAutoConstructMode.Linear;
         spline.ConstructLinearPath();
+    }
+
+    public Tuple<string, int> GetPathsInformation(int currentId, Tuple<int, int> edgesKey,
+        float roadPrice, float busPrice, float trainPrice)
+    {
+        string res = "";
+        int i = 0;
+        if (hasRoad)
+        {
+            res += "    - id: " + currentId + "\n" +
+                   "      firstNodeId: " + edgesKey.Item1 + "\n" +
+                   "      secondNodeId: " + edgesKey.Item2 + "\n" +
+                   "      price: " + roadPrice + "\n";
+            i++;
+        }
+
+        if (hasBus)
+        {
+            int index = currentId + i;
+            res += "    - id: " + index + "\n" +
+                   "      firstNodeId: " + edgesKey.Item1 + "\n" +
+                   "      secondNodeId: " + edgesKey.Item2 + "\n" +
+                   "      price: " + busPrice + "\n";
+            i++;
+        }
+
+        if (hasTrain)
+        {
+            int index = currentId + i;
+            res += "    - id: " + index + "\n" +
+                   "      firstNodeId: " + edgesKey.Item1 + "\n" +
+                   "      secondNodeId: " + edgesKey.Item2 + "\n" +
+                   "      price: " + trainPrice + "\n";
+            i++;
+        }
+
+        return Tuple.Create(res, i + currentId);
     }
 }
 

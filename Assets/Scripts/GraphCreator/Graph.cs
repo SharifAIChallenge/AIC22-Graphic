@@ -22,6 +22,7 @@ namespace GraphCreator
         [SerializeField] private EdgeDictionary _edges = new();
 
         [SerializeField] private Edge edgePrefab;
+        public float roadCost = 0, busCost = 10, trainCost = 100;
 
         public void AddNode()
         {
@@ -145,6 +146,29 @@ namespace GraphCreator
         public int GetPoliceStation(Team team)
         {
             return team == Team.FIRST ? 0 : 4;
+        }
+
+        public void BuildYaml()
+        {
+            string yamlString = "graph:\n" + "  paths:\n";
+            int i = 1;
+            foreach (Tuple<int,int> edgesKey in _edges.Keys)
+            {
+                Edge edge = _edges[edgesKey];
+
+                Tuple<string,int> infoTuple = edge.GetPathsInformation(i , edgesKey, roadCost, busCost, trainCost);
+                yamlString += infoTuple.Item1;
+                i = infoTuple.Item2;
+            }
+
+            yamlString += "  nodes:\n";
+            foreach (KeyValuePair<int,GameObject> node in _nodes)
+            {
+                int index = node.Key + 1;
+                yamlString += "    - id: " + index + "\n";
+            }
+            
+            Debug.Log(yamlString);
         }
     }
 
