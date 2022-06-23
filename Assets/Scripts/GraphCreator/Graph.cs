@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BezierSolution;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -10,9 +11,10 @@ namespace GraphCreator
     public class Graph : MonoBehaviour
     {
         [SerializeField] public bool editMode;
-        
+
         public GameObject nodePrefab;
         public bool edgeMode = false;
+        public EdgeType edgeEditType = EdgeType.ROAD;
         public Camera mainCamera;
         [SerializeField] private NodeDictionary _nodes = new();
         private int _nextNodeIndex = 0;
@@ -29,7 +31,6 @@ namespace GraphCreator
             _nodes.Add(_nextNodeIndex, newNode);
             Node nodeComponent = newNode.GetComponent<Node>();
             nodeComponent.SetId(_nextNodeIndex).SetGraph(this);
-            _edges.Add(_nextNodeIndex, new List<int>());
             _nextNodeIndex++;
         }
 
@@ -53,26 +54,38 @@ namespace GraphCreator
             }
         }
 
-        private void AddEdge(int selectedNodeID, int nodeID)
-        {
-            if (_edges[nodeID].Contains(selectedNodeID))
-            {
-                return;
-            }
-            
-            _edges[nodeID].Add(selectedNodeID);
-            _edges[selectedNodeID].Add(nodeID);
-            Debug.Log($"Node Added Between {selectedNodeID} AND {nodeID}");
 
-            Edge e = Instantiate(edgePrefab, transform);
-            e.Setup(_nodes[selectedNodeID].transform, _nodes[nodeID].transform);
+        private Tuple<int, int> GetEdgeTuple(int firstNodeID, int secondNodeID)
+        {
+            int bigger = (firstNodeID < secondNodeID) ? secondNodeID : firstNodeID;
+            int smaller = (firstNodeID < secondNodeID) ? firstNodeID : secondNodeID;
+            Tuple<int, int> edgeTuple = Tuple.Create(smaller, bigger);
+            return edgeTuple;
         }
 
+        private void AddEdge(int selectedNodeID, int nodeID)
+        {
+            Edge e;
+            Tuple<int, int> edgeTuple = GetEdgeTuple(selectedNodeID, nodeID);
+            if (_edges.Keys.Contains(edgeTuple))
+            {
+                e = _edges[edgeTuple];
+                e.SetTransportationMethod(edgeEditType);
+                Debug.Log($"{edgeEditType} Added to existing edge Between {selectedNodeID} AND {nodeID}");
+                return;
+            }
+
+            Debug.Log($"Edge Added Between {selectedNodeID} AND {nodeID} OF TYPE {edgeEditType}");
+            e = Instantiate(edgePrefab, transform);
+            e.Setup(_nodes[selectedNodeID].transform, _nodes[nodeID].transform, edgeEditType);
+            _edges[edgeTuple] = e;
+        }
 
         public void ToggleEdgeMode()
         {
             edgeMode = !edgeMode;
         }
+
         public Vector2 GetNodePositionById(int id)
         {
             if (_nodes.ContainsKey(id))
@@ -117,10 +130,18 @@ namespace GraphCreator
             waypoints.Add(secondNodePosition);
             // waypoints.Add((firstNodePosition+secondNodePosition)/2);
             // waypoints.Add((firstNodePosition+secondNodePosition)/2);
-            
+
             return waypoints.ToArray();
         }
-        
+
+        public Edge GetEdge(int firstNodeId, int secondNodeId)
+        {
+            Tuple<int, int> edgeTuple = GetEdgeTuple(firstNodeId, secondNodeId);
+            if (_edges.Keys.Contains(edgeTuple))
+                return _edges[edgeTuple];
+            return null;
+        }
+
         public int GetPoliceStation(Team team)
         {
             return team == Team.FIRST ? 0 : 4;
@@ -130,12 +151,10 @@ namespace GraphCreator
     [Serializable]
     public class NodeDictionary : SerializableDictionary<int, GameObject>
     {
-        
     }
-    
+
     [Serializable]
-    public class EdgeDictionary : SerializableDictionary<int, List<int>>
+    public class EdgeDictionary : SerializableDictionary<Tuple<int, int>, Edge>
     {
-        
     }
 }

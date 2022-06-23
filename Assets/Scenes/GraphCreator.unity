@@ -418,9 +418,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 586046585}
-  - {fileID: 1416094751}
-  - {fileID: 472514702}
+  - {fileID: 813025923}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -530,19 +528,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 472514701}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.027991462}
+  m_LocalScale: {x: 0.95233643, y: 0.95233643, z: 0.95233643}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 481643050}
   - {fileID: 1788832455}
-  m_Father: {fileID: 379860686}
+  m_Father: {fileID: 813025923}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 153, y: 341.1}
+  m_AnchoredPosition: {x: 71.337296, y: 161.80829}
   m_SizeDelta: {x: 66.97821, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &472514703
@@ -588,10 +586,22 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 481643051}
   toggleTransition: 1
   graphic: {fileID: 1282276727}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 813025924}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 296872069}
+        m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
+        m_MethodName: ChangeEdgeEditMode
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 472514703}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &481643049
 GameObject:
@@ -694,19 +704,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 586046584}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.027991462}
+  m_LocalScale: {x: 0.95233643, y: 0.95233643, z: 0.95233643}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 357251710}
   - {fileID: 1871416571}
-  m_Father: {fileID: 379860686}
+  m_Father: {fileID: 813025923}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 153, y: 104}
+  m_AnchoredPosition: {x: 71.337296, y: 48.908813}
   m_SizeDelta: {x: 66.97821, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &586046586
@@ -752,11 +762,23 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 357251711}
   toggleTransition: 1
   graphic: {fileID: 1604006732}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 813025924}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 1
+      m_Calls:
+      - m_Target: {fileID: 296872069}
+        m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
+        m_MethodName: ChangeEdgeEditMode
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 586046586}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_IsOn: 0
 --- !u!1 &769456348
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,6 +922,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 785859082}
   m_CullTransparentMesh: 1
+--- !u!1 &813025922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 813025923}
+  - component: {fileID: 813025924}
+  m_Layer: 0
+  m_Name: Toggles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &813025923
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813025922}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -752.85077, y: -684.39545, z: -0.058784824}
+  m_LocalScale: {x: 2.1000984, y: 2.1000984, z: 2.1000984}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 586046585}
+  - {fileID: 1416094751}
+  - {fileID: 472514702}
+  m_Father: {fileID: 379860686}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &813025924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813025922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AllowSwitchOff: 0
 --- !u!1 &1282276725
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,19 +1197,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1416094750}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.027991462}
+  m_LocalScale: {x: 0.95233643, y: 0.95233643, z: 0.95233643}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 403026428}
   - {fileID: 234000533}
-  m_Father: {fileID: 379860686}
+  m_Father: {fileID: 813025923}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 153, y: 224}
+  m_AnchoredPosition: {x: 71.337296, y: 106.048996}
   m_SizeDelta: {x: 66.97821, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1416094752
@@ -1185,11 +1255,23 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 403026429}
   toggleTransition: 1
   graphic: {fileID: 785859084}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 813025924}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 1
+      m_Calls:
+      - m_Target: {fileID: 296872069}
+        m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
+        m_MethodName: ChangeEdgeEditMode
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1416094752}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_IsOn: 0
 --- !u!1 &1604006730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1378,12 +1460,13 @@ MonoBehaviour:
   editMode: 1
   nodePrefab: {fileID: 2375205182632942344, guid: 41e1c0ddfbb28cccdbe62fbe5f885641, type: 3}
   edgeMode: 1
+  edgeEditType: 0
   mainCamera: {fileID: 1331478350}
   _nodes:
     m_keys: 
     m_values: []
   _edges:
-    m_keys: 
+    m_values: []
   edgePrefab: {fileID: 8062759539396268357, guid: a2c9ec6712beca64cacedba7668d2a50, type: 3}
 --- !u!4 &1833925016
 Transform:

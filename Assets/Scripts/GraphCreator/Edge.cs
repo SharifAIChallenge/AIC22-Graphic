@@ -12,10 +12,28 @@ public class Edge : MonoBehaviour
     public BezierSpline spline;
 
     public Material roadMat, busMat, trainMat;
-    
-    public void Setup(Transform from, Transform to)
+
+    public bool hasRoad = false, hasBus = false, hasTrain = false;
+
+    public void SetTransportationMethod(EdgeType type)
     {
-        spline.Initialize( 2 );
+        switch (type)
+        {
+            case EdgeType.ROAD:
+                hasRoad = true;
+                break;
+            case EdgeType.BUS:
+                hasBus = true;
+                break;
+            case EdgeType.TRAIN:
+                hasTrain = true;
+                break;
+        }
+    }
+    public void Setup(Transform from, Transform to, EdgeType type)
+    {
+        SetTransportationMethod(type);
+        spline.Initialize(2);
         spline[0].position = from.position;
         spline[1].position = to.position;
 
@@ -23,7 +41,7 @@ public class Edge : MonoBehaviour
         var s = new ConstraintSource {sourceTransform = from, weight = 1};
         c.AddSource(s);
         c.constraintActive = true;
-        
+
         c = spline[1].gameObject.AddComponent<PositionConstraint>();
         s = new ConstraintSource {sourceTransform = to, weight = 1};
         c.AddSource(s);
