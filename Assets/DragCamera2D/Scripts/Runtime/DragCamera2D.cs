@@ -45,8 +45,10 @@ public class DragCamera2D : MonoBehaviour
 
     public Camera cam;
 
+    public bool isPerspective = true;
+    
     [Header("Camera Movement")]
-
+    
     [Tooltip("Allow the Camera to be dragged.")]
     public bool dragEnabled = true;
     [Tooltip("Mouse button responsible for drag.")]
@@ -142,10 +144,15 @@ public class DragCamera2D : MonoBehaviour
 
     int frameid = 0;
 
+
+    private Vector3 startCameraPos;
+    
     void Start() {
         if (cam == null) {
             cam = Camera.main;
         }
+
+        startCameraPos = cam.transform.position;
     }
 
     void LateUpdate() {
@@ -349,8 +356,6 @@ public class DragCamera2D : MonoBehaviour
     private void clampZoom() {
         Camera.main.orthographicSize =  Mathf.Clamp(Camera.main.orthographicSize, minZoom, maxZoom);
         Mathf.Max(cam.orthographicSize, 0.1f);
-
-
     }
 
     void ZoomOrthoCamera(Vector3 zoomTowards, float amount) {
@@ -366,29 +371,52 @@ public class DragCamera2D : MonoBehaviour
 
     // managae zooming
     public void zoomControl() {
-        if (zoomToMouse) {
-            if (Input.GetAxis("Mouse ScrollWheel") > 0 && minZoom < Camera.main.orthographicSize) // forward
-            {
-                ZoomOrthoCamera(Camera.main.ScreenToWorldPoint(Input.mousePosition), zoomStepSize);
-            }
-            if(Input.GetAxis("Mouse ScrollWheel") < 0 && maxZoom > Camera.main.orthographicSize) // back            
-            {
-                ZoomOrthoCamera(Camera.main.ScreenToWorldPoint(Input.mousePosition), -zoomStepSize);
+        if (isPerspective)
+        {
+            var scrollWheelChange = Input.GetAxis("Mouse ScrollWheel");
+            if (scrollWheelChange != 0){
+                cam.transform.position += cam.transform.forward * scrollWheelChange * zoomStepSize;
             }
 
-        } else {
-
-            if (Input.GetAxis("Mouse ScrollWheel") > 0 && minZoom < Camera.main.orthographicSize) // forward
+            /*if (Input.GetAxis("Mouse ScrollWheel") > 0 && minZoom < Camera.main.fieldOfView) // forward
             {
-                Camera.main.orthographicSize = Camera.main.orthographicSize - zoomStepSize;
+                Camera.main.fieldOfView = Camera.main.fieldOfView - zoomStepSize;
             }
 
-            if (Input.GetAxis("Mouse ScrollWheel") < 0 && maxZoom > Camera.main.orthographicSize) // back            
+            if (Input.GetAxis("Mouse ScrollWheel") < 0 && maxZoom > Camera.main.fieldOfView) // back            
             {
-                Camera.main.orthographicSize = Camera.main.orthographicSize + zoomStepSize;
-            }
+                Camera.main.fieldOfView = Camera.main.fieldOfView + zoomStepSize;
+            }*/
+            
+            //Camera.main.fieldOfView =  Mathf.Clamp(Camera.main.fieldOfView, minZoom, maxZoom);
+            //Mathf.Max(cam.fieldOfView, 0.1f);
         }
-        clampZoom();
+        else
+        {
+            if (zoomToMouse) {
+                if (Input.GetAxis("Mouse ScrollWheel") > 0 && minZoom < Camera.main.orthographicSize) // forward
+                {
+                    ZoomOrthoCamera(Camera.main.ScreenToWorldPoint(Input.mousePosition), zoomStepSize);
+                }
+                if(Input.GetAxis("Mouse ScrollWheel") < 0 && maxZoom > Camera.main.orthographicSize) // back            
+                {
+                    ZoomOrthoCamera(Camera.main.ScreenToWorldPoint(Input.mousePosition), -zoomStepSize);
+                }
+
+            } else {
+
+                if (Input.GetAxis("Mouse ScrollWheel") > 0 && minZoom < Camera.main.orthographicSize) // forward
+                {
+                    Camera.main.orthographicSize = Camera.main.orthographicSize - zoomStepSize;
+                }
+
+                if (Input.GetAxis("Mouse ScrollWheel") < 0 && maxZoom > Camera.main.orthographicSize) // back            
+                {
+                    Camera.main.orthographicSize = Camera.main.orthographicSize + zoomStepSize;
+                }
+            }
+            clampZoom();
+        }
     }
 
 
