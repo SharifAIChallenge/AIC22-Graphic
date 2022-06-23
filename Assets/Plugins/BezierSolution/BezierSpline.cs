@@ -1194,7 +1194,7 @@ namespace BezierSolution
 			Vector3 tangent2 = segment.GetTangent( 0.025f ).normalized;
 			Vector3 cross = Vector3.Cross( tangent2, tangent1 ).normalized;
 			if( Mathf.Approximately( cross.sqrMagnitude, 0f ) ) // This is not a curved spline but rather a straight line
-				cross = Vector3.Cross( tangent2, ( tangent2.x != 0f || tangent2.z != 0f ) ? Vector3.up : Vector3.forward );
+				cross = Vector3.Cross( tangent2, ( tangent2.x != 0f || tangent2.z != 0f ) ? Vector3.right : Vector3.forward );
 
 			// prevNormal stores the unrotated normal whereas endpoints[index].normal stores the rotated normal
 			Vector3 prevNormal = Vector3.Cross( cross, tangent1 ).normalized;

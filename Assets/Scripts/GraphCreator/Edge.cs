@@ -49,6 +49,7 @@ public class Edge : MonoBehaviour
         c.constraintActive = true;
 
         spline.autoCalculateNormals = true;
+        //spline.AutoCalculateNormals(0f,10, false);
         spline.autoConstructMode = SplineAutoConstructMode.Linear;
         spline.ConstructLinearPath();
     }

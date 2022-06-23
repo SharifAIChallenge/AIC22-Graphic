@@ -18,7 +18,7 @@ public class DragAndDrop : MonoBehaviour
     private Vector3 GetMousePosition()
     {
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0;
+        mousePos.y = 0;
         return mousePos;
     }
 }

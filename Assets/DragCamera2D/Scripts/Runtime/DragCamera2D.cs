@@ -347,7 +347,14 @@ public class DragCamera2D : MonoBehaviour
                 y *= Camera.main.orthographicSize;
             }
 
-            transform.Translate(x, y, 0);
+            if (isPerspective)
+            {
+                transform.Translate(x, 0, y, Space.World);
+            }
+            else
+            {
+                transform.Translate(x, y, 0);
+            }
         }
 
         

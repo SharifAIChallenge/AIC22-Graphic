@@ -27,8 +27,9 @@ namespace GraphCreator
         public void AddNode()
         {
             Vector3 worldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            worldPosition.z = 0;
+            worldPosition.y = 0;
             GameObject newNode = Instantiate(nodePrefab, worldPosition, Quaternion.identity, this.transform);
+            newNode.transform.localRotation = Quaternion.identity;
             _nodes.Add(_nextNodeIndex, newNode);
             Node nodeComponent = newNode.GetComponent<Node>();
             nodeComponent.SetId(_nextNodeIndex).SetGraph(this);

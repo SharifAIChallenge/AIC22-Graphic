@@ -10,6 +10,8 @@ public class Node : MonoBehaviour
     public int id;
     [HideInInspector][SerializeField] private Graph graph;
 
+    [SerializeField] private MeshRenderer _renderer;
+    
     private void Start()
     {
         if (graph.editMode)
@@ -35,13 +37,15 @@ public class Node : MonoBehaviour
     {
         if(!graph.editMode) return;
         
-        this.GetComponent<SpriteRenderer>().color = Color.cyan;
+        //this.GetComponent<SpriteRenderer>().color = Color.cyan;
+        _renderer.material.color = Color.cyan;
         graph.SelectNode(this);
     }
 
     public void Unselect()
     {
         //this.GetComponent<SpriteRenderer>().color = new Color(1.0f,0.3915f,0.3915f);
-        this.GetComponent<SpriteRenderer>().color = Color.green;
+        //this.GetComponent<SpriteRenderer>().color = Color.green;
+        _renderer.material.color = Color.green;
     }
 }

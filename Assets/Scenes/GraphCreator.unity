@@ -418,7 +418,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 813025923}
+  - {fileID: 813025925}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -535,7 +535,7 @@ RectTransform:
   m_Children:
   - {fileID: 481643050}
   - {fileID: 1788832455}
-  m_Father: {fileID: 813025923}
+  m_Father: {fileID: 813025925}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -711,7 +711,7 @@ RectTransform:
   m_Children:
   - {fileID: 357251710}
   - {fileID: 1871416571}
-  m_Father: {fileID: 813025923}
+  m_Father: {fileID: 813025925}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -930,7 +930,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 813025923}
+  - component: {fileID: 813025925}
   - component: {fileID: 813025924}
   m_Layer: 0
   m_Name: Toggles
@@ -939,24 +939,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &813025923
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 813025922}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -752.85077, y: -684.39545, z: -0.058784824}
-  m_LocalScale: {x: 2.1000984, y: 2.1000984, z: 2.1000984}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 586046585}
-  - {fileID: 1416094751}
-  - {fileID: 472514702}
-  m_Father: {fileID: 379860686}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &813025924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -970,6 +952,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AllowSwitchOff: 0
+--- !u!224 &813025925
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813025922}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.058784824}
+  m_LocalScale: {x: 2.1000984, y: 2.1000984, z: 2.1000984}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 586046585}
+  - {fileID: 1416094751}
+  - {fileID: 472514702}
+  m_Father: {fileID: 379860686}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 122, y: 149}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1282276725
 GameObject:
   m_ObjectHideFlags: 0
@@ -1100,7 +1105,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1123,14 +1128,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331478348}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.01, y: 0, z: -10}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -1.01, y: 12.8, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &1331478352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,6 +1149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
+  isPerspective: 0
   dragEnabled: 1
   mouseButton: 2
   dragSpeed: -0.06
@@ -1162,8 +1168,8 @@ MonoBehaviour:
   touchDragSpeed: -0.03
   zoomEnabled: 1
   linkedZoomDrag: 1
-  maxZoom: 10
-  minZoom: 3
+  maxZoom: 50
+  minZoom: 10
   zoomStepSize: 0.5
   zoomToMouse: 0
   followTarget: {fileID: 0}
@@ -1204,7 +1210,7 @@ RectTransform:
   m_Children:
   - {fileID: 403026428}
   - {fileID: 234000533}
-  m_Father: {fileID: 813025923}
+  m_Father: {fileID: 813025925}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1468,6 +1474,9 @@ MonoBehaviour:
   _edges:
     m_values: []
   edgePrefab: {fileID: 8062759539396268357, guid: a2c9ec6712beca64cacedba7668d2a50, type: 3}
+  roadCost: 0
+  busCost: 10
+  trainCost: 100
 --- !u!4 &1833925016
 Transform:
   m_ObjectHideFlags: 0
@@ -1475,14 +1484,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1833925014}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 2.704418, y: 14.652144, z: -0.39472225}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1871416570
 GameObject:
   m_ObjectHideFlags: 0
