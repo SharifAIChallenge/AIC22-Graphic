@@ -28,7 +28,7 @@ public class AgentsController : MonoBehaviour
     private void Awake()
     {
         map = Instantiate(mapPrefab, mapParent);
-        cityGenerator.Generate();
+        StartCoroutine(cityGenerator.Generate());
     }
 
     public void CreateAgent(int id, int startNode, AgentType agentType, Team team, double balanceValue)
