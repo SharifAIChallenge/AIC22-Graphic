@@ -680,8 +680,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapParent: {fileID: 2018029816}
   cityGenerator: {fileID: 883603717}
-  mapName: map2
-  relativePath: /Resources/Maps/test.bundle
+  mapName: main
+  relativePath: /map.json
   Map: {fileID: 0}
 --- !u!1 &1025372784
 GameObject:
@@ -1096,7 +1096,6 @@ GameObject:
   - component: {fileID: 1456210172}
   - component: {fileID: 1456210174}
   - component: {fileID: 1456210175}
-  - component: {fileID: 1456210176}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1246,15 +1245,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!45 &1456210176
-Skybox:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1456210170}
-  m_Enabled: 1
-  m_CustomSkybox: {fileID: 2100000, guid: 493bfb50af5d9424da505ba945c86600, type: 2}
 --- !u!1 &1502603229
 GameObject:
   m_ObjectHideFlags: 0

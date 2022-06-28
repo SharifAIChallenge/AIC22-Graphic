@@ -48,7 +48,8 @@ public class MapManager : MonoBehaviour
             yield break;
         }*/
         
-        var path = Application.dataPath + relativePath;
+        //var path = Application.dataPath + relativePath;
+        var path = Config.GamePath + relativePath;
 
         var operation = Addressables.LoadContentCatalogAsync(path);
         var locator = await operation.Task;

@@ -18,17 +18,17 @@ MonoBehaviour:
   m_GUID: 8aa7c7071993c7c48a95fdd903b105b5
   m_SerializeEntries:
   - m_GUID: 567beefc0de99444aba27dd1607b8197
-    m_Address: old
+    m_Address: m1
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
   - m_GUID: 197d323e9123da74bb7cdb518ce34443
-    m_Address: map1
+    m_Address: m2
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
   - m_GUID: b3b0fdb24daf328458b166febcc6eb8e
-    m_Address: map2
+    m_Address: main
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
