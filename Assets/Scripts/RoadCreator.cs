@@ -50,8 +50,7 @@ public class RoadCreator : MonoBehaviour {
     Mesh CreateRoadMesh(BezierSpline spline, bool isClosed)
     {
         var points = spline.evenlySpacedPoints.uniformNormalizedTs;
-        print(points.Length);
-        
+
         Vector3[] verts = new Vector3[points.Length * 2];
         Vector2[] uvs = new Vector2[verts.Length];
         int numTris = 2 * (points.Length - 1) + ((isClosed) ? 2 : 0);
