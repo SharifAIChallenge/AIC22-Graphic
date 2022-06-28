@@ -7,7 +7,7 @@ public class LogHandler : MonoBehaviour
 
     void Start()
     {
-        reader = new StreamReader("Assets/log.txt");
+        reader = new StreamReader( Config.GamePath + "/log.txt");
     }
 
     public string GetNextLine()

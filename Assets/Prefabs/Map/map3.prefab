@@ -5592,7 +5592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0444a44c95730ed7b86e85a529e5325b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editMode: 1
+  editMode: 0
   nodePrefab: {fileID: 2375205182632942344, guid: 41e1c0ddfbb28cccdbe62fbe5f885641, type: 3}
   edgeMode: 1
   edgeEditType: 0
