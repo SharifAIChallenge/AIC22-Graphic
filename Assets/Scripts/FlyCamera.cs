@@ -4,24 +4,23 @@ using System.Collections;
 
 public class FlyCamera : MonoBehaviour
 {
-    float mainSpeed = 100.0f; //regular speed
-    float camSens = 0.25f; //How sensitive it with mouse
+    public float moveSpeed = 100.0f;
 
-    [Range(0.1f, 10f)]
-    public float zoomStepSize = 0.5f;
+    public float zoomStepSize = 10f;
+
+    public float orbitingSpeed = 3f;
+
+    public Vector2 moveXLimit = new Vector2(-10, 10);
+    public Vector2 moveZLimit = new Vector2(-10, 10);
+
+    public Vector2 zoomLimit = new Vector2(-10, 10);
+    public float baseCameraY = 40;
     
-    public float dragSpeed = 3f;
-    
-    private Vector3
-        lastMouse = new Vector3(255, 255, 255); //kind of in the middle of the screen, rather than at the top (play)
-
-    private float totalRun = 1.0f;
-
-    private float xRotation;
+    private float _xRotation;
 
     private void Start()
     {
-        xRotation = transform.eulerAngles.x;
+        _xRotation = transform.eulerAngles.x;
     }
 
     void Update()
@@ -34,17 +33,20 @@ public class FlyCamera : MonoBehaviour
     private void Zoom()
     {
         var scrollWheelChange = Input.GetAxis("Mouse ScrollWheel");
-        if (scrollWheelChange != 0){
-            transform.position += transform.forward * (scrollWheelChange * zoomStepSize);
+        if (scrollWheelChange != 0)
+        {
+            var newPos = transform.position + transform.forward * (scrollWheelChange * zoomStepSize);
+            if(newPos.y > baseCameraY + zoomLimit.x && newPos.y < baseCameraY + zoomLimit.y)
+                transform.position = newPos;
         }
     }
-    
+
     private void Orbiting()
     {
         if (!Input.GetMouseButton(1)) return;
-        
-        var x = Input.GetAxis("Mouse X") * dragSpeed;
-        var y = Input.GetAxis("Mouse Y") * dragSpeed;
+
+        var x = Input.GetAxis("Mouse X") * orbitingSpeed;
+        var y = Input.GetAxis("Mouse Y") * orbitingSpeed;
 
         if (x != 0)
         {
@@ -53,29 +55,23 @@ public class FlyCamera : MonoBehaviour
 
         if (y != 0)
         {
-            xRotation = Mathf.Clamp(xRotation - y, 0, 85);
-            transform.eulerAngles = new Vector3(xRotation, transform.localEulerAngles.y, transform.localEulerAngles.z);
+            _xRotation = Mathf.Clamp(_xRotation - y, 0, 85);
+            transform.eulerAngles = new Vector3(_xRotation, transform.localEulerAngles.y, transform.localEulerAngles.z);
         }
     }
 
     private void ShiftMove()
     {
-        float f = 0.0f;
-        Vector3 p = GetBaseInput();
-        if (p.sqrMagnitude > 0)
-        {
-            totalRun = Mathf.Clamp(totalRun * 0.5f, 1f, 1000f);
-            p = Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up) * p;
-            p *= mainSpeed;
-            p *= Time.deltaTime;
-
-            transform.position += p;
-            /*Vector3 newPosition = transform.position;
-            //transform.Translate(p);
-            newPosition.x = transform.position.x;
-            newPosition.z = transform.position.z;
-            transform.position = newPosition;*/
-        }
+        var p = GetBaseInput();
+        if (!(p.sqrMagnitude > 0)) return;
+        
+        
+        p = Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up) * p;
+        p *= moveSpeed;
+        p *= Time.deltaTime;
+        p += transform.position;
+        transform.position = new Vector3(Mathf.Clamp(p.x, moveXLimit.x, moveXLimit.y),
+            p.y, Mathf.Clamp(p.z, moveZLimit.x, moveZLimit.y));
     }
 
     private Vector3 GetBaseInput()
