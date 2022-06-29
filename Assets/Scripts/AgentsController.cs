@@ -27,7 +27,7 @@ public class AgentsController : MonoBehaviour
         if (agentType == AgentType.POLICE)
         {
             var c = Instantiate(policePrefab, agentsParent);
-            c.Setup(map, id, team, balanceValue);
+            c.Setup(map, id, team, balanceValue, startNode);
             _agents.Add(c);
         }
         else

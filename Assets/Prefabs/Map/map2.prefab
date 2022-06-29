@@ -145,7 +145,6 @@ GameObject:
   - component: {fileID: 7317073752058200764}
   - component: {fileID: 5444031266682812486}
   - component: {fileID: 6499993958534619529}
-  - component: {fileID: 4586544753700658205}
   m_Layer: 0
   m_Name: Node(Clone)
   m_TagString: Untagged
@@ -198,18 +197,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 1, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4586544753700658205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 234824554308039065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8716d3340500ea618d9f5653057227e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &244348068381540090
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,6 +737,9 @@ MonoBehaviour:
     - {fileID: 234824554308039065}
     - {fileID: 5817894278865778962}
   _edges:
+    m_values: []
+  _edges2:
+    m_keys: []
     m_values: []
   edgePrefab: {fileID: 8062759539396268357, guid: a2c9ec6712beca64cacedba7668d2a50, type: 3}
   roadCost: 0
@@ -1782,7 +1772,6 @@ GameObject:
   - component: {fileID: 5485733438964986647}
   - component: {fileID: 9185151357661255074}
   - component: {fileID: 7788851497656663157}
-  - component: {fileID: 4101971183203092020}
   m_Layer: 0
   m_Name: Node(Clone)
   m_TagString: Untagged
@@ -1835,18 +1824,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 1, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4101971183203092020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2129198737026171449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8716d3340500ea618d9f5653057227e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2223262647299617277
 GameObject:
   m_ObjectHideFlags: 0
@@ -2449,7 +2426,6 @@ GameObject:
   - component: {fileID: 2353407602498353019}
   - component: {fileID: 3813575278150509000}
   - component: {fileID: 4993659892310464779}
-  - component: {fileID: 4228851857460003303}
   m_Layer: 0
   m_Name: Node(Clone)
   m_TagString: Untagged
@@ -2502,18 +2478,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 1, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4228851857460003303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3344096535274401823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8716d3340500ea618d9f5653057227e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3437671850675381039
 GameObject:
   m_ObjectHideFlags: 0
@@ -3494,7 +3458,6 @@ GameObject:
   - component: {fileID: 3053528970857299617}
   - component: {fileID: 1554882400423477210}
   - component: {fileID: 3491582384747512375}
-  - component: {fileID: 4010597684540504536}
   m_Layer: 0
   m_Name: Node(Clone)
   m_TagString: Untagged
@@ -3547,18 +3510,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 1, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4010597684540504536
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4961937382935221872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8716d3340500ea618d9f5653057227e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5005815013219891633
 GameObject:
   m_ObjectHideFlags: 0
@@ -3837,7 +3788,6 @@ GameObject:
   - component: {fileID: 6032927064436078157}
   - component: {fileID: 9148135365849329634}
   - component: {fileID: 8005811199344735854}
-  - component: {fileID: 6396144112930673643}
   m_Layer: 0
   m_Name: Node(Clone)
   m_TagString: Untagged
@@ -3890,18 +3840,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 1, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6396144112930673643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5572794195590073282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8716d3340500ea618d9f5653057227e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5599271184598029700
 GameObject:
   m_ObjectHideFlags: 0
@@ -4186,7 +4124,6 @@ GameObject:
   - component: {fileID: 51726126135454427}
   - component: {fileID: 571508668912098077}
   - component: {fileID: 190157185788465038}
-  - component: {fileID: 194446332501932944}
   m_Layer: 0
   m_Name: Node(Clone)
   m_TagString: Untagged
@@ -4239,18 +4176,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 1, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &194446332501932944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5817894278865778962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8716d3340500ea618d9f5653057227e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5846983001941291955
 GameObject:
   m_ObjectHideFlags: 0
@@ -6000,7 +5925,6 @@ GameObject:
   - component: {fileID: 6958014617795415994}
   - component: {fileID: 5933096861795431026}
   - component: {fileID: 3456430873178302923}
-  - component: {fileID: 1444864370169040428}
   m_Layer: 0
   m_Name: Node(Clone)
   m_TagString: Untagged
@@ -6053,18 +5977,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 1, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1444864370169040428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8157165842899833033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8716d3340500ea618d9f5653057227e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8414275949631939427
 GameObject:
   m_ObjectHideFlags: 0
@@ -6290,7 +6202,6 @@ GameObject:
   - component: {fileID: 6860104097538294993}
   - component: {fileID: 8958912273758571866}
   - component: {fileID: 7193871733890374365}
-  - component: {fileID: 8453284134201046092}
   m_Layer: 0
   m_Name: Node(Clone)
   m_TagString: Untagged
@@ -6343,18 +6254,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 1, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8453284134201046092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8543532901369378449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8716d3340500ea618d9f5653057227e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8767144507821594219
 GameObject:
   m_ObjectHideFlags: 0

@@ -1130,7 +1130,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331478348}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.01, y: 12.8, z: -10}
+  m_LocalPosition: {x: -1.01, y: 31.6, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1621,6 +1621,7 @@ MonoBehaviour:
     m_keys: 
     m_values: []
   _edges:
+    m_keys: []
     m_values: []
   edgePrefab: {fileID: 8062759539396268357, guid: a2c9ec6712beca64cacedba7668d2a50, type: 3}
   roadCost: 0

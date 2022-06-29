@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BezierSolution;
+using GraphCreator;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -54,7 +55,7 @@ public class Edge : MonoBehaviour
         spline.ConstructLinearPath();
     }
 
-    public Tuple<string, int> GetPathsInformation(int currentId, Tuple<int, int> edgesKey,
+    public Tuple<string, int> GetPathsInformation(int currentId, MyTuple edgesKey,
         float roadPrice, float busPrice, float trainPrice)
     {
         string res = "";

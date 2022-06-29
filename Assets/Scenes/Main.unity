@@ -649,16 +649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a468d812ce79264bb2e6edc8658bcf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildings:
-  - {fileID: 1753556849162626, guid: 1f81558ce76f88b49b6e753533237c87, type: 3}
-  - {fileID: 1753556849162626, guid: b787dfae24f43084e884aeccecbe909f, type: 3}
-  - {fileID: 1753556849162626, guid: 57b52c2abe050a546986f04eefae7247, type: 3}
-  - {fileID: 1753556849162626, guid: b75115f9148635945b35a2372d52c844, type: 3}
-  - {fileID: 1753556849162626, guid: 2b6a6559e9fe0b54586865c1314c0ed7, type: 3}
-  - {fileID: 1753556849162626, guid: ed36407945e6051439e600c346cf65fa, type: 3}
-  - {fileID: 1753556849162626, guid: 0ae4d01db65f3da49af9496225c28b2e, type: 3}
-  - {fileID: 1753556849162626, guid: 55372fa2493c4e843a0c70b264812875, type: 3}
-  - {fileID: 1753556849162626, guid: 5006b56b0612dd44aaf256405f690c2a, type: 3}
+  buildings: []
   xBounds: {x: -50, y: 100}
   zBounds: {x: -100, y: 50}
   layerMask:
@@ -682,7 +673,9 @@ MonoBehaviour:
   cityGenerator: {fileID: 883603717}
   mapName: main
   relativePath: /map.json
+  mapPrefab: {fileID: 2691455601875086615, guid: 29e8d82d3595e6844a7a35babb73af66, type: 3}
   Map: {fileID: 0}
+  load: 0
 --- !u!1 &1025372784
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,8 +1087,9 @@ GameObject:
   - component: {fileID: 1456210171}
   - component: {fileID: 1456210173}
   - component: {fileID: 1456210172}
-  - component: {fileID: 1456210174}
   - component: {fileID: 1456210175}
+  - component: {fileID: 1456210176}
+  - component: {fileID: 1456210177}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1110,14 +1104,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1456210170}
-  m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
-  m_LocalPosition: {x: -1.8035288, y: 16.69, z: -20.27}
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
+  m_LocalPosition: {x: 0, y: 63.4, z: -55.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 417707335}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
 --- !u!81 &1456210172
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1169,49 +1163,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &1456210174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1456210170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c3989406c198b4087c0e47eb93dd41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  isPerspective: 1
-  dragEnabled: 1
-  mouseButton: 0
-  dragSpeed: -0.72
-  ztTarget: {fileID: 0}
-  DCTranslate: 0
-  DCZoom: 0
-  DCZoomTargetIn: 4
-  DCZoomTranslateSpeed: 0.5
-  DCZoomTargetOut: 10
-  DCZoomSpeed: 0.5
-  edgeBoundary: 0
-  edgeSpeed: 1
-  keyboardInput: 0
-  inverseKeyboard: 0
-  touchEnabled: 0
-  touchDragSpeed: -0.03
-  zoomEnabled: 1
-  linkedZoomDrag: 1
-  maxZoom: 10
-  minZoom: 3
-  zoomStepSize: 10
-  zoomToMouse: 0
-  followTarget: {fileID: 0}
-  lerpSpeed: 0.5
-  offset: {x: 0, y: 0, z: -10}
-  clampCamera: 0
-  bounds: {fileID: 1532110932}
-  dollyRail: {fileID: 0}
-  snapTarget: {fileID: 0}
 --- !u!114 &1456210175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1245,6 +1196,29 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &1456210176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456210170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff1fe28f3d01084e9c4bd1c1d95d79e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoomStepSize: 10
+  dragSpeed: 2
+--- !u!45 &1456210177
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456210170}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: 97637a2a763b7f24b8da4e139e4144ca, type: 2}
 --- !u!1 &1502603229
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,12 +7,4 @@ public class Thief : Agent
     {
         type = AgentType.THIEF;
     }
-    
-    public void Setup(Graph map,int id, Team team, double money, int startNode)
-    {
-        base.Setup(map, id, team, money);
-        
-        _currentNode = startNode;
-        transform.position = _map.GetNodePositionById(_currentNode);
-    }
 }

@@ -13,9 +13,11 @@ public class MapManager : MonoBehaviour
     [SerializeField] private string mapName;
     [SerializeField] private string relativePath;
 
-    private Graph mapPrefab;
+    [SerializeField] private Graph mapPrefab;
 
     public Graph Map;
+
+    [SerializeField] private bool load;
     
     //[SerializeField] private AssetReferenceGameObject mapPrefabReference;
 
@@ -47,20 +49,25 @@ public class MapManager : MonoBehaviour
         if (locations.Status != AsyncOperationStatus.Succeeded) {
             yield break;
         }*/
-        
-        //var path = Application.dataPath + relativePath;
-        var path = Config.GamePath + relativePath;
 
-        var operation = Addressables.LoadContentCatalogAsync(path);
-        var locator = await operation.Task;
-        
-        Addressables.ClearResourceLocators();
-        Addressables.AddResourceLocator(locator);
-        
-        var op = Addressables.LoadAssetAsync<GameObject>(mapName);
-        var prefab = await op.Task;
-        
-        mapPrefab = prefab.GetComponent<Graph>();
+        if (load)
+        {
+
+            //var path = Application.dataPath + relativePath;
+            var path = Config.GamePath + relativePath;
+
+            var operation = Addressables.LoadContentCatalogAsync(path);
+            var locator = await operation.Task;
+
+            Addressables.ClearResourceLocators();
+            Addressables.AddResourceLocator(locator);
+
+            var op = Addressables.LoadAssetAsync<GameObject>(mapName);
+            var prefab = await op.Task;
+
+            mapPrefab = prefab.GetComponent<Graph>();
+        }
+
         Map = Instantiate(mapPrefab, mapParent);
         StartCoroutine(cityGenerator.Generate());
     }

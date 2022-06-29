@@ -57,18 +57,18 @@ namespace GraphCreator
         }
 
 
-        private Tuple<int, int> GetEdgeTuple(int firstNodeID, int secondNodeID)
+        private MyTuple GetEdgeTuple(int firstNodeID, int secondNodeID)
         {
-            int bigger = (firstNodeID < secondNodeID) ? secondNodeID : firstNodeID;
-            int smaller = (firstNodeID < secondNodeID) ? firstNodeID : secondNodeID;
-            Tuple<int, int> edgeTuple = Tuple.Create(smaller, bigger);
+            var bigger = (firstNodeID < secondNodeID) ? secondNodeID : firstNodeID;
+            var smaller = (firstNodeID < secondNodeID) ? firstNodeID : secondNodeID;
+            var edgeTuple = new MyTuple(smaller, bigger);
             return edgeTuple;
         }
 
         private void AddEdge(int selectedNodeID, int nodeID)
         {
             Edge e;
-            Tuple<int, int> edgeTuple = GetEdgeTuple(selectedNodeID, nodeID);
+            var edgeTuple = GetEdgeTuple(selectedNodeID, nodeID);
             if (_edges.Keys.Contains(edgeTuple))
             {
                 e = _edges[edgeTuple];
@@ -79,7 +79,7 @@ namespace GraphCreator
 
             Debug.Log($"Edge Added Between {selectedNodeID} AND {nodeID} OF TYPE {edgeEditType}");
             e = Instantiate(edgePrefab, transform);
-            e.Setup(_nodes[selectedNodeID].transform, _nodes[nodeID].transform, edgeEditType);
+            e.Setup(_nodes[edgeTuple.Item1].transform, _nodes[edgeTuple.Item2].transform, edgeEditType);
             _edges[edgeTuple] = e;
         }
 
@@ -88,7 +88,7 @@ namespace GraphCreator
             edgeMode = !edgeMode;
         }
 
-        public Vector2 GetNodePositionById(int id)
+        public Vector3 GetNodePositionById(int id)
         {
             if (_nodes.ContainsKey(id))
                 return _nodes[id].transform.position;
@@ -117,8 +117,8 @@ namespace GraphCreator
 
         public Vector3[] GetPathPoint(int firstNodeId, int secondNodeId)
         {
-            Vector2 firstNodePosition;
-            Vector2 secondNodePosition;
+            /*Vector3 firstNodePosition;
+            Vector3 secondNodePosition;
             if (_nodes.ContainsKey(firstNodeId))
                 firstNodePosition = _nodes[firstNodeId].transform.position;
             else
@@ -128,17 +128,34 @@ namespace GraphCreator
             else
                 throw new Exception($"NO NODE WITH ID {secondNodeId} EXISTS!");
 
+            
             List<Vector3> waypoints = new List<Vector3>();
-            waypoints.Add(secondNodePosition);
-            // waypoints.Add((firstNodePosition+secondNodePosition)/2);
-            // waypoints.Add((firstNodePosition+secondNodePosition)/2);
+            waypoints.Add(secondNodePosition);*/
 
-            return waypoints.ToArray();
+            // waypoints.Add((firstNodePosition+secondNodePosition)/2);
+            // waypoints.Add((firstNodePosition+secondNodePosition)/2);
+            
+            var tuple = GetEdgeTuple(firstNodeId, secondNodeId);
+            if (_edges.ContainsKey(tuple))
+            {
+                var edge = _edges[tuple];
+                var waypoints = edge.spline.Select(c => c.position);
+                if (firstNodeId > secondNodeId)
+                {
+                    waypoints = waypoints.Reverse();
+                }
+
+                return waypoints.ToArray();
+            }
+            else
+            {
+                throw new Exception($"Edge doesnt exist between {firstNodeId} AND {secondNodeId}");
+            }
         }
 
         public Edge GetEdge(int firstNodeId, int secondNodeId)
         {
-            Tuple<int, int> edgeTuple = GetEdgeTuple(firstNodeId, secondNodeId);
+            var edgeTuple = GetEdgeTuple(firstNodeId, secondNodeId);
             if (_edges.Keys.Contains(edgeTuple))
                 return _edges[edgeTuple];
             return null;
@@ -146,14 +163,15 @@ namespace GraphCreator
 
         public int GetPoliceStation(Team team)
         {
-            return team == Team.FIRST ? 0 : 4;
+            //return team == Team.FIRST ? 0 : 4;
+            return 1;
         }
 
         public void BuildYaml()
         {
             string yamlString = "graph:\n" + "  paths:\n";
             int i = 1;
-            foreach (Tuple<int,int> edgesKey in _edges.Keys)
+            foreach (var edgesKey in _edges.Keys)
             {
                 Edge edge = _edges[edgesKey];
 
@@ -178,8 +196,26 @@ namespace GraphCreator
     {
     }
 
-    [Serializable]
+    /*[Serializable]
     public class EdgeDictionary : SerializableDictionary<Tuple<int, int>, Edge>
     {
+    }*/
+    
+    [Serializable]
+    public class EdgeDictionary : SerializableDictionary<MyTuple, Edge>
+    {
+    }
+
+    [Serializable]
+    public struct MyTuple
+    {
+        public int Item1;
+        public int Item2;
+        
+        public MyTuple(int item1, int item2)
+        {
+            Item1 = item1;
+            Item2 = item2;
+        }
     }
 }

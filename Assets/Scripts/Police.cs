@@ -10,11 +10,11 @@ public class Police : Agent
     }
 
 
-    public override void Setup(Graph map, int id, Team team, double money)
+    /*public override void Setup(Graph map, int id, Team team, double money)
     {
         base.Setup(map, id, team, money);
 
         _currentNode = map.GetPoliceStation(team);
         transform.position = _map.GetNodePositionById(_currentNode);
-    }
+    }*/
 }

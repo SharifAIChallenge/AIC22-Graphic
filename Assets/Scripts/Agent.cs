@@ -17,7 +17,7 @@ public abstract class Agent : MonoBehaviour
     
     protected Graph _map;
 
-    public virtual void Setup(Graph map, int id, Team team, double money)
+    public void Setup(Graph map, int id, Team team, double money, int startNode)
     {
         _map = map;
         this.id = id;
@@ -32,11 +32,18 @@ public abstract class Agent : MonoBehaviour
                 hat.color = Color.red;
                 break;
         }
+        _currentNode = startNode;
+        transform.position = _map.GetNodePositionById(_currentNode);
     }
     
     public void Move(int from, int to)
     {
-        transform.DOPath(_map.GetPathPoint(from, to), 1);
+        if(from == to) return;
+        
+        transform.DOPath(_map.GetPathPoint(from, to)[1..], 1.5f).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            _currentNode = to;
+        });
     }
 
     public void IncreaseBalance(double amount)
