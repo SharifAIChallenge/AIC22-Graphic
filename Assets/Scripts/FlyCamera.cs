@@ -15,7 +15,7 @@ public class FlyCamera : MonoBehaviour
 
     public Vector2 zoomLimit = new Vector2(-10, 10);
     public float baseCameraY = 40;
-    
+
     private float _xRotation;
 
     private void Start()
@@ -36,7 +36,9 @@ public class FlyCamera : MonoBehaviour
         if (scrollWheelChange != 0)
         {
             var newPos = transform.position + transform.forward * (scrollWheelChange * zoomStepSize);
-            if(newPos.y > baseCameraY + zoomLimit.x && newPos.y < baseCameraY + zoomLimit.y)
+            if (newPos.y > baseCameraY + zoomLimit.x && newPos.y < baseCameraY + zoomLimit.y &&
+                newPos.z > moveZLimit.x && newPos.z < moveZLimit.y && newPos.x > moveXLimit.x &&
+                newPos.x < moveXLimit.y)
                 transform.position = newPos;
         }
     }
@@ -64,8 +66,8 @@ public class FlyCamera : MonoBehaviour
     {
         var p = GetBaseInput();
         if (!(p.sqrMagnitude > 0)) return;
-        
-        
+
+
         p = Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up) * p;
         p *= moveSpeed;
         p *= Time.deltaTime;
