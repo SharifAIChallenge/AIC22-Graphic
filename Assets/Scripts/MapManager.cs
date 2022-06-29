@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using GraphCreator;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -18,16 +20,37 @@ public class MapManager : MonoBehaviour
     public Graph Map;
 
     [SerializeField] private bool load;
-    
-    //[SerializeField] private AssetReferenceGameObject mapPrefabReference;
 
     private void Start()
+    {
+        LoadMapFromFile();
+    }
+
+    private void LoadMapFromFile()
+    {
+        string path = Config.GamePath + "/map.json";
+        string json = File.ReadAllText(path);
+        var parsed = JsonUtility.FromJson<GraphJsonData>(json);
+
+        Map = Instantiate(mapPrefab, mapParent);
+        
+        foreach (var node in parsed.nodes)
+        {
+            Map.AddNode(node.id, node.position);
+        }
+
+        foreach (var edge in parsed.edges)
+        {
+            Map.AddEdge(edge.node1Id, edge.node2Id);
+        }
+    }
+    /*private void Start()
     {
         /*var locations = Addressables.LoadResourceLocationsAsync(address);
         yield return locations;
         if (locations.Status != AsyncOperationStatus.Succeeded) {
             yield break;
-        }*/
+        }#1#
 
         /*var op = Addressables.LoadAssetAsync<GameObject>(mapName);
         yield return op;
@@ -37,7 +60,7 @@ public class MapManager : MonoBehaviour
             mapPrefab = op.Result.GetComponent<Graph>();
             Map = Instantiate(mapPrefab, mapParent);
             StartCoroutine(cityGenerator.Generate());
-        }*/
+        }#1#
         
         Setup();
     }
@@ -48,7 +71,7 @@ public class MapManager : MonoBehaviour
         yield return locations;
         if (locations.Status != AsyncOperationStatus.Succeeded) {
             yield break;
-        }*/
+        }#1#
 
         if (load)
         {
@@ -70,5 +93,22 @@ public class MapManager : MonoBehaviour
 
         Map = Instantiate(mapPrefab, mapParent);
         StartCoroutine(cityGenerator.Generate());
-    }
+    }*/
+}
+
+[Serializable]
+public class GraphJsonData{
+    public List<NodeJsonData> nodes = new();
+    public List<EdgeJsonData> edges = new();
+}
+    
+[Serializable]
+public class NodeJsonData{
+    public int id;
+    public Vector3 position;
+}
+[Serializable]
+public class EdgeJsonData{
+    public int node1Id;
+    public int node2Id;
 }

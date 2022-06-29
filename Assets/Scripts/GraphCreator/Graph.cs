@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BezierSolution;
+using Newtonsoft.Json;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -17,7 +18,7 @@ namespace GraphCreator
         public EdgeType edgeEditType = EdgeType.ROAD;
         public Camera mainCamera;
         [SerializeField] private NodeDictionary _nodes = new();
-        private int _nextNodeIndex = 0;
+        private int _nextNodeIndex = 1;
         private Node _selectedNode;
         [SerializeField] private EdgeDictionary _edges = new();
 
@@ -28,12 +29,19 @@ namespace GraphCreator
         {
             Vector3 worldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             worldPosition.y = 0;
-            GameObject newNode = Instantiate(nodePrefab, worldPosition, Quaternion.identity, this.transform);
-            newNode.transform.localRotation = Quaternion.identity;
-            _nodes.Add(_nextNodeIndex, newNode);
-            Node nodeComponent = newNode.GetComponent<Node>();
-            nodeComponent.SetId(_nextNodeIndex).SetGraph(this);
+            
+            AddNode(_nextNodeIndex, worldPosition);
+            
             _nextNodeIndex++;
+        }
+
+        public void AddNode(int nodeId, Vector3 position)
+        {
+            var newNode = Instantiate(nodePrefab, position, Quaternion.identity, this.transform);
+            newNode.transform.localRotation = Quaternion.identity;
+            _nodes.Add(nodeId, newNode);
+            var nodeComponent = newNode.GetComponent<Node>();
+            nodeComponent.SetId(nodeId).SetGraph(this);
         }
 
         public void SelectNode(Node node)
@@ -65,7 +73,7 @@ namespace GraphCreator
             return edgeTuple;
         }
 
-        private void AddEdge(int selectedNodeID, int nodeID)
+        public void AddEdge(int selectedNodeID, int nodeID)
         {
             Edge e;
             var edgeTuple = GetEdgeTuple(selectedNodeID, nodeID);
@@ -95,25 +103,6 @@ namespace GraphCreator
             else
                 throw new Exception($"NO NODE WITH ID {id} EXISTS!");
         }
-
-        /*public Vector2 GetPathPoint(int firstNodeId, int secondNodeId, float t)
-        {
-            Vector2 firstNodePosition;
-            Vector2 secondNodePosition;
-            if (_nodes.ContainsKey(firstNodeId))
-                firstNodePosition = _nodes[firstNodeId].transform.position;
-            else
-                throw new Exception($"NO NODE WITH ID {firstNodeId} EXISTS!");
-            if (_nodes.ContainsKey(secondNodeId))
-                secondNodePosition = _nodes[secondNodeId].transform.position;
-            else
-                throw new Exception($"NO NODE WITH ID {secondNodeId} EXISTS!");
-            if (t > 1)
-                t = 1;
-            else if (t < 0)
-                t = 0;
-            return Vector2.Lerp(firstNodePosition, secondNodePosition, t);
-        }*/
 
         public Vector3[] GetPathPoint(int firstNodeId, int secondNodeId)
         {
@@ -183,11 +172,40 @@ namespace GraphCreator
             yamlString += "  nodes:\n";
             foreach (KeyValuePair<int,GameObject> node in _nodes)
             {
-                int index = node.Key + 1;
+                int index = node.Key;
                 yamlString += "    - id: " + index + "\n";
             }
             
             Debug.Log(yamlString);
+        }
+
+        public void BuildMapJson()
+        {
+            var map = new GraphJsonData();
+            
+            foreach (var pair in _nodes)
+            {
+                var node = new NodeJsonData{
+                    id = pair.Key,
+                    position = pair.Value.transform.position
+                };
+                map.nodes.Add(node);
+            }
+            
+            foreach (var pair in _edges)
+            {
+                var edge = new EdgeJsonData
+                {
+                    node1Id = pair.Key.Item1,
+                    node2Id = pair.Key.Item2
+                };
+                map.edges.Add(edge);
+            }
+            
+            /*Debug.Log(JsonConvert.SerializeObject(map,new JsonSerializerSettings() {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            }));*/
+            Debug.Log(JsonUtility.ToJson(map));
         }
     }
 
@@ -196,11 +214,6 @@ namespace GraphCreator
     {
     }
 
-    /*[Serializable]
-    public class EdgeDictionary : SerializableDictionary<Tuple<int, int>, Edge>
-    {
-    }*/
-    
     [Serializable]
     public class EdgeDictionary : SerializableDictionary<MyTuple, Edge>
     {

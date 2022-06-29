@@ -15,6 +15,10 @@ namespace GraphCreator
             {
                 graph.BuildYaml();
             }
+            if(GUILayout.Button("Build Map Json"))
+            {
+                graph.BuildMapJson();
+            }
         }
     }
 }

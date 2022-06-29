@@ -673,7 +673,7 @@ MonoBehaviour:
   cityGenerator: {fileID: 883603717}
   mapName: main
   relativePath: /map.json
-  mapPrefab: {fileID: 2691455601875086615, guid: 29e8d82d3595e6844a7a35babb73af66, type: 3}
+  mapPrefab: {fileID: 3609865402714235288, guid: 3b92fd8cb09c7e645b0cf718f6bf7379, type: 3}
   Map: {fileID: 0}
   load: 0
 --- !u!1 &1025372784
