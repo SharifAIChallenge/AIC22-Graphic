@@ -18,6 +18,8 @@ public class FlyCamera : MonoBehaviour
 
     private float _xRotation;
 
+    [SerializeField] private bool useKeyboard;
+
     private void Start()
     {
         _xRotation = transform.eulerAngles.x;
@@ -78,28 +80,40 @@ public class FlyCamera : MonoBehaviour
 
     private Vector3 GetBaseInput()
     {
-        //returns the basic values, if it's 0 than it's not active.
-        Vector3 p_Velocity = new Vector3();
-        if (Input.GetKey(KeyCode.W))
+        if (useKeyboard)
         {
-            p_Velocity += Vector3.forward;
+            Vector3 p_Velocity = new Vector3();
+            if (Input.GetKey(KeyCode.W))
+            {
+                p_Velocity += Vector3.forward;
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+                p_Velocity += Vector3.back;
+            }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                p_Velocity += Vector3.left;
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                p_Velocity += Vector3.right;
+            }
+            return p_Velocity;
+        }
+        else
+        {
+            if (!Input.GetMouseButton(0)) return Vector3.zero;
+
+            var x = -Input.GetAxis("Mouse X");
+            var y = -Input.GetAxis("Mouse Y");
+            print("helo");
+
+            return new Vector3(x, 0, y);
         }
 
-        if (Input.GetKey(KeyCode.S))
-        {
-            p_Velocity += Vector3.back;
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            p_Velocity += Vector3.left;
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            p_Velocity += Vector3.right;
-        }
-
-        return p_Velocity;
     }
 }

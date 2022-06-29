@@ -1415,13 +1415,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff1fe28f3d01084e9c4bd1c1d95d79e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 100
+  moveSpeed: 500
   zoomStepSize: 10
   orbitingSpeed: 3
   moveXLimit: {x: -500, y: 500}
   moveZLimit: {x: -500, y: 500}
   zoomLimit: {x: -20, y: 80}
   baseCameraY: 60
+  useKeyboard: 0
 --- !u!45 &1456210177
 Skybox:
   m_ObjectHideFlags: 0
