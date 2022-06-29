@@ -110,9 +110,11 @@ public class FlyCamera : MonoBehaviour
 
             var x = -Input.GetAxis("Mouse X");
             var y = -Input.GetAxis("Mouse Y");
-            print("helo");
 
-            return new Vector3(x, 0, y);
+            var a = Mathf.InverseLerp(zoomLimit.x, zoomLimit.y, transform.position.y);
+            var p = new Vector3(x, 0, y) * Mathf.Lerp(1, 4, a);
+
+            return p;
         }
 
     }
