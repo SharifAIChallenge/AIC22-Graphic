@@ -1,8 +1,10 @@
 {
-    "name": "AssetStorePackages",
+    "name": "SerializableDictionaryEditor",
     "rootNamespace": "",
     "references": [],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
