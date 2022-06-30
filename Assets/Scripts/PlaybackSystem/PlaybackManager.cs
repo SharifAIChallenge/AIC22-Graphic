@@ -57,6 +57,7 @@ public class PlaybackManager : MonoBehaviour
     private void Awake()
     {
         _cacheables.Add(agentsController);
+        _cacheables.Add(chatManager);
         hudManager.Setup(this);
     }
 
@@ -80,8 +81,7 @@ public class PlaybackManager : MonoBehaviour
 
     private void FirstSetupGame()
     {
-        logHandler.SetCurrentLine(turnStartsLineNumbers[1]);
-        NextMove();
+        LoadTurn(1);
     }
 
     public void Play()
@@ -126,6 +126,8 @@ public class PlaybackManager : MonoBehaviour
             Debug.LogError("GAME IS NOT CACHED!");
             return;
         }
+        
+        //TODO check if turn is in range
 
         _cacheables.ForEach(c => c.LoadState(turn - 1));
         logHandler.SetCurrentLine(turnStartsLineNumbers[turn]);
