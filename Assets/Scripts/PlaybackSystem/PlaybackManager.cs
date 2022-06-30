@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using TMPro;
 
 public class PlaybackManager : MonoBehaviour
 {
@@ -18,6 +21,10 @@ public class PlaybackManager : MonoBehaviour
     private int _turnNumber;
     private AgentType _turnAgentType;
     public Action<int, AgentType> onTurnChange = delegate { };
+
+
+    [Header("Playback Hud")]
+    [SerializeField] private TMP_InputField toTurnInputField;
 
     Regex agentId = new Regex("\"agentId\":\"([^\"]+)\"");
     Regex balance = new Regex("\"balance\":\"([^\"]+)\"");
@@ -37,14 +44,40 @@ public class PlaybackManager : MonoBehaviour
     Regex thiefId = new Regex("\"thiefId\":\"([^\"]+)\"");
     Regex gameResult = new Regex("\"game result\":\"([^\"]+)\"");
 
+    private List<Cacheable> _cacheables = new();
+
+    private void Awake()
+    {
+        _cacheables.Add(agentsController);
+    }
+
     private void Start()
     {
         hudManager.Setup(this);
-        ChangeTurn(1, AgentType.THIEF);
+        agentsController.IsCaching = true;
+
+        _cacheables.ForEach(c => c.IsCaching = true);
+        CreateCache();
+        _cacheables.ForEach(c => c.IsCaching = false);
     }
 
+    public void CreateCache()
+    {
+        var line = logHandler.GetNextLine();
+        while (line is not null)
+        {
+            RunLine(line);
+            line = logHandler.GetNextLine();
+        }
+    }
+    
+    
     public void NextMove()
     {
+        if (_gameStatus == GameStatus.FINISHED)
+        {
+            return;
+        }
         RunLine(logHandler.GetNextLine());
     }
 
@@ -133,6 +166,7 @@ public class PlaybackManager : MonoBehaviour
                 break;
             case GameStatus.ONGOING:
                 agentsController.SortAgents();
+                ChangeTurn(1, AgentType.THIEF);
                 break;
             case GameStatus.FINISHED:
                 break;
@@ -148,6 +182,19 @@ public class PlaybackManager : MonoBehaviour
         _turnNumber = turnNumber;
         _turnAgentType = turnType;
         onTurnChange?.Invoke(turnNumber, turnType);
+        
+        _cacheables.ForEach(c => c.SaveState());
+    }
+
+    public void LoadTurn()
+    {
+        int toTurnNumber;
+        if(toTurnInputField.text == "" || !int.TryParse(toTurnInputField.text, out toTurnNumber))
+        {
+            return;
+        }
+        
+        _cacheables.ForEach(c => c.LoadState(toTurnNumber - 1));
     }
 
     [Serializable]

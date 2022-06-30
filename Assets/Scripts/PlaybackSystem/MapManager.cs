@@ -28,7 +28,7 @@ public class MapManager : MonoBehaviour
 
     private void LoadMapFromFile()
     {
-        string path = Config.GamePath + "/map.json";
+        string path = Config.GamePath + relativePath;
         string json = File.ReadAllText(path);
         var parsed = JsonUtility.FromJson<GraphJsonData>(json);
 

@@ -1,9 +1,12 @@
 using System;
 using DG.Tweening;
 using GraphCreator;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using TMPro;
 using UnityEngine;
 
+[JsonConverter(typeof(AgentJsonConverter))]
 public abstract class Agent : MonoBehaviour
 {
     public int id;
@@ -36,9 +39,15 @@ public abstract class Agent : MonoBehaviour
         transform.position = _map.GetNodePositionById(_currentNode);
     }
     
-    public void Move(int from, int to)
+    public void Move(int from, int to, bool isCaching)
     {
         if(from == to) return;
+
+        if (isCaching)
+        {
+            _currentNode = to;
+            return;
+        }
         
         transform.DOPath(_map.GetPathPoint(from, to)[1..], 1.5f).SetEase(Ease.Linear).OnComplete(() =>
         {
@@ -66,6 +75,36 @@ public abstract class Agent : MonoBehaviour
     {
         agentDataPanel.SetActive(false);
     }
+
+    public JObject GetJsonObject()
+    {
+        var o = new JObject();
+        o.Add("id", id);
+        o.Add("type", type.ToString());
+        o.Add("money", money);
+        o.Add("currentNode", _currentNode);
+
+        return o;
+    }
+    
+    public void LoadFromJson(JToken j)
+    {
+        var o = JObject.Parse(j.ToString());
+        money = (double) o?["money"];
+        _currentNode = (int) o?["currentNode"];
+        transform.position = _map.GetNodePositionById(_currentNode);
+    }
+    
+    public void SetMoney(double money)
+    {
+        this.money = money;
+    }
+    
+    public void SetCurrentNode(int node)
+    {
+        _currentNode = node;
+        transform.position = _map.GetNodePositionById(_currentNode);
+    }
 }
 
 public enum AgentType
@@ -78,4 +117,27 @@ public enum Team
 {
     FIRST,
     SECOND
+}
+
+public class AgentJsonConverter : JsonConverter<Agent>
+{
+    public override Agent ReadJson(JsonReader reader, Type objectType, Agent existingValue, bool hasExistingValue,
+        JsonSerializer serializer)
+    {
+        /*Debug.Log(hasExistingValue);
+        
+        var o = JObject.Load(reader);
+        var money = (double) o?["money"];
+        var currentNode = (int) o?["currentNode"];
+        existingValue.SetMoney(money);
+        existingValue.SetCurrentNode(currentNode);
+
+        return existingValue;*/
+        throw new NotImplementedException("Unnecessary because CanRead is false. The type will skip the converter.");
+    }
+
+    public override void WriteJson(JsonWriter writer, Agent value, JsonSerializer serializer)
+    {
+        writer.WriteRawValue(value.GetJsonObject().ToString(Formatting.None));
+    }
 }

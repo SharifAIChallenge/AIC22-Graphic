@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GraphCreator;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-public class AgentsController : MonoBehaviour
+public class AgentsController : Cacheable
 {
     [SerializeField] private MapManager _mapManager;
     
@@ -47,7 +49,7 @@ public class AgentsController : MonoBehaviour
 
     public void MoveAgent(int id, int from, int to)
     {
-        _agents[id - 1].Move(from, to);
+        _agents[id - 1].Move(from, to, IsCaching);
     }
 
     public void BalanceCharge(int agentId, double balance, double wage)
@@ -58,5 +60,25 @@ public class AgentsController : MonoBehaviour
     public void DecreaseBalance(int agentId, double amount)
     {
         _agents[agentId - 1].DecreaseBalance(amount);
+    }
+
+    public override void SaveState()
+    {
+        var json = JsonConvert.SerializeObject(_agents, new JsonSerializerSettings() {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        });
+        
+        history.Add(json);
+    }
+    
+    public override void LoadState(int index)
+    {
+        var json = history[index];
+
+        var arr = JArray.Parse(json);
+        for (int i = 0; i < _agents.Count; i++)
+        {
+            _agents[i].LoadFromJson(arr[i].ToString(Formatting.None));
+        }
     }
 }
