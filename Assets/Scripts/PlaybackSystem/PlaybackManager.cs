@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -6,7 +7,6 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using TMPro;
 
 public class PlaybackManager : MonoBehaviour
 {
@@ -19,12 +19,12 @@ public class PlaybackManager : MonoBehaviour
     public Action<GameStatus> onGameStatusChange = delegate { };
 
     private int _turnNumber;
+
+    public int TurnNumber => _turnNumber;
+
     private AgentType _turnAgentType;
     public Action<int, AgentType> onTurnChange = delegate { };
 
-
-    [Header("Playback Hud")]
-    [SerializeField] private TMP_InputField toTurnInputField;
 
     #region regexes
     
@@ -52,13 +52,11 @@ public class PlaybackManager : MonoBehaviour
     private Dictionary<int, int> turnStartsLineNumbers = new();
     private bool _isCaching;
 
+    private Coroutine autoPlayCoroutine;
+    
     private void Awake()
     {
         _cacheables.Add(agentsController);
-    }
-
-    private void Start()
-    {
         hudManager.Setup(this);
     }
 
@@ -86,15 +84,55 @@ public class PlaybackManager : MonoBehaviour
         NextMove();
     }
 
+    public void Play()
+    {
+        autoPlayCoroutine = StartCoroutine(AutoPlay());
+    }
+
+    public void Pause()
+    {
+        StopCoroutine(autoPlayCoroutine);
+    }
+
+    private IEnumerator AutoPlay()
+    {
+        while (_gameStatus != GameStatus.FINISHED)
+        {
+            NextMove();
+            yield return new WaitForSeconds(1f);
+        }
+    }
+    
     public void NextMove()
     {
         var line = logHandler.GetNextLine();
+
         if(line is null)
         {
             return;
         }
         RunLine(line);
     }
+
+    public void PreviousTurn()
+    {
+        LoadTurn(_turnNumber - 1);
+    }
+    
+    public void LoadTurn(int turn)
+    {
+        if (!Config.Cached)
+        {
+            Debug.LogError("GAME IS NOT CACHED!");
+            return;
+        }
+
+        _cacheables.ForEach(c => c.LoadState(turn - 1));
+        logHandler.SetCurrentLine(turnStartsLineNumbers[turn]);
+        NextMove();
+    }
+
+    #region running
 
     private void RunLine(string line)
     {
@@ -205,25 +243,9 @@ public class PlaybackManager : MonoBehaviour
         }
     }
 
-    public void LoadTurn()
-    {
-        if (!Config.Cached)
-        {
-            Debug.LogError("GAME IS NOT CACHED!");
-            return;
-        }
-        
-        int toTurnNumber;
-        if(toTurnInputField.text == "" || !int.TryParse(toTurnInputField.text, out toTurnNumber))
-        {
-            return;
-        }
-        
-        _cacheables.ForEach(c => c.LoadState(toTurnNumber - 1));
-        logHandler.SetCurrentLine(turnStartsLineNumbers[toTurnNumber]);
-        NextMove();
-    }
+    #endregion
 
+    #region JsonClasses
     [Serializable]
     private class GameLog<T>
     {
@@ -251,6 +273,8 @@ public class PlaybackManager : MonoBehaviour
         public GameStatus fromStatus;
         public GameStatus toStatus;
     }
+    
+    #endregion
 }
 
 public enum GameStatus

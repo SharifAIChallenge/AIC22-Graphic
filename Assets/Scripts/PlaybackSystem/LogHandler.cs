@@ -35,8 +35,7 @@ public class LogHandler : MonoBehaviour
             {
                 return null;
             }
-
-            Debug.Log(logLines[_currentLine]);
+            
             return logLines[_currentLine++];
         }
         else

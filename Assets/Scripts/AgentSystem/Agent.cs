@@ -20,6 +20,8 @@ public abstract class Agent : MonoBehaviour
     
     protected Graph _map;
 
+    private static float Speed => Config.agentsMoveSpeed;
+    
     public void Setup(Graph map, int id, Team team, double money, int startNode)
     {
         _map = map;
@@ -49,7 +51,9 @@ public abstract class Agent : MonoBehaviour
             return;
         }
         
-        transform.DOPath(_map.GetPathPoint(from, to)[1..], 1.5f).SetEase(Ease.Linear).OnComplete(() =>
+        var length = _map.GetEdge(from, to).spline.GetLengthApproximately(0, 1);
+        var duration = length / Speed;
+        transform.DOPath(_map.GetPathPoint(from, to)[1..], duration).SetEase(Ease.Linear).OnComplete(() =>
         {
             _currentNode = to;
         });
