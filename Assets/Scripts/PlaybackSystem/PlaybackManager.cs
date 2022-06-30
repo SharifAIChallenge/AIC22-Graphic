@@ -26,6 +26,8 @@ public class PlaybackManager : MonoBehaviour
     [Header("Playback Hud")]
     [SerializeField] private TMP_InputField toTurnInputField;
 
+    #region regexes
+    
     Regex agentId = new Regex("\"agentId\":\"([^\"]+)\"");
     Regex balance = new Regex("\"balance\":\"([^\"]+)\"");
     Regex team = new Regex("\"team\":\"([^\"]+)\"");
@@ -44,7 +46,11 @@ public class PlaybackManager : MonoBehaviour
     Regex thiefId = new Regex("\"thiefId\":\"([^\"]+)\"");
     Regex gameResult = new Regex("\"game result\":\"([^\"]+)\"");
 
+    #endregion
+    
     private List<Cacheable> _cacheables = new();
+    private Dictionary<int, int> turnStartsLineNumbers = new();
+    private bool _isCaching;
 
     private void Awake()
     {
@@ -54,31 +60,40 @@ public class PlaybackManager : MonoBehaviour
     private void Start()
     {
         hudManager.Setup(this);
-        agentsController.IsCaching = true;
-
-        _cacheables.ForEach(c => c.IsCaching = true);
-        CreateCache();
-        _cacheables.ForEach(c => c.IsCaching = false);
     }
 
     public void CreateCache()
     {
+        _isCaching = true;
+        _cacheables.ForEach(c => c.IsCaching = true);
+
         var line = logHandler.GetNextLine();
         while (line is not null)
         {
             RunLine(line);
             line = logHandler.GetNextLine();
         }
+        
+        _cacheables.ForEach(c => c.IsCaching = false);
+        _isCaching = false;
+        
+        FirstSetupGame();
     }
-    
-    
+
+    private void FirstSetupGame()
+    {
+        logHandler.SetCurrentLine(turnStartsLineNumbers[1]);
+        NextMove();
+    }
+
     public void NextMove()
     {
-        if (_gameStatus == GameStatus.FINISHED)
+        var line = logHandler.GetNextLine();
+        if(line is null)
         {
             return;
         }
-        RunLine(logHandler.GetNextLine());
+        RunLine(line);
     }
 
     private void RunLine(string line)
@@ -182,12 +197,22 @@ public class PlaybackManager : MonoBehaviour
         _turnNumber = turnNumber;
         _turnAgentType = turnType;
         onTurnChange?.Invoke(turnNumber, turnType);
-        
-        _cacheables.ForEach(c => c.SaveState());
+
+        if (_isCaching)
+        {
+            _cacheables.ForEach(c => c.SaveState());
+            turnStartsLineNumbers.Add(turnNumber, logHandler.GetCurrentLine() - 1);
+        }
     }
 
     public void LoadTurn()
     {
+        if (!Config.Cached)
+        {
+            Debug.LogError("GAME IS NOT CACHED!");
+            return;
+        }
+        
         int toTurnNumber;
         if(toTurnInputField.text == "" || !int.TryParse(toTurnInputField.text, out toTurnNumber))
         {
@@ -195,6 +220,8 @@ public class PlaybackManager : MonoBehaviour
         }
         
         _cacheables.ForEach(c => c.LoadState(toTurnNumber - 1));
+        logHandler.SetCurrentLine(turnStartsLineNumbers[toTurnNumber]);
+        NextMove();
     }
 
     [Serializable]

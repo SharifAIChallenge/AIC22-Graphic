@@ -21,7 +21,7 @@ public class MapManager : MonoBehaviour
 
     [SerializeField] private bool load;
 
-    private void Start()
+    public void Setup()
     {
         LoadMapFromFile();
     }
