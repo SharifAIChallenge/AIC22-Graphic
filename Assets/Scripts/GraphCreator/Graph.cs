@@ -13,7 +13,7 @@ namespace GraphCreator
     {
         [SerializeField] public bool editMode;
 
-        public GameObject nodePrefab;
+        public Node nodePrefab;
         public bool edgeMode = false;
         public EdgeType edgeEditType = EdgeType.ROAD;
         public Camera mainCamera;
@@ -170,7 +170,7 @@ namespace GraphCreator
             }
 
             yamlString += "  nodes:\n";
-            foreach (KeyValuePair<int,GameObject> node in _nodes)
+            foreach (KeyValuePair<int, Node> node in _nodes)
             {
                 int index = node.Key;
                 yamlString += "    - id: " + index + "\n";
@@ -207,10 +207,18 @@ namespace GraphCreator
             }));*/
             Debug.Log(JsonUtility.ToJson(map));
         }
+
+        public Node GetNodeById(int id)
+        {
+            if (_nodes.ContainsKey(id))
+                return _nodes[id];
+
+            return null;
+        }
     }
 
     [Serializable]
-    public class NodeDictionary : SerializableDictionary<int, GameObject>
+    public class NodeDictionary : SerializableDictionary<int, Node>
     {
     }
 

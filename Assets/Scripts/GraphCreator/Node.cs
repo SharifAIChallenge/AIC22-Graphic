@@ -12,6 +12,10 @@ public class Node : MonoBehaviour
 
     [SerializeField] private MeshRenderer _renderer;
     
+    private List<Agent> _agentsInNode = new();
+
+    [SerializeField] private List<Vector3> poses = new();
+
     private void Start()
     {
         if (graph.editMode)
@@ -47,5 +51,26 @@ public class Node : MonoBehaviour
         //this.GetComponent<SpriteRenderer>().color = new Color(1.0f,0.3915f,0.3915f);
         //this.GetComponent<SpriteRenderer>().color = Color.green;
         _renderer.material.color = Color.green;
+    }
+
+    public void AddAgent(Agent agent)
+    {
+        _agentsInNode.Add(agent);
+        AdjustPositions();
+    }
+
+    public void RemoveAgent(Agent agent)
+    {
+        _agentsInNode.Remove(agent);
+        AdjustPositions();
+    }
+
+    private void AdjustPositions()
+    {
+        for (var i = 0; i < _agentsInNode.Count; i++)
+        {
+            var agent = _agentsInNode[i];
+            agent.transform.position = transform.position + poses[i % poses.Count];
+        }
     }
 }

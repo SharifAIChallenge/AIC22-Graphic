@@ -2033,7 +2033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editMode: 1
-  nodePrefab: {fileID: 2375205182632942344, guid: 41e1c0ddfbb28cccdbe62fbe5f885641, type: 3}
+  nodePrefab: {fileID: 4231344827564614119, guid: 41e1c0ddfbb28cccdbe62fbe5f885641, type: 3}
   edgeMode: 1
   edgeEditType: 0
   mainCamera: {fileID: 1331478350}

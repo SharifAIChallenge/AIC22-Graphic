@@ -84,7 +84,7 @@ public class ChatManager : Cacheable
             {
                 for (int j = min; j < loaded.Count; j++)
                 {
-                    Debug.Log(i + ", " + j + ", " + loaded[j].text);
+                    //Debug.Log(i + ", " + j + ", " + loaded[j].text);
                     var newText = Instantiate(textObject, (chatPanels[i]).transform);
                     var newMessage = new Message
                     {

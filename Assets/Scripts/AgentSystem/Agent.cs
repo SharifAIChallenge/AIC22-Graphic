@@ -12,13 +12,32 @@ public abstract class Agent : MonoBehaviour
     public int id;
     protected AgentType type;
     protected double money;
-    protected int _currentNode;
+    
+    private int _currentNode;
+    protected int CurrentNode
+    {
+        get => _currentNode;
+        set
+        {
+            var oldNode = _map.GetNodeById(_currentNode);
+            if (oldNode is not null)
+            {
+                oldNode.RemoveAgent(this);
+            }
+            var newNode = _map.GetNodeById(value);
+            newNode.AddAgent(this);
+
+            _currentNode = value;
+        }
+    }
 
     [SerializeField] private SpriteRenderer hat;
     [SerializeField] private GameObject agentDataPanel;
+    [SerializeField] private TMP_Text idText;
     [SerializeField] private TMP_Text moneyText;
-    
+
     protected Graph _map;
+
 
     private static float Speed => Config.agentsMoveSpeed;
     
@@ -37,8 +56,7 @@ public abstract class Agent : MonoBehaviour
                 hat.color = Color.red;
                 break;
         }
-        _currentNode = startNode;
-        transform.position = _map.GetNodePositionById(_currentNode);
+        CurrentNode = startNode;
     }
     
     public void Move(int from, int to, bool isCaching)
@@ -47,15 +65,22 @@ public abstract class Agent : MonoBehaviour
 
         if (isCaching)
         {
-            _currentNode = to;
+            CurrentNode = to;
             return;
         }
         
-        var length = _map.GetEdge(from, to).spline.GetLengthApproximately(0, 1);
-        var duration = length / Speed;
-        transform.DOPath(_map.GetPathPoint(from, to)[1..], duration).SetEase(Ease.Linear).OnComplete(() =>
+        var edge = _map.GetEdge(from, to);
+        if (edge is null)
         {
-            _currentNode = to;
+            Debug.LogError("No Edge between " + from + " and " + to);
+            return;
+        }
+        
+        var length = edge.spline.GetLengthApproximately(0, 1);
+        var duration = length / Speed;
+        transform.DOPath(_map.GetPathPoint(from, to), duration).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            CurrentNode = to;
         });
     }
 
@@ -71,6 +96,7 @@ public abstract class Agent : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        idText.text = "ID: " + id;
         moneyText.text = "Money: " + money;
         agentDataPanel.SetActive(true);
     }
@@ -86,7 +112,7 @@ public abstract class Agent : MonoBehaviour
         o.Add("id", id);
         o.Add("type", type.ToString());
         o.Add("money", money);
-        o.Add("currentNode", _currentNode);
+        o.Add("currentNode", CurrentNode);
 
         return o;
     }
@@ -95,8 +121,7 @@ public abstract class Agent : MonoBehaviour
     {
         var o = JObject.Parse(j.ToString());
         money = (double) o?["money"];
-        _currentNode = (int) o?["currentNode"];
-        transform.position = _map.GetNodePositionById(_currentNode);
+        CurrentNode = (int) o?["currentNode"];
     }
     
     public void SetMoney(double money)
@@ -106,8 +131,8 @@ public abstract class Agent : MonoBehaviour
     
     public void SetCurrentNode(int node)
     {
-        _currentNode = node;
-        transform.position = _map.GetNodePositionById(_currentNode);
+        CurrentNode = node;
+        transform.position = _map.GetNodePositionById(CurrentNode);
     }
 }
 

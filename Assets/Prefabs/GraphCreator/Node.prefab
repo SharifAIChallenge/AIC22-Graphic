@@ -305,6 +305,11 @@ MonoBehaviour:
   id: 0
   graph: {fileID: 0}
   _renderer: {fileID: 418581313}
+  poses:
+  - {x: 0, y: 0, z: -3}
+  - {x: 3, y: 0, z: 0}
+  - {x: -3, y: 0, z: 0}
+  - {x: 0, y: 0, z: 3}
 --- !u!65 &3053087514605682121
 BoxCollider:
   m_ObjectHideFlags: 0
