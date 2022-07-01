@@ -9,17 +9,23 @@ public class GameManager : MonoBehaviour
     [SerializeField] private MapManager mapManager;
     [SerializeField] private LogHandler logHandler;
 
+    [SerializeField] private GameObject loadingPanel;
+    
     private void Awake()
     {
+        loadingPanel.SetActive(true);
         mapManager.Setup();
         logHandler.Setup();
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
         if (Config.Cached)
         {
             playbackManager.CreateCache();
         }
+
+        yield return new WaitForSeconds(3);
+        loadingPanel.SetActive(false);
     }
 }

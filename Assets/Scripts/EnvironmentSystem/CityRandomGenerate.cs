@@ -106,4 +106,14 @@ public class CityRandomGenerate : MonoBehaviour
             }
         }
     }
+    
+    #if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(new Vector3((mapXBounds.y + mapXBounds.x)/2, 0, (mapZBounds.y + mapZBounds.x)/2) , new Vector3(mapXBounds.y - mapXBounds.x, 1, mapZBounds.y - mapZBounds.x));
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(new Vector3((xBounds.y + xBounds.x)/2, 0, (zBounds.y + zBounds.x)/2), new Vector3(xBounds.y - xBounds.x, 1, zBounds.y - zBounds.x));
+    }
+    #endif
 }

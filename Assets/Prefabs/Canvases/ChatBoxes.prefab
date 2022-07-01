@@ -226,6 +226,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7622441293428687825, guid: 176f1096abedb154084998b903b5156d, type: 3}
+      propertyPath: m_text
+      value: Second Team -Police
+      objectReference: {fileID: 0}
+    - target: {fileID: 7622441293428687825, guid: 176f1096abedb154084998b903b5156d, type: 3}
+      propertyPath: m_fontSize
+      value: 29.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151461892997190273, guid: 176f1096abedb154084998b903b5156d, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 176f1096abedb154084998b903b5156d, type: 3}
 --- !u!224 &1739343970083130550 stripped
@@ -345,6 +357,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7374126715372923840, guid: 176f1096abedb154084998b903b5156d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374126715372923840, guid: 176f1096abedb154084998b903b5156d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8151461892997190273, guid: 176f1096abedb154084998b903b5156d, type: 3}
       propertyPath: m_Value
       value: 1
@@ -450,7 +470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6887357735241703797, guid: 176f1096abedb154084998b903b5156d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -170
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 6887357735241703797, guid: 176f1096abedb154084998b903b5156d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -463,6 +483,14 @@ PrefabInstance:
     - target: {fileID: 6887357735241703797, guid: 176f1096abedb154084998b903b5156d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7622441293428687825, guid: 176f1096abedb154084998b903b5156d, type: 3}
+      propertyPath: m_text
+      value: Second Team -Thief
+      objectReference: {fileID: 0}
+    - target: {fileID: 7622441293428687825, guid: 176f1096abedb154084998b903b5156d, type: 3}
+      propertyPath: m_fontSize
+      value: 31.15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 176f1096abedb154084998b903b5156d, type: 3}
@@ -569,7 +597,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6887357735241703797, guid: 176f1096abedb154084998b903b5156d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -170
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 6887357735241703797, guid: 176f1096abedb154084998b903b5156d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -582,6 +610,22 @@ PrefabInstance:
     - target: {fileID: 6887357735241703797, guid: 176f1096abedb154084998b903b5156d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374126715372923840, guid: 176f1096abedb154084998b903b5156d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374126715372923840, guid: 176f1096abedb154084998b903b5156d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7622441293428687825, guid: 176f1096abedb154084998b903b5156d, type: 3}
+      propertyPath: m_text
+      value: First Team -Thief
+      objectReference: {fileID: 0}
+    - target: {fileID: 7622441293428687825, guid: 176f1096abedb154084998b903b5156d, type: 3}
+      propertyPath: m_fontSize
+      value: 37.15
       objectReference: {fileID: 0}
     - target: {fileID: 8151461892997190273, guid: 176f1096abedb154084998b903b5156d, type: 3}
       propertyPath: m_Value
