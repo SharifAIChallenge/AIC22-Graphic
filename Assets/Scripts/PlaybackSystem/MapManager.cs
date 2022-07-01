@@ -24,6 +24,13 @@ public class MapManager : MonoBehaviour
     public void Setup()
     {
         LoadMapFromFile();
+        StartCoroutine(CreateCity());
+    }
+
+    private IEnumerator CreateCity()
+    {
+        yield return new WaitForEndOfFrame();
+        cityGenerator.Generate();        
     }
 
     private void LoadMapFromFile()

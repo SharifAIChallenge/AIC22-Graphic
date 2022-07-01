@@ -17,6 +17,10 @@ public class RoadCreator : MonoBehaviour {
 
     public BezierSpline spline;
 
+    [SerializeField] private MeshFilter _meshFilter;
+    [SerializeField] private MeshRenderer _meshRenderer;
+    [SerializeField] private MeshCollider _meshCollider;
+    
     private void Start()
     {
         UpdateRoad();
@@ -39,12 +43,15 @@ public class RoadCreator : MonoBehaviour {
 
     public void UpdateRoad()
     {
-        GetComponent<MeshFilter>().mesh = CreateRoadMesh(spline, false);
+        _meshFilter.mesh = CreateRoadMesh(spline, false);
 
         //var textureRepeat = Mathf.RoundToInt(tiling * spline.evenlySpacedPoints.uniformNormalizedTs.Length * spacing * .05f);
         var textureRepeat = tiling * spline.evenlySpacedPoints.splineLength * .05f;
 
-        GetComponent<MeshRenderer>().material.mainTextureScale = new Vector2(1, textureRepeat);
+        _meshRenderer.material.mainTextureScale = new Vector2(1, textureRepeat);
+
+        _meshCollider.sharedMesh = null;
+        _meshCollider.sharedMesh = _meshFilter.mesh;
     }
 
     Mesh CreateRoadMesh(BezierSpline spline, bool isClosed)

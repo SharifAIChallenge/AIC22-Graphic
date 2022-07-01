@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnvironmentGenerator : MonoBehaviour
 {
@@ -11,6 +13,12 @@ public class EnvironmentGenerator : MonoBehaviour
     
     [SerializeField] private float minScale = 3;
     [SerializeField] private float maxScale = 10;
+
+    private void Start()
+    {
+        Build();
+        
+    }
 
     void Build()
     {
