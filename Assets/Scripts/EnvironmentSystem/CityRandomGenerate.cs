@@ -8,6 +8,10 @@ public class CityRandomGenerate : MonoBehaviour
 {
     [SerializeField] private List<GameObject> buildings = new();
     [SerializeField] private GameObject groundChunk;
+    [SerializeField] private GameObject streetChunk1;
+    [SerializeField] private GameObject streetChunk2;
+    [SerializeField] private GameObject streetChunk3;
+    
     [SerializeField] private Vector2 xBounds;
     [SerializeField] private Vector2 zBounds;
     [SerializeField] private float yOffset;
@@ -79,17 +83,33 @@ public class CityRandomGenerate : MonoBehaviour
                 {
                     continue;
                 }
-                
-                Instantiate(groundChunk, pos + Vector3.up * 0.3f, Quaternion.identity, buildingParent);
 
                 if(x < mapXBounds.x || x > mapXBounds.y || z < mapZBounds.x || z > mapZBounds.y)
                 {
-                    if(i % blockSize == 0 || j % blockSize == 0)
+                    if (i % blockSize == 0)
                     {
-                        continue;
+                        if (j % blockSize == 0)
+                        {
+                            Instantiate(streetChunk3, pos + Vector3.up * 0.3f, Quaternion.identity, buildingParent);
+                            continue;
+                        }
+                        else
+                        {
+                            Instantiate(streetChunk1, pos + Vector3.up * 0.3f, Quaternion.identity, buildingParent);
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (j % blockSize == 0)
+                        {
+                            Instantiate(streetChunk2, pos + Vector3.up * 0.3f, Quaternion.identity, buildingParent);
+                            continue;
+                        }
                     }
                 }
                 
+                Instantiate(groundChunk, pos + Vector3.up * 0.3f, Quaternion.identity, buildingParent);
                 if (Physics.OverlapBox(pos, Vector3.one * overlapSize, Quaternion.identity, layerMask).Length > 0)
                 {
                     continue;

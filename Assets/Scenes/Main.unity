@@ -1841,6 +1841,9 @@ MonoBehaviour:
   - {fileID: 3760286104875414242, guid: 1dd4394505665594481faafa70fcea48, type: 3}
   - {fileID: 9147029088721949754, guid: fc3979ef5ea59c7488d05e9bf8b009ee, type: 3}
   groundChunk: {fileID: 3949173908977567850, guid: 18e58daaa1d6f7a44b0f1447bf5fdc95, type: 3}
+  streetChunk1: {fileID: 3949173908977567850, guid: 55186314cc768c14691a868f323c8221, type: 3}
+  streetChunk2: {fileID: 3949173908977567850, guid: 0589a2f5e74b30747a95fc2b43a31ae4, type: 3}
+  streetChunk3: {fileID: 3949173908977567850, guid: 9a9d4db1f1c86284385ae6d9f251559b, type: 3}
   xBounds: {x: -600, y: 600}
   zBounds: {x: -600, y: 600}
   yOffset: -1.5
@@ -2619,8 +2622,8 @@ MonoBehaviour:
   orbitingSpeed: 3
   moveXLimit: {x: -500, y: 500}
   moveZLimit: {x: -500, y: 500}
-  zoomLimit: {x: -20, y: 80}
-  baseCameraY: 60
+  zoomLimit: {x: -30, y: 50}
+  baseCameraY: 90
   useKeyboard: 0
 --- !u!45 &1456210177
 Skybox:
