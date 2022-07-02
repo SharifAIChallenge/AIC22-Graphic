@@ -2752,11 +2752,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 500
-  zoomStepSize: 10
+  zoomStepSize: 15
   orbitingSpeed: 3
   moveXLimit: {x: -500, y: 500}
   moveZLimit: {x: -500, y: 500}
-  zoomLimit: {x: -30, y: 50}
+  zoomLimit: {x: -20, y: 100}
   baseCameraY: 90
   useKeyboard: 0
 --- !u!45 &1456210177
