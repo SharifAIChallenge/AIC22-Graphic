@@ -16,6 +16,8 @@ public class CityRandomGenerate : MonoBehaviour
     [SerializeField] private Vector2 zBounds;
     [SerializeField] private float yOffset;
     [SerializeField] private float gridSize = 4;
+    [SerializeField] private float blockSize = 6;
+    [SerializeField] private float scaleMultiply = 0.002f;
     [SerializeField] private float overlapSize = 3;
 
     [SerializeField] private Vector2 mapXBounds;
@@ -28,6 +30,9 @@ public class CityRandomGenerate : MonoBehaviour
     
     public int count;
     [SerializeField] private Transform buildingParent;
+    [SerializeField] private Transform groundParent;
+    [SerializeField] private Transform streetParent;
+
 
     private void Start()
     {
@@ -66,8 +71,6 @@ public class CityRandomGenerate : MonoBehaviour
 
     public void Generate()
     {
-        var blockSize = 7;
-        
         var xCount = (int) (xBounds.y - xBounds.x) / gridSize;
         var zCount = (int) (zBounds.y - zBounds.x) / gridSize;
 
@@ -90,12 +93,12 @@ public class CityRandomGenerate : MonoBehaviour
                     {
                         if (j % blockSize == 0)
                         {
-                            Instantiate(streetChunk3, pos + Vector3.up * 0.3f, Quaternion.identity, buildingParent);
+                            Instantiate(streetChunk3, pos + Vector3.up * 0.3f, streetChunk3.transform.rotation , streetParent);
                             continue;
                         }
                         else
                         {
-                            Instantiate(streetChunk1, pos + Vector3.up * 0.3f, Quaternion.identity, buildingParent);
+                            Instantiate(streetChunk1, pos + Vector3.up * 0.3f, streetChunk1.transform.rotation, streetParent);
                             continue;
                         }
                     }
@@ -103,13 +106,13 @@ public class CityRandomGenerate : MonoBehaviour
                     {
                         if (j % blockSize == 0)
                         {
-                            Instantiate(streetChunk2, pos + Vector3.up * 0.3f, Quaternion.identity, buildingParent);
+                            Instantiate(streetChunk2, pos + Vector3.up * 0.3f, streetChunk2.transform.rotation, streetParent);
                             continue;
                         }
                     }
                 }
                 
-                Instantiate(groundChunk, pos + Vector3.up * 0.3f, Quaternion.identity, buildingParent);
+                //Instantiate(groundChunk, pos + Vector3.up * 0.3f, Quaternion.identity, groundParent);
                 if (Physics.OverlapBox(pos, Vector3.one * overlapSize, Quaternion.identity, layerMask).Length > 0)
                 {
                     continue;
@@ -117,7 +120,7 @@ public class CityRandomGenerate : MonoBehaviour
                 
                 var randomBuilding = buildings[Random.Range(0, buildings.Count)];
                 var c = Instantiate(randomBuilding, pos, randomBuilding.transform.rotation, buildingParent);
-                c.transform.localScale /= 500;
+                c.transform.localScale *= scaleMultiply;
                 
                 var randomRotation = Random.Range(0, 4);
                 c.transform.Rotate(0, randomRotation * 90, 0, Space.World);
