@@ -4,7 +4,7 @@ using System.Collections;
 
 public class FlyCamera : MonoBehaviour
 {
-    public float moveSpeed = 100.0f;
+    //public float moveSpeed = 100.0f;
 
     public float zoomStepSize = 10f;
 
@@ -18,10 +18,14 @@ public class FlyCamera : MonoBehaviour
 
     private float _xRotation;
 
-    [SerializeField] private bool useKeyboard;
+    //[SerializeField] private bool useKeyboard;
+    private Camera cam;
+    private Vector3 _previousScreenPoint;
+    private Vector3 _previousWorldPoint;
 
     private void Start()
     {
+        cam = Camera.main;
         _xRotation = transform.eulerAngles.x;
     }
 
@@ -66,7 +70,14 @@ public class FlyCamera : MonoBehaviour
 
     private void ShiftMove()
     {
-        var p = GetBaseInput();
+        var screenPosition = Input.mousePosition;
+
+        var isDown = Input.GetMouseButton(0);
+        var wentDown = Input.GetMouseButtonDown(0);
+
+        ProcessTouch(viewCamera: cam, screenPosition: screenPosition, isDown: isDown, wentDown: wentDown);
+
+        /*var p = GetBaseInput();
         if (!(p.sqrMagnitude > 0)) return;
 
 
@@ -75,10 +86,42 @@ public class FlyCamera : MonoBehaviour
         p *= Time.deltaTime;
         p += transform.position;
         transform.position = new Vector3(Mathf.Clamp(p.x, moveXLimit.x, moveXLimit.y),
-            p.y, Mathf.Clamp(p.z, moveZLimit.x, moveZLimit.y));
+            p.y, Mathf.Clamp(p.z, moveZLimit.x, moveZLimit.y));*/
     }
 
-    private Vector3 GetBaseInput()
+    private void ProcessTouch(Camera viewCamera, Vector3 screenPosition, bool isDown, bool wentDown)
+    {
+        var ray = viewCamera.ScreenPointToRay(screenPosition);
+        var plane = new Plane(Vector3.up, Vector3.zero);
+        if (plane.Raycast(ray, out var distance))
+        {
+            var worldPoint = ray.GetPoint(distance);
+
+            if (wentDown)
+            {
+                _previousWorldPoint = worldPoint;
+            }
+
+            if (isDown)
+            {
+                //var worldDelta = worldPoint - _previousWorldPoint;
+                
+                ray = viewCamera.ScreenPointToRay(_previousScreenPoint);
+                plane.Raycast(ray, out distance);
+                _previousWorldPoint = ray.GetPoint(distance);
+
+                var worldDelta = worldPoint - _previousWorldPoint;
+
+                transform.position -= worldDelta;
+            }
+
+            _previousWorldPoint = worldPoint;
+        }
+
+        _previousScreenPoint = screenPosition;
+    }
+
+    /*private Vector3 GetBaseInput()
     {
         if (useKeyboard)
         {
@@ -102,6 +145,7 @@ public class FlyCamera : MonoBehaviour
             {
                 p_Velocity += Vector3.right;
             }
+
             return p_Velocity;
         }
         else
@@ -116,6 +160,5 @@ public class FlyCamera : MonoBehaviour
 
             return p;
         }
-
-    }
+    }*/
 }
