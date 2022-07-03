@@ -2791,8 +2791,8 @@ MonoBehaviour:
   moveSpeed: 500
   zoomStepSize: 15
   orbitingSpeed: 3
-  moveXLimit: {x: -500, y: 500}
-  moveZLimit: {x: -500, y: 500}
+  moveXLimit: {x: -400, y: 400}
+  moveZLimit: {x: -400, y: 400}
   zoomLimit: {x: -20, y: 100}
   baseCameraY: 90
   useKeyboard: 0
