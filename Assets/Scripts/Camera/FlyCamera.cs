@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class FlyCamera : MonoBehaviour
 {
@@ -22,6 +23,9 @@ public class FlyCamera : MonoBehaviour
     private Camera cam;
     private Vector3 _previousScreenPoint;
     private Vector3 _previousWorldPoint;
+
+    [SerializeField] private Vector3 defaultPosition;
+    [SerializeField] private Vector3 defaultRotation;
 
     private void Start()
     {
@@ -112,13 +116,25 @@ public class FlyCamera : MonoBehaviour
 
                 var worldDelta = worldPoint - _previousWorldPoint;
 
-                transform.position -= worldDelta;
+                var p = transform.position - worldDelta;
+                p.x = Mathf.Clamp(p.x, moveXLimit.x, moveXLimit.y);
+                p.z = Mathf.Clamp(p.z, moveZLimit.x, moveZLimit.y);
+                transform.position = p;
             }
 
             _previousWorldPoint = worldPoint;
         }
 
         _previousScreenPoint = screenPosition;
+    }
+
+    public void ResetCamera()
+    {
+        transform.DOMove(defaultPosition, 1f);
+        transform.DORotate(defaultRotation, 1f).OnComplete(() =>
+        {
+            _xRotation = transform.eulerAngles.x;
+        });
     }
 
     /*private Vector3 GetBaseInput()
