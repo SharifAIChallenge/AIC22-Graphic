@@ -36,7 +36,7 @@ public class ChatManager : Cacheable
                 type.Equals("THIEF") ? (chatPanels[2]).transform : (chatPanels[3]).transform);
         }
 
-        newMessage.textObject = newText.GetComponent<TMP_Text>();
+        newMessage.textObject = newText.GetComponentInChildren<TMP_Text>();
         newMessage.textObject.text = newMessage.text;
         if (team.Equals("FIRST"))
         {
@@ -89,7 +89,7 @@ public class ChatManager : Cacheable
                     var newMessage = new Message
                     {
                         text = loaded[j].text,
-                        textObject = newText.GetComponent<TMP_Text>()
+                        textObject = newText.GetComponentInChildren<TMP_Text>()
                     };
                     newMessage.textObject.text = newMessage.text;
                     current.Add(newMessage);
@@ -99,7 +99,7 @@ public class ChatManager : Cacheable
             {
                 for (int j = min; j < current.Count; j++)
                 {
-                    Destroy(current[j].textObject.gameObject);
+                    Destroy(current[j].textObject.transform.parent.parent.gameObject);
                 }
 
                 current.RemoveRange(min, current.Count - loaded.Count);
