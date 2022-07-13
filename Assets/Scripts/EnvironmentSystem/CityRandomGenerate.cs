@@ -68,7 +68,13 @@ public class CityRandomGenerate : MonoBehaviour
             instantiatedBuildings.Add(c);
         }
     }*/
-
+    
+    public void SetMapBounds(Vector2 xBounds, Vector2 zBounds)
+    {
+        mapXBounds = xBounds;
+        mapZBounds = zBounds;
+    }
+    
     public void Generate()
     {
         var xCount = (int) (xBounds.y - xBounds.x) / gridSize;

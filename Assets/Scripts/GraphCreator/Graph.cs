@@ -75,19 +75,24 @@ namespace GraphCreator
 
         public void AddEdge(int selectedNodeID, int nodeID)
         {
+            AddEdge(selectedNodeID, nodeID, edgeEditType);
+        }
+        
+        public void AddEdge(int firstNode, int secondNode, EdgeType edgeType)
+        {
             Edge e;
-            var edgeTuple = GetEdgeTuple(selectedNodeID, nodeID);
+            var edgeTuple = GetEdgeTuple(firstNode, secondNode);
             if (_edges.Keys.Contains(edgeTuple))
             {
                 e = _edges[edgeTuple];
-                e.SetTransportationMethod(edgeEditType);
-                Debug.Log($"{edgeEditType} Added to existing edge Between {selectedNodeID} AND {nodeID}");
+                e.SetTransportationMethod(edgeType);
+                Debug.Log($"{edgeType} Set to existing edge Between {firstNode} AND {secondNode}");
                 return;
             }
 
-            Debug.Log($"Edge Added Between {selectedNodeID} AND {nodeID} OF TYPE {edgeEditType}");
+            Debug.Log($"Edge Added Between {firstNode} AND {secondNode} OF TYPE {edgeType}");
             e = Instantiate(edgePrefab, transform);
-            e.Setup(_nodes[edgeTuple.Item1].transform, _nodes[edgeTuple.Item2].transform, edgeEditType);
+            e.Setup(_nodes[edgeTuple.Item1].transform, _nodes[edgeTuple.Item2].transform, edgeType);
             _edges[edgeTuple] = e;
         }
 
@@ -197,7 +202,8 @@ namespace GraphCreator
                 var edge = new EdgeJsonData
                 {
                     node1Id = pair.Key.Item1,
-                    node2Id = pair.Key.Item2
+                    node2Id = pair.Key.Item2,
+                    edgeType = pair.Value.edgeType
                 };
                 map.edges.Add(edge);
             }

@@ -292,15 +292,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4caf7ca9eabba649a9a1b35f2275b96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 0}
-  bezierLineRenderer: {fileID: 0}
+  meshRenderer: {fileID: 2141184490051046832}
   spline: {fileID: 8521651104112414697}
-  roadMat: {fileID: 0}
-  busMat: {fileID: 0}
-  trainMat: {fileID: 0}
-  hasRoad: 0
-  hasBus: 0
-  hasTrain: 0
+  roadMat: {fileID: 2100000, guid: b7b02465493b574488bd5f89a00d3939, type: 2}
+  busMat: {fileID: 2100000, guid: af6c7932a1e84264c94e180aa4f92fc9, type: 2}
+  trainMat: {fileID: 2100000, guid: 5ee944a94cf6df84e865dea23576cb35, type: 2}
+  edgeType: 0
 --- !u!1 &8521651105470860685
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using GraphCreator;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -40,16 +41,24 @@ public class MapManager : MonoBehaviour
         var parsed = JsonUtility.FromJson<GraphJsonData>(json);
 
         Map = Instantiate(mapPrefab, mapParent);
+
+        var nodePoses = new List<Vector3>();
         
         foreach (var node in parsed.nodes)
         {
             Map.AddNode(node.id, node.position);
+            nodePoses.Add(node.position);
         }
 
         foreach (var edge in parsed.edges)
         {
-            Map.AddEdge(edge.node1Id, edge.node2Id);
+            Map.AddEdge(edge.node1Id, edge.node2Id, edge.edgeType);
         }
+
+        cityGenerator.SetMapBounds(
+            new Vector2(nodePoses.Min(v => v.x) - 10, nodePoses.Max(v => v.x) + 10),
+            new Vector2(nodePoses.Min(v => v.z) - 10, nodePoses.Max(v => v.z) + 10)
+            );
     }
     /*private void Start()
     {
@@ -118,4 +127,5 @@ public class NodeJsonData{
 public class EdgeJsonData{
     public int node1Id;
     public int node2Id;
+    public EdgeType edgeType;
 }

@@ -8,17 +8,35 @@ using UnityEngine.Animations;
 
 public class Edge : MonoBehaviour
 {
-    public LineRenderer lineRenderer;
-    public BezierLineRenderer bezierLineRenderer;
+    public MeshRenderer meshRenderer;
     public BezierSpline spline;
 
     public Material roadMat, busMat, trainMat;
 
-    public bool hasRoad = false, hasBus = false, hasTrain = false;
+    //public bool hasRoad = false, hasBus = false, hasTrain = false;
 
+    public EdgeType edgeType;
+    
     public void SetTransportationMethod(EdgeType type)
     {
+        edgeType = type;
         switch (type)
+        {
+            case EdgeType.ROAD:
+                meshRenderer.material = roadMat;
+                meshRenderer.transform.localPosition = Vector3.up * 0.02f;
+                break;
+            case EdgeType.BUS:
+                meshRenderer.material = busMat;
+                meshRenderer.transform.localPosition = Vector3.up * 0.01f;
+                break;
+            case EdgeType.TRAIN:
+                meshRenderer.material = trainMat;
+                meshRenderer.transform.localPosition = Vector3.zero;
+                break;
+        }
+        
+        /*switch (type)
         {
             case EdgeType.ROAD:
                 hasRoad = true;
@@ -29,7 +47,7 @@ public class Edge : MonoBehaviour
             case EdgeType.TRAIN:
                 hasTrain = true;
                 break;
-        }
+        }*/
     }
 
     public void Setup(Transform from, Transform to, EdgeType type)
@@ -60,16 +78,14 @@ public class Edge : MonoBehaviour
     {
         string res = "";
         int i = 0;
-        if (hasRoad)
+        if (edgeType == EdgeType.ROAD)
         {
             res += "    - id: " + currentId + "\n" +
                    "      firstNodeId: " + edgesKey.Item1 + "\n" +
                    "      secondNodeId: " + edgesKey.Item2 + "\n" +
                    "      price: " + roadPrice + "\n";
             i++;
-        }
-
-        if (hasBus)
+        }else if (edgeType == EdgeType.BUS)
         {
             int index = currentId + i;
             res += "    - id: " + index + "\n" +
@@ -77,9 +93,7 @@ public class Edge : MonoBehaviour
                    "      secondNodeId: " + edgesKey.Item2 + "\n" +
                    "      price: " + busPrice + "\n";
             i++;
-        }
-
-        if (hasTrain)
+        }else if (edgeType == EdgeType.TRAIN)
         {
             int index = currentId + i;
             res += "    - id: " + index + "\n" +
