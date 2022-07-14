@@ -81,4 +81,9 @@ public class AgentsController : Cacheable
             _agents[i].LoadFromJson(arr[i].ToString(Formatting.None));
         }
     }
+
+    public void ThiefCaught(int thiefId)
+    {
+        ((Thief) _agents[thiefId - 1]).Caught();
+    }
 }

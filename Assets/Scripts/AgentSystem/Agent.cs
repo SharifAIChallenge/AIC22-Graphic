@@ -36,6 +36,8 @@ public abstract class Agent : MonoBehaviour
     [SerializeField] private TMP_Text idText;
     [SerializeField] private TMP_Text moneyText;
 
+    [SerializeField] protected GameObject visualGO;
+    
     protected Graph _map;
 
 
@@ -106,7 +108,7 @@ public abstract class Agent : MonoBehaviour
         agentDataPanel.SetActive(false);
     }
 
-    public JObject GetJsonObject()
+    public virtual JObject GetJsonObject()
     {
         var o = new JObject();
         o.Add("id", id);
@@ -117,7 +119,7 @@ public abstract class Agent : MonoBehaviour
         return o;
     }
     
-    public void LoadFromJson(JToken j)
+    public virtual void LoadFromJson(JToken j)
     {
         var o = JObject.Parse(j.ToString());
         money = (double) o?["money"];

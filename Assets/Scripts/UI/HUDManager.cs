@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +16,9 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private Button nextTurnButton;
     [SerializeField] private Button previousTurnButton;
     [SerializeField] private Button goToTurnButton;
-    
+
+    [SerializeField] private CanvasGroup alertPanel;
+    [SerializeField] private TMP_Text alertPanelText;
 
     private PlaybackManager _playbackManager;
     
@@ -90,4 +93,19 @@ public class HUDManager : MonoBehaviour
     {
         _playbackManager.onTurnChange -= UpdateTurn;
     }
+
+    public void ThiefCaughtAlert(int thiefId)
+    {
+        alertPanelText.text = $"Thief with ID {thiefId}\n<color=\"red\">ARRESTED</color>";
+        alertPanel.transform.localScale = Vector3.zero;
+        alertPanel.alpha = 1;
+        alertPanel.transform.DOScale(1, 0.2f);
+        StartCoroutine(CloseAlert());
+    }
+
+    private IEnumerator CloseAlert()
+    {
+        yield return new WaitForSeconds(2);
+        alertPanel.DOFade(0, 0.3f);
+    } 
 }

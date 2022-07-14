@@ -644,6 +644,7 @@ MonoBehaviour:
   agentDataPanel: {fileID: 779384873}
   idText: {fileID: 696839005787801918}
   moneyText: {fileID: 6807369286275168496}
+  visualGO: {fileID: 3531867122628425066}
 --- !u!54 &503022508250419196
 Rigidbody:
   m_ObjectHideFlags: 0

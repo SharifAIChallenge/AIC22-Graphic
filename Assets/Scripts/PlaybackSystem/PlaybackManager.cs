@@ -194,9 +194,15 @@ public class PlaybackManager : MonoBehaviour
         }
         else if (line.Contains("\"type\":\"POLICES_CAUGHT_THIEVES\""))
         {
-            var thiefIdValue = GetValue(thiefId, line);
+            var thiefIdValue = int.Parse(GetValue(thiefId, line));
             var nodeIdValue = GetValue(nodeId, line);
-            //call function
+            
+            agentsController.ThiefCaught(thiefIdValue);
+            if (!_isCaching)
+            {
+                hudManager.ThiefCaughtAlert(thiefIdValue);
+            }
+            Debug.Log($"Thief with Id {thiefIdValue} arrested");
         }
         else if (line.Contains("\"type\":\"GAME_RESULT_CHANGED\""))
         {
