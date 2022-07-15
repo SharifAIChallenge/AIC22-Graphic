@@ -18,9 +18,13 @@ public class PlaybackManager : MonoBehaviour
     private GameStatus _gameStatus;
     public Action<GameStatus> onGameStatusChange = delegate { };
 
+    
+    
     private int _turnNumber;
 
     public int TurnNumber => _turnNumber;
+    
+    public GameStatus GameStatus => _gameStatus;
 
     private AgentType _turnAgentType;
     public Action<int, AgentType> onTurnChange = delegate { };
@@ -96,11 +100,13 @@ public class PlaybackManager : MonoBehaviour
 
     private IEnumerator AutoPlay()
     {
-        while (_gameStatus != GameStatus.FINISHED)
+        while (GameStatus != GameStatus.FINISHED)
         {
             NextMove();
             yield return new WaitForSeconds(1f);
         }
+
+        hudManager.TogglePlayBack();
     }
     
     public void NextMove()

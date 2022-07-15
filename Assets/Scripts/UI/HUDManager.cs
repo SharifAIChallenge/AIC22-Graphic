@@ -61,19 +61,21 @@ public class HUDManager : MonoBehaviour
         _playbackManager.NextMove();
     }
 
-    private void TogglePlayBack()
+    public void TogglePlayBack()
     {
         if (_isPlaying)
         {
             _isPlaying = !_isPlaying;
             _playbackManager.Pause();
             playPauseButton.GetComponentInChildren<TMP_Text>().text = "Play";
-            nextTurnButton.interactable = true;
+            nextTurnButton.interactable = _playbackManager.GameStatus == GameStatus.ONGOING;
             previousTurnButton.interactable = _playbackManager.TurnNumber > 1;
             goToTurnButton.interactable = true;
         }
         else
         {
+            if(_playbackManager.GameStatus == GameStatus.FINISHED) 
+                return;
             _isPlaying = !_isPlaying;
             _playbackManager.Play();
             playPauseButton.GetComponentInChildren<TMP_Text>().text = "Pause";
