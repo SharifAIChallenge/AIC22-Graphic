@@ -131,6 +131,11 @@ public class PlaybackManager : MonoBehaviour
 
         _cacheables.ForEach(c => c.LoadState(turn - 1));
         logHandler.SetCurrentLine(turnStartsLineNumbers[turn]);
+        
+        _turnNumber = turn;
+        hudManager.EnableNextButton(true);
+        _gameStatus = GameStatus.ONGOING;
+        
         NextMove();
     }
 
@@ -228,8 +233,10 @@ public class PlaybackManager : MonoBehaviour
             case GameStatus.ONGOING:
                 agentsController.SortAgents();
                 ChangeTurn(1, AgentType.THIEF);
+                hudManager.EnableNextButton(true);
                 break;
             case GameStatus.FINISHED:
+                hudManager.EnableNextButton(false);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(toStatus), toStatus, null);

@@ -107,5 +107,10 @@ public class HUDManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         alertPanel.DOFade(0, 0.3f);
-    } 
+    }
+
+    public void EnableNextButton(bool enable)
+    {
+        nextTurnButton.interactable = enable;
+    }
 }
