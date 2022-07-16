@@ -7,6 +7,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6931963855739265781, guid: 36326fa393de6624a9808fbee6381b29, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.7944279
+      objectReference: {fileID: 0}
+    - target: {fileID: 6931963855739265781, guid: 36326fa393de6624a9808fbee6381b29, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.7944279
+      objectReference: {fileID: 0}
+    - target: {fileID: 6931963855739265781, guid: 36326fa393de6624a9808fbee6381b29, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.7944279
+      objectReference: {fileID: 0}
+    - target: {fileID: 6931963855739265781, guid: 36326fa393de6624a9808fbee6381b29, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6931963855739265781, guid: 36326fa393de6624a9808fbee6381b29, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 6985981959492537438, guid: 36326fa393de6624a9808fbee6381b29, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 493f9f0dc74a9de4aaa8152ca6d544f1, type: 3}
     - target: {fileID: 8538545206451265410, guid: 36326fa393de6624a9808fbee6381b29, type: 3}
       propertyPath: m_Name
       value: Thief
@@ -130,3 +154,10 @@ MonoBehaviour:
   idText: {fileID: 2266375613130804560}
   moneyText: {fileID: 5233395739309030558}
   visualGO: {fileID: 2872124008541630724}
+  locationPinSR: {fileID: 224205269695097539}
+  iconSR: {fileID: 8514990139301972016}
+--- !u!212 &8514990139301972016 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6985981959492537438, guid: 36326fa393de6624a9808fbee6381b29, type: 3}
+  m_PrefabInstance: {fileID: 1646175610568655982}
+  m_PrefabAsset: {fileID: 0}
