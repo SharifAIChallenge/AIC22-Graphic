@@ -37,7 +37,10 @@ public abstract class Agent : MonoBehaviour
     [SerializeField] private TMP_Text moneyText;
 
     [SerializeField] protected GameObject visualGO;
-    
+
+    [SerializeField] private SpriteRenderer locationPinSR;
+    [SerializeField] private SpriteRenderer iconSR;
+
     protected Graph _map;
 
 
@@ -59,6 +62,9 @@ public abstract class Agent : MonoBehaviour
                 break;
         }
         CurrentNode = startNode;
+
+        //locationPinSR.material.renderQueue = 3000 + id * 10;
+        //iconSR.material.renderQueue = 3001 + id * 10;
     }
     
     public void Move(int from, int to, bool isCaching)

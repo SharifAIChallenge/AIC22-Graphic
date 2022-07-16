@@ -67,7 +67,7 @@ public class FlyCamera : MonoBehaviour
 
         if (y != 0)
         {
-            _xRotation = Mathf.Clamp(_xRotation - y, 0, 85);
+            _xRotation = Mathf.Clamp(_xRotation - y, 0, 60);
             transform.eulerAngles = new Vector3(_xRotation, transform.localEulerAngles.y, transform.localEulerAngles.z);
         }
     }

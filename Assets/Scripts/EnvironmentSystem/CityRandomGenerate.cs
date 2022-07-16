@@ -17,7 +17,7 @@ public class CityRandomGenerate : MonoBehaviour
     [SerializeField] private float yOffset;
     [SerializeField] private float gridSize = 4;
     [SerializeField] private float blockSize = 6;
-    [SerializeField] private float scaleMultiply = 0.002f;
+    [SerializeField] private Vector3 scaleMultiply = Vector3.one * 0.002f;
     [SerializeField] private float overlapSize = 3;
 
     [SerializeField] private Vector2 mapXBounds;
@@ -126,7 +126,7 @@ public class CityRandomGenerate : MonoBehaviour
                 
                 var randomBuilding = buildings[Random.Range(0, buildings.Count)];
                 var c = Instantiate(randomBuilding, pos, randomBuilding.transform.rotation, buildingParent);
-                c.transform.localScale *= scaleMultiply;
+                c.transform.localScale = Vector3.Scale(c.transform.localScale, scaleMultiply);
                 
                 var randomRotation = Random.Range(0, 4);
                 c.transform.Rotate(0, randomRotation * 90, 0, Space.World);

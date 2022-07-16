@@ -56,8 +56,8 @@ public class MapManager : MonoBehaviour
         }
 
         cityGenerator.SetMapBounds(
-            new Vector2(nodePoses.Min(v => v.x) - 10, nodePoses.Max(v => v.x) + 10),
-            new Vector2(nodePoses.Min(v => v.z) - 10, nodePoses.Max(v => v.z) + 10)
+            new Vector2(nodePoses.Min(v => v.x) - 15, nodePoses.Max(v => v.x) + 15),
+            new Vector2(nodePoses.Min(v => v.z) - 15, nodePoses.Max(v => v.z) + 15)
             );
     }
     /*private void Start()
