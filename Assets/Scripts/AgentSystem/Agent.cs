@@ -10,7 +10,7 @@ using UnityEngine;
 public abstract class Agent : MonoBehaviour
 {
     public int id;
-    protected AgentType type;
+    public AgentType type;
     protected double money;
     
     private int _currentNode;
@@ -175,6 +175,13 @@ public class AgentJsonConverter : JsonConverter<Agent>
 
     public override void WriteJson(JsonWriter writer, Agent value, JsonSerializer serializer)
     {
-        writer.WriteRawValue(value.GetJsonObject().ToString(Formatting.None));
+        if (value.type == AgentType.THIEF)
+        {
+            writer.WriteRawValue(((Thief)value).GetJsonObject().ToString(Formatting.None));
+        }
+        else
+        {
+            writer.WriteRawValue(value.GetJsonObject().ToString(Formatting.None));
+        }
     }
 }
