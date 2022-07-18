@@ -11,6 +11,10 @@ namespace GraphCreator
             DrawDefaultInspector();
 
             Graph graph = (Graph)target;
+            if(GUILayout.Button("Load Json File"))
+            {
+                graph.LoadMapJson();
+            }
             if(GUILayout.Button("Build YAML File!"))
             {
                 graph.BuildYaml();

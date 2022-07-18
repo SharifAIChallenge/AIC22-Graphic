@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using BezierSolution;
-using Newtonsoft.Json;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Animations;
 
 namespace GraphCreator
 {
@@ -24,6 +21,10 @@ namespace GraphCreator
 
         [SerializeField] private Edge edgePrefab;
         public float roadCost = 0, busCost = 10, trainCost = 100;
+
+        [Space]
+        [SerializeField] private string yamlFileAddress;
+        [SerializeField] private string jsonFileAddress;
 
         public void AddNode()
         {
@@ -111,24 +112,6 @@ namespace GraphCreator
 
         public Vector3[] GetPathPoint(int firstNodeId, int secondNodeId)
         {
-            /*Vector3 firstNodePosition;
-            Vector3 secondNodePosition;
-            if (_nodes.ContainsKey(firstNodeId))
-                firstNodePosition = _nodes[firstNodeId].transform.position;
-            else
-                throw new Exception($"NO NODE WITH ID {firstNodeId} EXISTS!");
-            if (_nodes.ContainsKey(secondNodeId))
-                secondNodePosition = _nodes[secondNodeId].transform.position;
-            else
-                throw new Exception($"NO NODE WITH ID {secondNodeId} EXISTS!");
-
-            
-            List<Vector3> waypoints = new List<Vector3>();
-            waypoints.Add(secondNodePosition);*/
-
-            // waypoints.Add((firstNodePosition+secondNodePosition)/2);
-            // waypoints.Add((firstNodePosition+secondNodePosition)/2);
-            
             var tuple = GetEdgeTuple(firstNodeId, secondNodeId);
             if (_edges.ContainsKey(tuple))
             {
@@ -155,12 +138,6 @@ namespace GraphCreator
             return null;
         }
 
-        public int GetPoliceStation(Team team)
-        {
-            //return team == Team.FIRST ? 0 : 4;
-            return 1;
-        }
-
         public void BuildYaml()
         {
             string yamlString = "graph:\n" + "  paths:\n";
@@ -182,6 +159,9 @@ namespace GraphCreator
             }
             
             Debug.Log(yamlString);
+            
+            using var writer = new StreamWriter(yamlFileAddress);
+            writer.WriteLine(yamlString);
         }
 
         public void BuildMapJson()
@@ -211,7 +191,11 @@ namespace GraphCreator
             /*Debug.Log(JsonConvert.SerializeObject(map,new JsonSerializerSettings() {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             }));*/
-            Debug.Log(JsonUtility.ToJson(map));
+            var json = JsonUtility.ToJson(map);
+            Debug.Log(json + "\n");
+
+            using var writer = new StreamWriter(jsonFileAddress);
+            writer.WriteLine(json);
         }
 
         public Node GetNodeById(int id)
@@ -220,6 +204,22 @@ namespace GraphCreator
                 return _nodes[id];
 
             return null;
+        }
+        
+        public void LoadMapJson()
+        {
+            string json = File.ReadAllText(jsonFileAddress);
+            var parsed = JsonUtility.FromJson<GraphJsonData>(json);
+
+            foreach (var node in parsed.nodes)
+            {
+                AddNode(node.id, node.position);
+            }
+
+            foreach (var edge in parsed.edges)
+            {
+                AddEdge(edge.node1Id, edge.node2Id, edge.edgeType);
+            }
         }
     }
 

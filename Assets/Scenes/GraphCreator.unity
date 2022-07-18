@@ -788,7 +788,7 @@ RectTransform:
   - {fileID: 481643050}
   - {fileID: 1788832455}
   m_Father: {fileID: 813025925}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -964,11 +964,11 @@ RectTransform:
   - {fileID: 357251710}
   - {fileID: 1871416571}
   m_Father: {fileID: 813025925}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 71.337296, y: 48.908813}
+  m_AnchoredPosition: {x: 71.337296, y: 105.8}
   m_SizeDelta: {x: 66.97821, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &586046586
@@ -1216,9 +1216,9 @@ RectTransform:
   m_LocalScale: {x: 2.1000984, y: 2.1000984, z: 2.1000984}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 472514702}
   - {fileID: 586046585}
   - {fileID: 1416094751}
-  - {fileID: 472514702}
   m_Father: {fileID: 379860686}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1497,11 +1497,11 @@ RectTransform:
   - {fileID: 403026428}
   - {fileID: 234000533}
   m_Father: {fileID: 813025925}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 71.337296, y: 106.048996}
+  m_AnchoredPosition: {x: 71.337296, y: 47.5}
   m_SizeDelta: {x: 66.97821, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1416094752
@@ -2047,6 +2047,8 @@ MonoBehaviour:
   roadCost: 0
   busCost: 10
   trainCost: 100
+  yamlFileAddress: 
+  jsonFileAddress: 
 --- !u!4 &1833925016
 Transform:
   m_ObjectHideFlags: 0
