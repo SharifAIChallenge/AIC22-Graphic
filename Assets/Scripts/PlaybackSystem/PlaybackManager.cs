@@ -57,7 +57,9 @@ public class PlaybackManager : MonoBehaviour
     private bool _isCaching;
 
     private Coroutine autoPlayCoroutine;
-    
+
+    public List<int> visibleTurns = new();
+
     private void Awake()
     {
         _cacheables.Add(agentsController);
@@ -256,6 +258,8 @@ public class PlaybackManager : MonoBehaviour
         _turnNumber = turnNumber;
         _turnAgentType = turnType;
         onTurnChange?.Invoke(turnNumber, turnType);
+        
+        agentsController.ChangeVisibleState(visibleTurns.Contains(turnNumber));
 
         if (_isCaching)
         {

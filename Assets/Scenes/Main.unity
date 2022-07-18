@@ -3112,6 +3112,7 @@ MonoBehaviour:
   chatManager: {fileID: 1723170044}
   logHandler: {fileID: 576621903}
   hudManager: {fileID: 163100051}
+  visibleTurns: 
 --- !u!1 &1518768579
 GameObject:
   m_ObjectHideFlags: 0

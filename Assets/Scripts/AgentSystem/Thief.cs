@@ -1,3 +1,4 @@
+using DG.Tweening;
 using GraphCreator;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
@@ -5,7 +6,10 @@ using UnityEngine;
 public class Thief : Agent
 {
     private bool _isCaught;
+    private bool _isVisible;
 
+    [SerializeField] private SpriteRenderer visualSR;
+    
     public bool IsCaught
     {
         get => _isCaught;
@@ -13,6 +17,16 @@ public class Thief : Agent
         {
             visualGO.SetActive(!value);
             _isCaught = value;
+        }
+    }
+    
+    public bool IsVisible
+    {
+        get => _isVisible;
+        set
+        {
+            visualSR.DOFade(value ? 1 : 0.6f, 0.1f);
+            _isVisible = value;
         }
     }
 

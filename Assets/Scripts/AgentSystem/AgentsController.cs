@@ -86,4 +86,12 @@ public class AgentsController : Cacheable
     {
         ((Thief) _agents[thiefId - 1]).Caught();
     }
+    
+    public void ChangeVisibleState(bool visible)
+    {
+        foreach (var agent in _agents.Where(agent => agent.type == AgentType.THIEF))
+        {
+            ((Thief) agent).IsVisible = visible;
+        }
+    }
 }
