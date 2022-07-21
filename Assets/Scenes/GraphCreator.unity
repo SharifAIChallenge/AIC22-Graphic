@@ -2048,7 +2048,7 @@ MonoBehaviour:
   busCost: 10
   trainCost: 100
   yamlFileAddress: 
-  jsonFileAddress: 
+  jsonFileAddress: C:\Users\Abolfazl Kashi\Desktop\TEST\map.json
 --- !u!4 &1833925016
 Transform:
   m_ObjectHideFlags: 0

@@ -17,7 +17,7 @@ public class FirstSceneManager : MonoBehaviour
 
     public void ChooseFolder()
     {
-        var path = StandaloneFileBrowser.OpenFolderPanel("Choose a folder", "", false);
+        /*var path = StandaloneFileBrowser.OpenFolderPanel("Choose a folder", "", false);
         
         if(path.Length == 0)
             return;
@@ -27,6 +27,19 @@ public class FirstSceneManager : MonoBehaviour
 
         print(path[0]);
         Config.GamePath = path[0];
+        pathText.text = path[0];
+        StartButton.interactable = true;*/
+        
+        var path = StandaloneFileBrowser.OpenFilePanel("Choose log file", "", "", false);
+        
+        if(path.Length == 0)
+            return;
+        
+        if(string.IsNullOrEmpty(path[0]))
+            return;
+
+        print(path[0]);
+        Config.LogFilePath = path[0];
         pathText.text = path[0];
         StartButton.interactable = true;
     }

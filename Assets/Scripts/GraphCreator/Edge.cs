@@ -54,7 +54,7 @@ public class Edge : MonoBehaviour
     public void Setup(Transform from, Transform to, EdgeType type, List<Vector3> splinePoints, SplineAutoConstructMode constructMode)
     {
         SetTransportationMethod(type);
-        if (splinePoints is null)
+        if (splinePoints is null || splinePoints.Count <= 1)
         {
             spline.Initialize(2);
             spline[0].position = from.position;

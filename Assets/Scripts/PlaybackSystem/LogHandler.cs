@@ -11,19 +11,17 @@ public class LogHandler : MonoBehaviour
 
     public void Setup()
     {
+        //reader = new StreamReader(Config.GamePath + "/log.txt");
+        reader = new StreamReader(Config.LogFilePath);
+
         if (Config.Cached)
         {
-            reader = new StreamReader(Config.GamePath + "/log.txt");
             while (reader.ReadLine() is { } line)
             {
                 logLines.Add(line);
             }
             reader.Close();
             _currentLine = 0;
-        }
-        else
-        {
-            reader = new StreamReader( Config.GamePath + "/log.txt");
         }
     }
 

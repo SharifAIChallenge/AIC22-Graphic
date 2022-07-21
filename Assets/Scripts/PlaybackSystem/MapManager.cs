@@ -37,8 +37,11 @@ public class MapManager : MonoBehaviour
 
     private void LoadMapFromFile()
     {
-        string path = Config.GamePath + relativePath;
-        string json = File.ReadAllText(path);
+        //var reader = new StreamReader(Config.GamePath + "/log.txt");
+        var reader = new StreamReader(Config.LogFilePath);
+        var json = reader.ReadLine();
+        //string path = Config.GamePath + relativePath;
+        //string json = File.ReadAllText(path);
         var parsed = JsonUtility.FromJson<GraphJsonData>(json);
 
         Map = Instantiate(mapPrefab, mapParent);
