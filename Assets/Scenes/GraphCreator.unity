@@ -1421,7 +1421,7 @@ MonoBehaviour:
   touchDragSpeed: -0.03
   zoomEnabled: 1
   linkedZoomDrag: 1
-  maxZoom: 70
+  maxZoom: 100
   minZoom: 10
   zoomStepSize: 0.5
   zoomToMouse: 0
