@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BezierSolution;
 using UnityEngine;
 
 namespace GraphCreator
@@ -76,10 +77,10 @@ namespace GraphCreator
 
         public void AddEdge(int selectedNodeID, int nodeID)
         {
-            AddEdge(selectedNodeID, nodeID, edgeEditType);
+            AddEdge(selectedNodeID, nodeID, edgeEditType, null, SplineAutoConstructMode.Linear);
         }
         
-        public void AddEdge(int firstNode, int secondNode, EdgeType edgeType)
+        public void AddEdge(int firstNode, int secondNode, EdgeType edgeType, List<Vector3> splinePoints, SplineAutoConstructMode constructMode)
         {
             Edge e;
             var edgeTuple = GetEdgeTuple(firstNode, secondNode);
@@ -93,7 +94,7 @@ namespace GraphCreator
 
             Debug.Log($"Edge Added Between {firstNode} AND {secondNode} OF TYPE {edgeType}");
             e = Instantiate(edgePrefab, transform);
-            e.Setup(_nodes[edgeTuple.Item1].transform, _nodes[edgeTuple.Item2].transform, edgeType);
+            e.Setup(_nodes[edgeTuple.Item1].transform, _nodes[edgeTuple.Item2].transform, edgeType, splinePoints, constructMode);
             _edges[edgeTuple] = e;
         }
 
@@ -183,7 +184,9 @@ namespace GraphCreator
                 {
                     node1Id = pair.Key.Item1,
                     node2Id = pair.Key.Item2,
-                    edgeType = pair.Value.edgeType
+                    edgeType = pair.Value.edgeType,
+                    splinePoints = pair.Value.GetSplinePoints(),
+                    constructMode = pair.Value.spline.autoConstructMode
                 };
                 map.edges.Add(edge);
             }
@@ -218,7 +221,7 @@ namespace GraphCreator
 
             foreach (var edge in parsed.edges)
             {
-                AddEdge(edge.node1Id, edge.node2Id, edge.edgeType);
+                AddEdge(edge.node1Id, edge.node2Id, edge.edgeType, edge.splinePoints, edge.constructMode);
             }
         }
     }

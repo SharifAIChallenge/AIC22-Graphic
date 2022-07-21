@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using BezierSolution;
 using GraphCreator;
 using UnityEngine;
@@ -50,27 +51,37 @@ public class Edge : MonoBehaviour
         }*/
     }
 
-    public void Setup(Transform from, Transform to, EdgeType type)
+    public void Setup(Transform from, Transform to, EdgeType type, List<Vector3> splinePoints, SplineAutoConstructMode constructMode)
     {
         SetTransportationMethod(type);
-        spline.Initialize(2);
-        spline[0].position = from.position;
-        spline[1].position = to.position;
+        if (splinePoints is null)
+        {
+            spline.Initialize(2);
+            spline[0].position = from.position;
+            spline[1].position = to.position;
+        }
+        else
+        {
+            spline.Initialize(splinePoints.Count);
+            for (int i = 0; i < splinePoints.Count; i++)
+            {
+                spline[i].position = splinePoints[i];
+            }
+        }
+        
 
         var c = spline[0].gameObject.AddComponent<PositionConstraint>();
         var s = new ConstraintSource {sourceTransform = from, weight = 1};
         c.AddSource(s);
         c.constraintActive = true;
 
-        c = spline[1].gameObject.AddComponent<PositionConstraint>();
+        c = spline[^1].gameObject.AddComponent<PositionConstraint>();
         s = new ConstraintSource {sourceTransform = to, weight = 1};
         c.AddSource(s);
         c.constraintActive = true;
-
+        
+        spline.autoConstructMode = constructMode;
         spline.autoCalculateNormals = true;
-        //spline.AutoCalculateNormals(0f,10, false);
-        spline.autoConstructMode = SplineAutoConstructMode.Linear;
-        spline.ConstructLinearPath();
     }
 
     public Tuple<string, int> GetPathsInformation(int currentId, MyTuple edgesKey,
@@ -104,6 +115,11 @@ public class Edge : MonoBehaviour
         }
 
         return Tuple.Create(res, i + currentId);
+    }
+
+    public List<Vector3> GetSplinePoints()
+    {
+        return spline.Select(c => c.position).ToList();
     }
 }
 

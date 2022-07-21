@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BezierSolution;
 using GraphCreator;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -52,7 +53,7 @@ public class MapManager : MonoBehaviour
 
         foreach (var edge in parsed.edges)
         {
-            Map.AddEdge(edge.node1Id, edge.node2Id, edge.edgeType);
+            Map.AddEdge(edge.node1Id, edge.node2Id, edge.edgeType, edge.splinePoints, edge.constructMode);
         }
 
         cityGenerator.SetMapBounds(
@@ -128,4 +129,6 @@ public class EdgeJsonData{
     public int node1Id;
     public int node2Id;
     public EdgeType edgeType;
+    public List<Vector3> splinePoints;
+    public SplineAutoConstructMode constructMode;
 }
