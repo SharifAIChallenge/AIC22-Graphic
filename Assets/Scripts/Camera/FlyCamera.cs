@@ -136,6 +136,15 @@ public class FlyCamera : MonoBehaviour
             _xRotation = transform.eulerAngles.x;
         });
     }
+    
+    public void ChangeZoomButton(float value)
+    {
+        var newPos = transform.position + transform.forward * (value * zoomStepSize);
+        if (newPos.y > baseCameraY + zoomLimit.x && newPos.y < baseCameraY + zoomLimit.y &&
+            newPos.z > moveZLimit.x && newPos.z < moveZLimit.y && newPos.x > moveXLimit.x &&
+            newPos.x < moveXLimit.y)
+            transform.position = newPos;
+    }
 
     /*private Vector3 GetBaseInput()
     {
