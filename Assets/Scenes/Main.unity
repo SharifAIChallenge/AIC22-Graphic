@@ -3456,7 +3456,7 @@ MonoBehaviour:
   orbitingSpeed: 3
   moveXLimit: {x: -300, y: 300}
   moveZLimit: {x: -300, y: 300}
-  zoomLimit: {x: -20, y: 100}
+  zoomLimit: {x: -20, y: 170}
   baseCameraY: 90
   defaultPosition: {x: 0, y: 90, z: -50}
   defaultRotation: {x: 50, y: 0, z: 0}
