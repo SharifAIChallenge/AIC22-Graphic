@@ -45,6 +45,7 @@ public class PlaybackManager : MonoBehaviour
     Regex fromNodeId = new Regex("\"fromNodeId\":\"([^\"]+)\"");
     Regex toTurnNumber = new Regex("\"toTurnNumber\":\"([^\"]+)\"");
     Regex toTurn = new Regex("\"toTurn\":\"([^\"]+)\"");
+    Regex isVisible = new Regex("\"isVisible\":\"([^\"]+)\"");
     Regex wage = new Regex("\"wage\":\"([^\"]+)\"");
     Regex text = new Regex("\"text\":\"([^\"]*)\"");
     Regex thiefId = new Regex("\"thiefId\":\"([^\"]+)\"");
@@ -57,8 +58,6 @@ public class PlaybackManager : MonoBehaviour
     private bool _isCaching;
 
     private Coroutine autoPlayCoroutine;
-
-    public List<int> visibleTurns = new();
 
     private void Awake()
     {
@@ -183,8 +182,9 @@ public class PlaybackManager : MonoBehaviour
         {
             var toTurnNumberValue = int.Parse(GetValue(toTurnNumber, line));
             var toTurnValue = GetValue(toTurn, line) == "THIEF" ? AgentType.THIEF : AgentType.POLICE;
+            var isVisibleValue = GetValue(isVisible, line) == "true";
 
-            ChangeTurn(toTurnNumberValue, toTurnValue);
+            ChangeTurn(toTurnNumberValue, toTurnValue, isVisibleValue);
         }
         else if (line.Contains("\"type\":\"AGENT_BALANCE_CHARGED\""))
         {
@@ -240,7 +240,7 @@ public class PlaybackManager : MonoBehaviour
                 break;
             case GameStatus.ONGOING:
                 agentsController.SortAgents();
-                ChangeTurn(1, AgentType.THIEF);
+                ChangeTurn(1, AgentType.THIEF, false);
                 hudManager.EnableNextButton(true);
                 break;
             case GameStatus.FINISHED:
@@ -253,13 +253,13 @@ public class PlaybackManager : MonoBehaviour
         onGameStatusChange.Invoke(toStatus);
     }
 
-    private void ChangeTurn(int turnNumber, AgentType turnType)
+    private void ChangeTurn(int turnNumber, AgentType turnType, bool isVisibleValue)
     {
         _turnNumber = turnNumber;
         _turnAgentType = turnType;
         onTurnChange?.Invoke(turnNumber, turnType);
         
-        agentsController.ChangeVisibleState(visibleTurns.Contains(turnNumber));
+        agentsController.ChangeVisibleState(isVisibleValue);
 
         if (_isCaching)
         {
