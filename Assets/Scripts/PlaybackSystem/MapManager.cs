@@ -40,6 +40,7 @@ public class MapManager : MonoBehaviour
         //var reader = new StreamReader(Config.GamePath + "/log.txt");
         var reader = new StreamReader(Config.LogFilePath);
         var json = reader.ReadLine();
+        json = json.Substring(1, json.Length - 2);
         //string path = Config.GamePath + relativePath;
         //string json = File.ReadAllText(path);
         var parsed = JsonUtility.FromJson<GraphJsonData>(json);
