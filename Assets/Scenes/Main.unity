@@ -2906,7 +2906,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 5
+          m_FloatArgument: 1.5
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -3040,7 +3040,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: -2
+          m_FloatArgument: -1.5
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -3452,11 +3452,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff1fe28f3d01084e9c4bd1c1d95d79e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomStepSize: 15
+  zoomStepSize: 80
   orbitingSpeed: 3
   moveXLimit: {x: -300, y: 300}
   moveZLimit: {x: -300, y: 300}
-  zoomLimit: {x: -20, y: 170}
+  zoomLimit: {x: -20, y: 300}
   baseCameraY: 90
   defaultPosition: {x: 0, y: 90, z: -50}
   defaultRotation: {x: 50, y: 0, z: 0}
