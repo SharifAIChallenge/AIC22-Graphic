@@ -165,11 +165,11 @@ public class HUDManager : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow) && nextTurnButton.interactable)
         {
             NextTurn();
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) && previousTurnButton.interactable)
         {
             PreviousTurn();
         }
@@ -177,7 +177,7 @@ public class HUDManager : MonoBehaviour
         {
             TogglePlayBack();
         }
-        else if(Input.GetKeyDown(KeyCode.N))
+        else if(Input.GetKeyDown(KeyCode.N) && nextStepButton.interactable)
         {
             Next();
         }
