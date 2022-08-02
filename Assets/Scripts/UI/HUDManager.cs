@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -22,6 +23,9 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private CanvasGroup alertPanel;
     [SerializeField] private TMP_Text alertPanelText;
 
+    [SerializeField] private Slider gameSpeedSlider;
+    [SerializeField] private TMP_Text gameSpeedText;
+    
     private PlaybackManager _playbackManager;
 
     private bool _isPlaying;
@@ -37,6 +41,8 @@ public class HUDManager : MonoBehaviour
         previousTurnButton.onClick.AddListener(PreviousTurn);
         nextTurnButton.onClick.AddListener(NextTurn);
         goToTurnButton.onClick.AddListener(GoToTurn);
+        
+        gameSpeedSlider.onValueChanged.AddListener(UpdateGameSpeed);
     }
 
     private void GoToTurn()
@@ -149,5 +155,11 @@ public class HUDManager : MonoBehaviour
         alertPanel.alpha = 1;
         alertPanel.transform.DOScale(1, 0.2f);
         StartCoroutine(CloseAlert());
+    }
+    
+    private void UpdateGameSpeed(float value)
+    {
+        Config.GameSpeed = value;
+        gameSpeedText.text = $"{value.ToString("F1", CultureInfo.InvariantCulture)}x";
     }
 }

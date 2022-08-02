@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
@@ -106,7 +105,7 @@ public class PlaybackManager : MonoBehaviour
         while (GameStatus != GameStatus.FINISHED)
         {
             NextMove();
-            yield return new WaitForSeconds(0.7f);
+            yield return new WaitForSeconds(0.7f / Config.GameSpeed);
         }
 
         hudManager.TogglePlayBack();

@@ -86,7 +86,7 @@ public abstract class Agent : MonoBehaviour
         
         var length = edge.spline.GetLengthApproximately(0, 1);
         var duration = length / Speed;
-        transform.DOPath(_map.GetPathPoint(from, to), duration).SetEase(Ease.Linear).OnComplete(() =>
+        transform.DOPath(_map.GetPathPoint(from, to), duration / Config.GameSpeed).SetEase(Ease.Linear).OnComplete(() =>
         {
             CurrentNode = to;
         });
