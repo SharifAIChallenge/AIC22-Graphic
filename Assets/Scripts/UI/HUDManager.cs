@@ -13,8 +13,9 @@ public class HUDManager : MonoBehaviour
     [Header("Playback Hud")]
     [SerializeField] private TMP_InputField toTurnInputField;
     [SerializeField] private Button playPauseButton;
-    [SerializeField] private Button nextTurnButton;
+    [SerializeField] private Button nextStepButton;
     [SerializeField] private Button previousTurnButton;
+    [SerializeField] private Button nextTurnButton;
     [SerializeField] private Button goToTurnButton;
 
     [SerializeField] private CanvasGroup alertPanel;
@@ -31,8 +32,9 @@ public class HUDManager : MonoBehaviour
         _isPlaying = false;
         
         playPauseButton.onClick.AddListener(TogglePlayBack);
-        nextTurnButton.onClick.AddListener(Next);
+        nextStepButton.onClick.AddListener(Next);
         previousTurnButton.onClick.AddListener(PreviousTurn);
+        nextTurnButton.onClick.AddListener(NextTurn);
         goToTurnButton.onClick.AddListener(GoToTurn);
     }
 
@@ -44,6 +46,7 @@ public class HUDManager : MonoBehaviour
         {
             return;
         }
+        toTurnInputField.text = "";
         _playbackManager.LoadTurn(toTurnNumber);
     }
 
@@ -52,6 +55,13 @@ public class HUDManager : MonoBehaviour
         if(_isPlaying) return;
         
         _playbackManager.PreviousTurn();
+    }
+    
+    private void NextTurn()
+    {
+        if(_isPlaying) return;
+        
+        _playbackManager.NextTurn();
     }
 
     private void Next()
@@ -68,8 +78,9 @@ public class HUDManager : MonoBehaviour
             _isPlaying = !_isPlaying;
             _playbackManager.Pause();
             playPauseButton.GetComponentInChildren<TMP_Text>().text = "Play";
-            nextTurnButton.interactable = _playbackManager.GameStatus == GameStatus.ONGOING;
+            nextStepButton.interactable = _playbackManager.GameStatus == GameStatus.ONGOING;
             previousTurnButton.interactable = _playbackManager.TurnNumber > 1;
+            nextTurnButton.interactable = _playbackManager.TurnNumber < Config.lastTurn;
             goToTurnButton.interactable = true;
         }
         else
@@ -79,8 +90,9 @@ public class HUDManager : MonoBehaviour
             _isPlaying = !_isPlaying;
             _playbackManager.Play();
             playPauseButton.GetComponentInChildren<TMP_Text>().text = "Pause";
-            nextTurnButton.interactable = false;
+            nextStepButton.interactable = false;
             previousTurnButton.interactable = false;
+            nextTurnButton.interactable = false;
             goToTurnButton.interactable = false;
         }
     }
@@ -89,6 +101,7 @@ public class HUDManager : MonoBehaviour
     {
         turnText.text = $"Turn: {turnNumber} ({turnType.ToString().ToLower()} turn)";
         previousTurnButton.interactable = turnNumber > 1 && !_isPlaying;
+        nextTurnButton.interactable = turnNumber < Config.lastTurn && !_isPlaying;
     }
 
     private void OnDisable()
@@ -113,6 +126,6 @@ public class HUDManager : MonoBehaviour
 
     public void EnableNextButton(bool enable)
     {
-        nextTurnButton.interactable = enable;
+        nextStepButton.interactable = enable;
     }
 }

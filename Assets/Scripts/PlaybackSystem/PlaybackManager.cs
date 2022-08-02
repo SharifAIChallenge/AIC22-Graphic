@@ -77,7 +77,8 @@ public class PlaybackManager : MonoBehaviour
             RunLine(line);
             line = logHandler.GetNextLine();
         }
-        
+        Config.lastTurn = _turnNumber;
+
         _cacheables.ForEach(c => c.IsCaching = false);
         _isCaching = false;
         
@@ -126,6 +127,11 @@ public class PlaybackManager : MonoBehaviour
         LoadTurn(_turnNumber - 1);
     }
     
+    public void NextTurn()
+    {
+        LoadTurn(_turnNumber + 1);
+    }
+    
     public void LoadTurn(int turn)
     {
         if (!Config.Cached)
@@ -134,7 +140,11 @@ public class PlaybackManager : MonoBehaviour
             return;
         }
         
-        //TODO check if turn is in range
+        if(turn < 1 || turn > Config.lastTurn)
+        {
+            Debug.LogError("TURN IS OUT OF RANGE!");
+            return;
+        }
 
         _cacheables.ForEach(c => c.LoadState(turn - 1));
         logHandler.SetCurrentLine(turnStartsLineNumbers[turn]);
