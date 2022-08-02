@@ -104,22 +104,35 @@ public class PlaybackManager : MonoBehaviour
     {
         while (GameStatus != GameStatus.FINISHED)
         {
-            NextMove();
+            var waitTime = NextMove();
+            if(waitTime == 0) break;
+            
             yield return new WaitForSeconds(0.7f / Config.GameSpeed);
         }
 
         hudManager.TogglePlayBack();
     }
     
-    public void NextMove()
+    public float NextMove()
     {
         var line = logHandler.GetNextLine();
-
         if(line is null)
         {
-            return;
+            return 0;
         }
-        RunLine(line);
+        var time = RunLine(line);
+        
+        while (time == 0)
+        {
+            line = logHandler.GetNextLine();
+            if(line is null)
+            {
+                break;
+            }
+            time = RunLine(line);
+        }
+        
+        return time;
     }
 
     public void PreviousTurn()
@@ -158,26 +171,31 @@ public class PlaybackManager : MonoBehaviour
 
     #region running
 
-    private void RunLine(string line)
+    private float RunLine(string line)
     {
         var log = line.Substring(1, line.Length - 2);
+        //Debug.Log(log);
 
         if (line.Contains("\"type\":\"READINESS_DECLARATION\""))
         {
             var parsed = JsonConvert.DeserializeObject<GameLog<ReadinessLog>>(log, new StringEnumConverter());
-            if (parsed is null) return;
+            if (parsed is null) return 0;
 
             var context = parsed.context;
             agentsController.CreateAgent(context.agentId, context.nodeId, context.type, context.team, context.balance);
+            return 0;
         }
-        else if (line.Contains("\"type\":\"STATUS_CHANGE\""))
+        
+        if (line.Contains("\"type\":\"STATUS_CHANGE\""))
         {
             var parsed = JsonConvert.DeserializeObject<GameLog<StatusChangeLog>>(log, new StringEnumConverter());
-            if (parsed is null) return;
+            if (parsed is null) return 0;
 
             ChangeGameStatus(parsed.context.toStatus);
+            return 0.1f;
         }
-        else if (line.Contains("\"type\":\"AGENT_MOVEMENT\""))
+        
+        if (line.Contains("\"type\":\"AGENT_MOVEMENT\""))
         {
             var agentIdValue = int.Parse(GetValue(agentId, line));
             var balanceValue = GetValue(balance, line);
@@ -187,24 +205,31 @@ public class PlaybackManager : MonoBehaviour
 
             agentsController.MoveAgent(agentIdValue, fromNodeIdValue, toNodeIdValue);
             agentsController.DecreaseBalance(agentIdValue, priceValue);
+
+            return 1;
         }
-        else if (line.Contains("\"type\":\"TURN_CHANGE\""))
+        
+        if (line.Contains("\"type\":\"TURN_CHANGE\""))
         {
             var toTurnNumberValue = int.Parse(GetValue(toTurnNumber, line));
             var toTurnValue = GetValue(toTurn, line) == "THIEF" ? AgentType.THIEF : AgentType.POLICE;
             var isVisibleValue = GetValue(isVisible, line) == "true";
 
             ChangeTurn(toTurnNumberValue, toTurnValue, isVisibleValue);
+            return 0.1f;
         }
-        else if (line.Contains("\"type\":\"AGENT_BALANCE_CHARGED\""))
+        
+        if (line.Contains("\"type\":\"AGENT_BALANCE_CHARGED\""))
         {
             var agentIdValue = int.Parse(GetValue(agentId, line));
             var balanceValue = double.Parse(GetValue(balance, line), CultureInfo.InvariantCulture);
             var wageValue = double.Parse(GetValue(wage, line), CultureInfo.InvariantCulture);
 
             agentsController.BalanceCharge(agentIdValue, balanceValue, wageValue);
+            return 0;
         }
-        else if (line.Contains("\"type\":\"AGENT_SEND_MESSAGE\""))
+        
+        if (line.Contains("\"type\":\"AGENT_SEND_MESSAGE\""))
         {
             var agentIdValue = int.Parse(GetValue(agentId, line));
             var priceValue = double.Parse(GetValue(price, line), CultureInfo.InvariantCulture);
@@ -214,8 +239,10 @@ public class PlaybackManager : MonoBehaviour
 
             chatManager.UpdateChat(teamValue, typeValue, agentIdValue.ToString(), textValue);
             agentsController.DecreaseBalance(agentIdValue, priceValue);
+            return 1;
         }
-        else if (line.Contains("\"type\":\"POLICES_CAUGHT_THIEVES\""))
+        
+        if (line.Contains("\"type\":\"POLICES_CAUGHT_THIEVES\""))
         {
             var thiefIdValue = int.Parse(GetValue(thiefId, line));
             var nodeIdValue = GetValue(nodeId, line);
@@ -226,15 +253,21 @@ public class PlaybackManager : MonoBehaviour
                 hudManager.ThiefCaughtAlert(thiefIdValue);
             }
             Debug.Log($"Thief with Id {thiefIdValue} arrested");
+            return 1;
         }
-        else if (line.Contains("\"type\":\"GAME_RESULT_CHANGED\""))
+        
+        if (line.Contains("\"type\":\"GAME_RESULT_CHANGED\""))
         {
             var gameResultValue = GetValue(gameResult, line);
             if (!Enum.TryParse(gameResultValue, out _finalResult))
             {
                 Debug.LogError("GAME RESULT IS NOT VALID!");
             }
+
+            return 0;
         }
+
+        return 0;
     }
 
     static string GetValue(Regex regex, string str)
