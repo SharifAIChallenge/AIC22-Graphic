@@ -29,7 +29,8 @@ public class PlaybackManager : MonoBehaviour
     private AgentType _turnAgentType;
     public Action<int, AgentType> onTurnChange = delegate { };
 
-
+    private GameResult _finalResult;
+    
     #region regexes
     
     Regex agentId = new Regex("\"agentId\":\"([^\"]+)\"");
@@ -105,7 +106,7 @@ public class PlaybackManager : MonoBehaviour
         while (GameStatus != GameStatus.FINISHED)
         {
             NextMove();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.7f);
         }
 
         hudManager.TogglePlayBack();
@@ -230,7 +231,10 @@ public class PlaybackManager : MonoBehaviour
         else if (line.Contains("\"type\":\"GAME_RESULT_CHANGED\""))
         {
             var gameResultValue = GetValue(gameResult, line);
-            //call function
+            if (!Enum.TryParse(gameResultValue, out _finalResult))
+            {
+                Debug.LogError("GAME RESULT IS NOT VALID!");
+            }
         }
     }
 
@@ -255,6 +259,10 @@ public class PlaybackManager : MonoBehaviour
                 break;
             case GameStatus.FINISHED:
                 hudManager.EnableNextButton(false);
+                if (!_isCaching)
+                {
+                    hudManager.GameEndAlert(_finalResult);
+                }
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(toStatus), toStatus, null);
@@ -317,4 +325,10 @@ public enum GameStatus
     PENDING,
     ONGOING,
     FINISHED
+}
+public enum GameResult
+{
+    FIRST_WINS,
+    SECOND_WINS,
+    TIE
 }

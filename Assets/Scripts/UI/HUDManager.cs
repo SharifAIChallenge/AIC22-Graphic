@@ -10,8 +10,9 @@ public class HUDManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text turnText;
 
-    [Header("Playback Hud")]
-    [SerializeField] private TMP_InputField toTurnInputField;
+    [Header("Playback Hud")] [SerializeField]
+    private TMP_InputField toTurnInputField;
+
     [SerializeField] private Button playPauseButton;
     [SerializeField] private Button nextStepButton;
     [SerializeField] private Button previousTurnButton;
@@ -22,15 +23,15 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private TMP_Text alertPanelText;
 
     private PlaybackManager _playbackManager;
-    
+
     private bool _isPlaying;
-    
+
     public void Setup(PlaybackManager playbackManager)
     {
         _playbackManager = playbackManager;
         _playbackManager.onTurnChange += UpdateTurn;
         _isPlaying = false;
-        
+
         playPauseButton.onClick.AddListener(TogglePlayBack);
         nextStepButton.onClick.AddListener(Next);
         previousTurnButton.onClick.AddListener(PreviousTurn);
@@ -40,34 +41,35 @@ public class HUDManager : MonoBehaviour
 
     private void GoToTurn()
     {
-        if(_isPlaying) return;
+        if (_isPlaying) return;
 
-        if(toTurnInputField.text == "" || !int.TryParse(toTurnInputField.text, out var toTurnNumber))
+        if (toTurnInputField.text == "" || !int.TryParse(toTurnInputField.text, out var toTurnNumber))
         {
             return;
         }
+
         toTurnInputField.text = "";
         _playbackManager.LoadTurn(toTurnNumber);
     }
 
     private void PreviousTurn()
     {
-        if(_isPlaying) return;
-        
+        if (_isPlaying) return;
+
         _playbackManager.PreviousTurn();
     }
-    
+
     private void NextTurn()
     {
-        if(_isPlaying) return;
-        
+        if (_isPlaying) return;
+
         _playbackManager.NextTurn();
     }
 
     private void Next()
     {
-        if(_isPlaying) return;
-        
+        if (_isPlaying) return;
+
         _playbackManager.NextMove();
     }
 
@@ -85,7 +87,7 @@ public class HUDManager : MonoBehaviour
         }
         else
         {
-            if(_playbackManager.GameStatus == GameStatus.FINISHED) 
+            if (_playbackManager.GameStatus == GameStatus.FINISHED)
                 return;
             _isPlaying = !_isPlaying;
             _playbackManager.Play();
@@ -111,7 +113,7 @@ public class HUDManager : MonoBehaviour
 
     public void ThiefCaughtAlert(int thiefId)
     {
-        alertPanelText.text = $"Thief with ID {thiefId}\n<color=\"red\">ARRESTED</color>";
+        alertPanelText.text = $"Thief with ID {thiefId}\n<color=#8f0000>ARRESTED</color>";
         alertPanel.transform.localScale = Vector3.zero;
         alertPanel.alpha = 1;
         alertPanel.transform.DOScale(1, 0.2f);
@@ -127,5 +129,25 @@ public class HUDManager : MonoBehaviour
     public void EnableNextButton(bool enable)
     {
         nextStepButton.interactable = enable;
+    }
+
+    public void GameEndAlert(GameResult finalResult)
+    {
+        if (finalResult == GameResult.TIE)
+        {
+            alertPanelText.text = "Game Finished:\nIt Was a DRAW!";
+        }
+        else
+        {
+            var winner = finalResult == GameResult.FIRST_WINS ? "FIRST" : "SECOND";
+            var color = finalResult == GameResult.FIRST_WINS ? "blue" : "red";
+            var colorTag = finalResult == GameResult.FIRST_WINS ? "<color=\"blue\">" : "<color=#8f0000>";
+            alertPanelText.text = $"Game Finished:\n{colorTag}{winner} ({color})</color>\nTeam Won The Game!";
+        }
+
+        alertPanel.transform.localScale = Vector3.zero;
+        alertPanel.alpha = 1;
+        alertPanel.transform.DOScale(1, 0.2f);
+        StartCoroutine(CloseAlert());
     }
 }
