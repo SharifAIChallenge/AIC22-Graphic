@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public class FlyCamera : MonoBehaviour
 {
@@ -95,6 +96,11 @@ public class FlyCamera : MonoBehaviour
 
     private void ProcessTouch(Camera viewCamera, Vector3 screenPosition, bool isDown, bool wentDown)
     {
+        if (EventSystem.current.IsPointerOverGameObject())    // is the touch on the GUI
+        {
+            return;
+        }
+        
         var ray = viewCamera.ScreenPointToRay(screenPosition);
         var plane = new Plane(Vector3.up, Vector3.zero);
         if (plane.Raycast(ray, out var distance))
