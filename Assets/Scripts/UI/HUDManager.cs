@@ -162,4 +162,24 @@ public class HUDManager : MonoBehaviour
         Config.GameSpeed = value;
         gameSpeedText.text = $"{value.ToString("F1", CultureInfo.InvariantCulture)}x";
     }
+    
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            NextTurn();
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            PreviousTurn();
+        }
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TogglePlayBack();
+        }
+        else if(Input.GetKeyDown(KeyCode.N))
+        {
+            Next();
+        }
+    }
 }
