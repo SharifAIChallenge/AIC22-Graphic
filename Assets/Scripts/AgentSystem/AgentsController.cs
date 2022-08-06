@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using GraphCreator;
@@ -15,12 +14,8 @@ public class AgentsController : Cacheable
 
     [SerializeField] private Transform agentsParent;
 
-    /*private List<Agent> _team1_Cop = new();
-    private List<Agent> _team1_Thief = new();
-    private List<Agent> _team2_Cop = new();
-    private List<Agent> _team2_Thief = new();*/
-
-    private List<Agent> _agents = new();
+    //private List<Agent> _agents = new();
+    private Dictionary<int, Agent> _agents = new();
 
     private Graph map => _mapManager.Map;
     
@@ -30,44 +25,64 @@ public class AgentsController : Cacheable
         {
             var c = Instantiate(policePrefab, agentsParent);
             c.Setup(map, id, team, balanceValue, startNode);
-            _agents.Add(c);
+            _agents.Add(id, c);
         }
         else
         {
             var c = Instantiate(thiefPrefab, agentsParent);
             c.Setup(map, id, team, balanceValue, startNode);
-            _agents.Add(c);
+            _agents.Add(id, c);
         }
     }
 
     
     
-    public void SortAgents()
+    /*public void SortAgents()
     {
         _agents.Sort((a, b) => a.id - b.id);
-    }
+    }*/
 
     public void MoveAgent(int id, int from, int to)
     {
-        _agents[id - 1].Move(from, to, IsCaching);
+        try
+        {
+            _agents[id].Move(from, to, IsCaching);
+        }
+        catch (KeyNotFoundException)
+        {
+            Debug.LogError($"Agent with id {id} not found");
+        }
     }
 
     public void BalanceCharge(int agentId, double balance, double wage)
     {
-        _agents[agentId - 1].IncreaseBalance(wage);
+        try{
+            _agents[agentId].IncreaseBalance(wage);
+        }
+        catch (KeyNotFoundException)
+        {
+            Debug.LogError($"Agent with id {agentId} not found");
+        }
     }
 
     public void DecreaseBalance(int agentId, double amount)
     {
-        _agents[agentId - 1].DecreaseBalance(amount);
+        try{
+            _agents[agentId].DecreaseBalance(amount);
+        }
+        catch (KeyNotFoundException)
+        {
+            Debug.LogError($"Agent with id {agentId} not found");
+        }
     }
 
     public override void SaveState()
     {
-        var json = JsonConvert.SerializeObject(_agents, new JsonSerializerSettings() {
+        var json = JsonConvert.SerializeObject(_agents, new JsonSerializerSettings()
+        {
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
         });
-        
+
         history.Add(json);
     }
     
@@ -75,21 +90,29 @@ public class AgentsController : Cacheable
     {
         var json = history[index];
 
-        var arr = JArray.Parse(json);
-        for (int i = 0; i < _agents.Count; i++)
+        var dict = JsonConvert.DeserializeObject<Dictionary<string, JToken>>(json);
+        
+        foreach (var (id, jObject) in dict)
         {
-            _agents[i].LoadFromJson(arr[i].ToString(Formatting.None));
+            _agents[int.Parse(id)].LoadFromJson(jObject.ToString(Formatting.None));
         }
     }
 
     public void ThiefCaught(int thiefId)
     {
-        ((Thief) _agents[thiefId - 1]).Caught();
+        try
+        {
+            ((Thief) _agents[thiefId]).Caught();
+        }
+        catch (KeyNotFoundException)
+        {
+            Debug.LogError($"Agent with id {thiefId} not found");
+        }
     }
     
     public void ChangeVisibleState(bool visible)
     {
-        foreach (var agent in _agents.Where(agent => agent.type == AgentType.THIEF))
+        foreach (var (id, agent) in _agents.Where(agent => agent.Value.type == AgentType.THIEF))
         {
             ((Thief) agent).IsVisible = visible;
         }

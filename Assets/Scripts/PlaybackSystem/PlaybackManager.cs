@@ -285,7 +285,7 @@ public class PlaybackManager : MonoBehaviour
             case GameStatus.PENDING:
                 break;
             case GameStatus.ONGOING:
-                agentsController.SortAgents();
+                //agentsController.SortAgents();
                 ChangeTurn(1, AgentType.THIEF, false);
                 hudManager.EnableNextButton(true);
                 break;
