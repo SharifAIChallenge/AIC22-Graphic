@@ -999,8 +999,8 @@ MonoBehaviour:
   gameSpeedSlider: {fileID: 1199343428}
   gameSpeedText: {fileID: 959228874}
   firstTeamPoliceView: {fileID: 147315128}
-  firstTeamThiefView: {fileID: 1923775396}
-  secondTeamPoliceView: {fileID: 1524120781}
+  firstTeamThiefView: {fileID: 1524120781}
+  secondTeamPoliceView: {fileID: 1923775396}
   secondTeamThiefView: {fileID: 1681956783}
 --- !u!1 &169120481
 GameObject:
