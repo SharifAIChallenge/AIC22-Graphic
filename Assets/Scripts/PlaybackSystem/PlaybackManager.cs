@@ -264,7 +264,7 @@ public class PlaybackManager : MonoBehaviour
                 Debug.LogError("GAME RESULT IS NOT VALID!");
             }
 
-            return 0;
+            return 0.1f;
         }
 
         return 0;
