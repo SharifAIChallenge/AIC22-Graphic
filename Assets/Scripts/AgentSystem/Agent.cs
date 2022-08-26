@@ -11,6 +11,7 @@ public abstract class Agent : MonoBehaviour
 {
     public int id;
     public AgentType type;
+    public Team team;
     protected double money;
     
     private int _currentNode;
@@ -51,6 +52,7 @@ public abstract class Agent : MonoBehaviour
         _map = map;
         this.id = id;
         this.money = money;
+        this.team = team;
         switch (team)
         {
             case Team.FIRST:
@@ -142,6 +144,8 @@ public abstract class Agent : MonoBehaviour
         CurrentNode = node;
         transform.position = _map.GetNodePositionById(CurrentNode);
     }
+
+    public abstract void UpdateViewState();
 }
 
 public enum AgentType

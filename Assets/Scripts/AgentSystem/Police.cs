@@ -8,13 +8,16 @@ public class Police : Agent
     {
         type = AgentType.POLICE;
     }
-
-
-    /*public override void Setup(Graph map, int id, Team team, double money)
+    
+    public override void UpdateViewState()
     {
-        base.Setup(map, id, team, money);
-
-        _currentNode = map.GetPoliceStation(team);
-        transform.position = _map.GetNodePositionById(_currentNode);
-    }*/
+        if(team == Team.FIRST)
+        {
+            visualGO.SetActive(Config.firstTeamPoliceView);
+        }
+        else
+        {
+            visualGO.SetActive(Config.secondTeamPoliceView);
+        }
+    }
 }

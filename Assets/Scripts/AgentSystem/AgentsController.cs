@@ -35,13 +35,6 @@ public class AgentsController : Cacheable
         }
     }
 
-    
-    
-    /*public void SortAgents()
-    {
-        _agents.Sort((a, b) => a.id - b.id);
-    }*/
-
     public void MoveAgent(int id, int from, int to)
     {
         try
@@ -115,6 +108,14 @@ public class AgentsController : Cacheable
         foreach (var (id, agent) in _agents.Where(agent => agent.Value.type == AgentType.THIEF))
         {
             ((Thief) agent).IsVisible = visible;
+        }
+    }
+
+    public void UpdateAgentsView()
+    {
+        foreach (var agent in _agents)
+        {
+            agent.Value.UpdateViewState();
         }
     }
 }

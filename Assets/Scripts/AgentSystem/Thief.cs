@@ -15,8 +15,8 @@ public class Thief : Agent
         get => _isCaught;
         set
         {
-            visualGO.SetActive(!value);
             _isCaught = value;
+            UpdateViewState();
         }
     }
     
@@ -54,5 +54,17 @@ public class Thief : Agent
         base.LoadFromJson(j);
         var o = JObject.Parse(j.ToString());
         IsCaught = (bool) o?["caught"];
+    }
+    
+    public override void UpdateViewState()
+    {
+        if(team == Team.FIRST)
+        {
+            visualGO.SetActive(Config.firstTeamThiefView && !IsCaught);
+        }
+        else
+        {
+            visualGO.SetActive(Config.secondTeamThiefView && !IsCaught);
+        }
     }
 }

@@ -25,6 +25,12 @@ public class HUDManager : MonoBehaviour
 
     [SerializeField] private Slider gameSpeedSlider;
     [SerializeField] private TMP_Text gameSpeedText;
+
+    [Header("View Hud")]
+    [SerializeField] private Toggle firstTeamPoliceView;
+    [SerializeField] private Toggle firstTeamThiefView;
+    [SerializeField] private Toggle secondTeamPoliceView;
+    [SerializeField] private Toggle secondTeamThiefView;
     
     private PlaybackManager _playbackManager;
 
@@ -43,6 +49,11 @@ public class HUDManager : MonoBehaviour
         goToTurnButton.onClick.AddListener(GoToTurn);
         
         gameSpeedSlider.onValueChanged.AddListener(UpdateGameSpeed);
+        
+        firstTeamPoliceView.onValueChanged.AddListener(UpdateAgentsView);
+        firstTeamThiefView.onValueChanged.AddListener(UpdateAgentsView);
+        secondTeamPoliceView.onValueChanged.AddListener(UpdateAgentsView);
+        secondTeamThiefView.onValueChanged.AddListener(UpdateAgentsView);
     }
 
     private void GoToTurn()
@@ -181,5 +192,14 @@ public class HUDManager : MonoBehaviour
         {
             Next();
         }
+    }
+    
+    private void UpdateAgentsView(bool arg0)
+    {
+        Config.firstTeamPoliceView = firstTeamPoliceView.isOn;
+        Config.firstTeamThiefView = firstTeamThiefView.isOn;
+        Config.secondTeamPoliceView = secondTeamPoliceView.isOn;
+        Config.secondTeamThiefView = secondTeamThiefView.isOn;
+        _playbackManager.UpdateAgentsView();
     }
 }

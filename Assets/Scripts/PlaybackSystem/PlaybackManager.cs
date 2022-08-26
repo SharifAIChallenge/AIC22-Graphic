@@ -317,6 +317,11 @@ public class PlaybackManager : MonoBehaviour
             turnStartsLineNumbers.Add(turnNumber, logHandler.GetCurrentLine() - 1);
         }
     }
+    
+    public void UpdateAgentsView()
+    {
+        agentsController.UpdateAgentsView();
+    }
 
     #endregion
 
