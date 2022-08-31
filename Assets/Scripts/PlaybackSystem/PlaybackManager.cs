@@ -342,7 +342,7 @@ public class PlaybackManager : MonoBehaviour
         public int agentId;
         public double balance;
         public Team team;
-        public AgentType type;
+        public ExtendedAgentType type;
         public int nodeId;
         public string token;
     }

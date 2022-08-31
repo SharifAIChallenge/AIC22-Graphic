@@ -2534,7 +2534,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mapManager: {fileID: 883603718}
   policePrefab: {fileID: 8538545206451265414, guid: 36326fa393de6624a9808fbee6381b29, type: 3}
+  batmanPrefab: {fileID: 462929788604086574, guid: 9d071893a625dde47ac6bf8e17901759, type: 3}
   thiefPrefab: {fileID: 5381316014965168168, guid: 035887d7b42534e47b02024111b2473a, type: 3}
+  jokerPrefab: {fileID: 5608672130664920854, guid: 25ab069c7232c624e9200768a0b88382, type: 3}
   agentsParent: {fileID: 399362296}
 --- !u!1 &834139303
 GameObject:

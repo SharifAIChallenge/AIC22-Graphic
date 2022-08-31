@@ -11,6 +11,7 @@ public abstract class Agent : MonoBehaviour
 {
     public int id;
     public AgentType type;
+    public ExtendedAgentType extendedType;
     public Team team;
     protected double money;
     
@@ -47,7 +48,7 @@ public abstract class Agent : MonoBehaviour
 
     private static float Speed => Config.agentsMoveSpeed;
     
-    public void Setup(Graph map, int id, Team team, double money, int startNode)
+    public void Setup(Graph map, int id, Team team, double money, int startNode, ExtendedAgentType extendedAgentType)
     {
         _map = map;
         this.id = id;
@@ -64,9 +65,7 @@ public abstract class Agent : MonoBehaviour
                 break;
         }
         CurrentNode = startNode;
-
-        //locationPinSR.material.renderQueue = 3000 + id * 10;
-        //iconSR.material.renderQueue = 3001 + id * 10;
+        extendedType = extendedAgentType;
     }
     
     public void Move(int from, int to, bool isCaching)
@@ -151,7 +150,15 @@ public abstract class Agent : MonoBehaviour
 public enum AgentType
 {
     POLICE,
-    THIEF
+    THIEF,
+}
+
+public enum ExtendedAgentType
+{
+    POLICE,
+    THIEF,
+    BATMAN,
+    JOKER
 }
 
 public enum Team

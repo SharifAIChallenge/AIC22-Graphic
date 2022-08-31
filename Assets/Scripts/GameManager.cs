@@ -1,6 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,7 +14,10 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         loadingPanel.SetActive(true);
-        mapManager.Setup();
+        
+        var reader = new StreamReader(Config.LogFilePath);
+        reader.ReadLine();
+        mapManager.Setup(reader.ReadLine());
         logHandler.Setup();
     }
 

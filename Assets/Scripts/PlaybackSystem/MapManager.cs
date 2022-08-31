@@ -23,9 +23,9 @@ public class MapManager : MonoBehaviour
 
     [SerializeField] private bool load;
 
-    public void Setup()
+    public void Setup(string mapLine)
     {
-        LoadMapFromFile();
+        LoadMapFromFile(mapLine);
         StartCoroutine(CreateCity());
     }
 
@@ -35,14 +35,11 @@ public class MapManager : MonoBehaviour
         cityGenerator.Generate();        
     }
 
-    private void LoadMapFromFile()
+    private void LoadMapFromFile(string mapLine)
     {
-        //var reader = new StreamReader(Config.GamePath + "/log.txt");
-        var reader = new StreamReader(Config.LogFilePath);
-        var json = reader.ReadLine();
+        var json = mapLine;
         json = json.Substring(1, json.Length - 2);
-        //string path = Config.GamePath + relativePath;
-        //string json = File.ReadAllText(path);
+
         var parsed = JsonUtility.FromJson<GraphJsonData>(json);
 
         Map = Instantiate(mapPrefab, mapParent);
