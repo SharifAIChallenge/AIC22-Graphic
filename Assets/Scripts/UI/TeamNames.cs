@@ -1,12 +1,12 @@
 using System;
-using TMPro;
+using RTLTMPro;
 using UnityEngine;
 
 public class TeamNames : MonoBehaviour
 {
-    [SerializeField] private TMP_Text firstTeamNameText;
-    [SerializeField] private TMP_Text secondTeamNameText;
-    
+    [SerializeField] private RTLTextMeshPro firstTeamNameText;
+    [SerializeField] private RTLTextMeshPro secondTeamNameText;
+
     public void SetTeamNames(string json)
     {
         json = json.Substring(1, json.Length - 2);
