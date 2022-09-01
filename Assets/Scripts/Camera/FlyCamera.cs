@@ -36,6 +36,11 @@ public class FlyCamera : MonoBehaviour
 
     void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject())    // is the touch on the GUI
+        {
+            return;
+        }
+        
         Zoom();
         Orbiting();
         ShiftMove();
@@ -96,11 +101,6 @@ public class FlyCamera : MonoBehaviour
 
     private void ProcessTouch(Camera viewCamera, Vector3 screenPosition, bool isDown, bool wentDown)
     {
-        if (EventSystem.current.IsPointerOverGameObject())    // is the touch on the GUI
-        {
-            return;
-        }
-        
         var ray = viewCamera.ScreenPointToRay(screenPosition);
         var plane = new Plane(Vector3.up, Vector3.zero);
         if (plane.Raycast(ray, out var distance))
