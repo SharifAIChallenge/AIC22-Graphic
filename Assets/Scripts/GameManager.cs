@@ -11,12 +11,14 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject loadingPanel;
     
+    [SerializeField] private TeamNames teamNames;
+    
     private void Awake()
     {
         loadingPanel.SetActive(true);
         
         var reader = new StreamReader(Config.LogFilePath);
-        reader.ReadLine();
+        teamNames.SetTeamNames(reader.ReadLine());
         mapManager.Setup(reader.ReadLine());
         logHandler.Setup();
     }
