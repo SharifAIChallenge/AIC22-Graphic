@@ -87,6 +87,12 @@ namespace GraphCreator
             if (_edges.Keys.Contains(edgeTuple))
             {
                 e = _edges[edgeTuple];
+                if (e.edgeType == edgeType)
+                {
+                    DeleteEdge(edgeTuple);
+                    Debug.Log($"DELETE edge Between {firstNode} AND {secondNode}");
+                    return;
+                }
                 e.SetTransportationMethod(edgeType);
                 Debug.Log($"{edgeType} Set to existing edge Between {firstNode} AND {secondNode}");
                 return;
@@ -96,6 +102,13 @@ namespace GraphCreator
             e = Instantiate(edgePrefab, transform);
             e.Setup(_nodes[edgeTuple.Item1].transform, _nodes[edgeTuple.Item2].transform, edgeType, splinePoints, constructMode);
             _edges[edgeTuple] = e;
+        }
+        
+        private void DeleteEdge(MyTuple edgeTuple)
+        {
+            var e = _edges[edgeTuple];
+            Destroy(e.gameObject);
+            _edges.Remove(edgeTuple);
         }
 
         public void ToggleEdgeMode()
