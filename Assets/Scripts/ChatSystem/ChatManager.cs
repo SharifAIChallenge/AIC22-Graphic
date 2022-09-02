@@ -28,24 +28,24 @@ public class ChatManager : Cacheable
         if (team.Equals("FIRST"))
         {
             newText = Instantiate(textObject,
-                type.Equals("THIEF") ? (chatPanels[0]).transform : (chatPanels[1]).transform);
+                (type == "THIEF" || type == "JOKER") ? (chatPanels[0]).transform : (chatPanels[1]).transform);
         }
         else
         {
             newText = Instantiate(textObject,
-                type.Equals("THIEF") ? (chatPanels[2]).transform : (chatPanels[3]).transform);
+                (type == "THIEF" || type == "JOKER") ? (chatPanels[2]).transform : (chatPanels[3]).transform);
         }
 
         newMessage.textObject = newText.GetComponentInChildren<TMP_Text>();
         newMessage.textObject.text = newMessage.text;
         if (team.Equals("FIRST"))
         {
-            if (type.Equals("THIEF")) (messageList[0]).Add(newMessage);
+            if (type == "THIEF" || type == "JOKER") (messageList[0]).Add(newMessage);
             else (messageList[1]).Add(newMessage);
         }
         else
         {
-            if (type.Equals("THIEF")) (messageList[2]).Add(newMessage);
+            if (type == "THIEF" || type == "JOKER") (messageList[2]).Add(newMessage);
             else (messageList[3]).Add(newMessage);
         }
     }
