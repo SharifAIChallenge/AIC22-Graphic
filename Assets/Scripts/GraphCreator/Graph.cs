@@ -227,10 +227,15 @@ namespace GraphCreator
             string json = File.ReadAllText(jsonFileAddress);
             var parsed = JsonUtility.FromJson<GraphJsonData>(json);
 
+            var maxNode = 0;
             foreach (var node in parsed.nodes)
             {
                 AddNode(node.id, node.position);
+                if (node.id > maxNode)
+                    maxNode = node.id;
             }
+
+            _nextNodeIndex = maxNode + 1;
 
             foreach (var edge in parsed.edges)
             {

@@ -1421,9 +1421,9 @@ MonoBehaviour:
   touchDragSpeed: -0.03
   zoomEnabled: 1
   linkedZoomDrag: 1
-  maxZoom: 100
+  maxZoom: 300
   minZoom: 10
-  zoomStepSize: 0.5
+  zoomStepSize: 3
   zoomToMouse: 0
   followTarget: {fileID: 0}
   lerpSpeed: 0.5
