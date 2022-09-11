@@ -1,0 +1,28 @@
+using UnityEditor;
+using UnityEngine;
+
+namespace GraphCreator
+{
+    [CustomEditor(typeof(Graph))]
+    public class GraphEditorInspector : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            DrawDefaultInspector();
+
+            Graph graph = (Graph)target;
+            if(GUILayout.Button("Load Json File"))
+            {
+                graph.LoadMapJson();
+            }
+            if(GUILayout.Button("Build YAML File!"))
+            {
+                graph.BuildYaml();
+            }
+            if(GUILayout.Button("Build Map Json"))
+            {
+                graph.BuildMapJson();
+            }
+        }
+    }
+}
